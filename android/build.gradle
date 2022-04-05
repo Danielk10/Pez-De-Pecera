@@ -1,5 +1,5 @@
 android {
-    buildToolsVersion "android-Tiramisu"
+    buildToolsVersion "30.0.3"
     compileSdkVersion "android-Tiramisu"
     sourceSets {
         main {
