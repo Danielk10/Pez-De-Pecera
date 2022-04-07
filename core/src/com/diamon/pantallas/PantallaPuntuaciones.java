@@ -36,7 +36,7 @@ public class PantallaPuntuaciones extends Pantalla {
 	@Override
 	public void mostrar() {
 
-		musica = recurso.get("audios/musica.ogg", Music.class);
+		musica = recurso.get("audios/creditos.ogg", Music.class);
 
 		if (dato.isSonido())
 

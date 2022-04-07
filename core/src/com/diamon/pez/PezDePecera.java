@@ -63,6 +63,10 @@ public class PezDePecera extends Juego {
 
 		}
 
+		recurso.load("texturas/bomba.png", Texture.class);
+
+		recurso.load("texturas/algas.png", Texture.class);
+
 		recurso.load("texturas/invisible.png", Texture.class);
 
 		recurso.load("texturas/fondo1.png", Texture.class);
@@ -91,6 +95,14 @@ public class PezDePecera extends Juego {
 
 		recurso.load("texturas/pez.atlas", TextureAtlas.class);
 
+		recurso.load("texturas/pez1.atlas", TextureAtlas.class);
+
+		recurso.load("texturas/pezG.atlas", TextureAtlas.class);
+
+		recurso.load("texturas/pulpo.atlas", TextureAtlas.class);
+
+		recurso.load("texturas/pezGlobo.atlas", TextureAtlas.class);
+
 		recurso.load("texturas/iconos.atlas", TextureAtlas.class);
 
 		recurso.load("texturas/controles.atlas", TextureAtlas.class);
@@ -100,6 +112,10 @@ public class PezDePecera extends Juego {
 		recurso.load("audios/explosion.ogg", Sound.class);
 
 		recurso.load("audios/musica.ogg", Music.class);
+
+		recurso.load("audios/moustro.ogg", Music.class);
+
+		recurso.load("audios/creditos.ogg", Music.class);
 
 		recurso.load("uis/general/uiskin.json", Skin.class);
 

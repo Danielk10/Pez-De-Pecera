@@ -1114,6 +1114,12 @@ public class PantallaOpciones extends Pantalla {
 
 		if (dato.isFiltradoBilineal()) {
 
+			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 			recurso.get("texturas/fondo2.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -1156,9 +1162,40 @@ public class PantallaOpciones extends Pantalla {
 
 			}
 
+			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
 		}
 
 		if (!dato.isFiltradoBilineal()) {
+
+			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Nearest,
+					TextureFilter.Nearest);
+
+			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
 			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
@@ -1203,6 +1240,30 @@ public class PantallaOpciones extends Pantalla {
 
 			}
 
+			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
 		}
 
 	}
@@ -1211,19 +1272,23 @@ public class PantallaOpciones extends Pantalla {
 
 		recurso.get("audios/musica.ogg", Music.class).setVolume(dato.getVolumenMusica());
 
+		recurso.get("audios/moustro.ogg", Music.class).setVolume(dato.getVolumenMusica());
+
+		recurso.get("audios/creditos.ogg", Music.class).setVolume(dato.getVolumenMusica());
+
 		if (dato.isSonido()) {
 
-			if (!recurso.get("audios/musica.ogg", Music.class).isPlaying()) {
+			if (!recurso.get("audios/creditos.ogg", Music.class).isPlaying()) {
 
-				recurso.get("audios/musica.ogg", Music.class).setLooping(true);
+				recurso.get("audios/creditos.ogg", Music.class).setLooping(true);
 
-				recurso.get("audios/musica.ogg", Music.class).play();
+				recurso.get("audios/creditos.ogg", Music.class).play();
 
 			}
 
 		} else {
 
-			recurso.get("audios/musica.ogg", Music.class).stop();
+			recurso.get("audios/creditos.ogg", Music.class).stop();
 
 		}
 

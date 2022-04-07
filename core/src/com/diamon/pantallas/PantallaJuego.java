@@ -292,7 +292,7 @@ public class PantallaJuego extends Pantalla {
 		musica[2] = recurso.get("audios/musica.ogg", Music.class);
 		musica[3] = recurso.get("audios/musica.ogg", Music.class);
 
-		musicaGefe = recurso.get("audios/musica.ogg", Music.class);
+		musicaGefe = recurso.get("audios/moustro.ogg", Music.class);
 
 		if (dato.isSonido()) {
 
@@ -433,8 +433,11 @@ public class PantallaJuego extends Pantalla {
 							if (jugador.isGefe())
 
 							{
+								if (musicaGefe != null) {
 
-								musicaGefe.pause();
+									musicaGefe.pause();
+								}
+
 							} else {
 
 								musica[indice].pause();
@@ -566,7 +569,12 @@ public class PantallaJuego extends Pantalla {
 
 						{
 
-							musicaGefe.play();
+							if (musicaGefe != null) {
+
+								musicaGefe.play();
+
+							}
+
 						} else {
 
 							musica[indice].play();
@@ -721,7 +729,12 @@ public class PantallaJuego extends Pantalla {
 
 									{
 
-										musicaGefe.play();
+										if (musicaGefe != null) {
+
+											musicaGefe.play();
+
+										}
+
 									} else {
 
 										musica[indice].play();
@@ -767,7 +780,11 @@ public class PantallaJuego extends Pantalla {
 
 										{
 
-											musicaGefe.pause();
+											if (musicaGefe != null) {
+
+												musicaGefe.pause();
+											}
+
 										} else {
 
 											musica[indice].pause();
@@ -951,7 +968,11 @@ public class PantallaJuego extends Pantalla {
 
 				{
 
-					musicaGefe.stop();
+					if (musicaGefe != null) {
+
+						musicaGefe.stop();
+
+					}
 
 				}
 
@@ -984,7 +1005,7 @@ public class PantallaJuego extends Pantalla {
 
 							dato.setContinuar(false);
 
-							dato.setHelicoptero(1);
+							dato.setPez(1);
 
 							dato.setNumeroSatelite(0);
 
@@ -1023,7 +1044,7 @@ public class PantallaJuego extends Pantalla {
 
 							dato.setBombas(10);
 
-							dato.setHelicoptero(1);
+							dato.setPez(1);
 
 							dato.setNumeroSatelite(0);
 
@@ -1087,7 +1108,7 @@ public class PantallaJuego extends Pantalla {
 
 								musica[indice].stop();
 
-								nivel.addAction(Actions.sequence(Actions.delay(10f), Actions.run(new Runnable() {
+								nivel.addAction(Actions.sequence(Actions.delay(4.5f), Actions.run(new Runnable() {
 
 									public void run() {
 
@@ -1114,7 +1135,7 @@ public class PantallaJuego extends Pantalla {
 
 					dato.setBombas(jugador.getBomba());
 
-					dato.setHelicoptero(jugador.getTipo());
+					dato.setPez(jugador.getTipo());
 
 					dato.setNumeroSatelite(jugador.getNumeroDeSatelites());
 
@@ -1160,9 +1181,13 @@ public class PantallaJuego extends Pantalla {
 
 					musica[indice].stop();
 
-					musicaGefe.play();
+					if (musicaGefe != null) {
 
-					musicaGefe.setLooping(true);
+						musicaGefe.play();
+
+						musicaGefe.setLooping(true);
+
+					}
 
 					gefe = true;
 
@@ -1170,9 +1195,13 @@ public class PantallaJuego extends Pantalla {
 
 			} else {
 
-				if (musicaGefe.isPlaying()) {
+				if (musicaGefe != null) {
 
-					musicaGefe.stop();
+					if (musicaGefe.isPlaying()) {
+
+						musicaGefe.stop();
+
+					}
 
 				}
 

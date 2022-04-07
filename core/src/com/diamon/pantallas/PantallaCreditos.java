@@ -73,7 +73,7 @@ public class PantallaCreditos extends Pantalla {
 
 		posicionEspecial = -1450.0f;
 
-		musica = recurso.get("audios/musica.ogg", Music.class);
+		musica = recurso.get("audios/creditos.ogg", Music.class);
 
 		if (dato.isSonido())
 

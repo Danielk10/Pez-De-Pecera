@@ -109,6 +109,12 @@ public class PantallaCarga extends Pantalla {
 
 		if (dato.isFiltradoBilineal()) {
 
+			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 			recurso.get("texturas/fondo2.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -151,9 +157,40 @@ public class PantallaCarga extends Pantalla {
 
 			}
 
+			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+			}
+
 		}
 
 		if (!dato.isFiltradoBilineal()) {
+
+			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Nearest,
+					TextureFilter.Nearest);
+
+			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
 			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
@@ -198,6 +235,30 @@ public class PantallaCarga extends Pantalla {
 
 			}
 
+			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
+			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
+
+				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+
+			}
+
 		}
 
 	}
@@ -205,6 +266,10 @@ public class PantallaCarga extends Pantalla {
 	private void sonido() {
 
 		recurso.get("audios/musica.ogg", Music.class).setVolume(dato.getVolumenMusica());
+
+		recurso.get("audios/moustro.ogg", Music.class).setVolume(dato.getVolumenMusica());
+
+		recurso.get("audios/creditos.ogg", Music.class).setVolume(dato.getVolumenMusica());
 
 	}
 

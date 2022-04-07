@@ -7,17 +7,25 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.diamon.datos.Dato;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.personajes.Algas;
+import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.JefeCuatro;
 import com.diamon.personajes.JefeDos;
 import com.diamon.personajes.JefeTres;
 import com.diamon.personajes.JefeUno;
 import com.diamon.personajes.Jugador;
+import com.diamon.personajes.PezAngel;
+import com.diamon.personajes.PezGloboAmarillo;
+import com.diamon.personajes.PezGloboNaranja;
+import com.diamon.personajes.Pulpo;
 
 public class Niveles extends Nivel {
 
@@ -116,6 +124,84 @@ public class Niveles extends Nivel {
 
 		String numeroNivel = "Nivel " + dato.getNumeroNivel();
 
+		for (Vector2 posicion : dato.getPosicionActores(Dato.PULPO, numeroNivel))
+
+		{
+			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
+					Animation.PlayMode.LOOP, pantalla);
+
+			actor.setSize(32, 64);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+		}
+
+		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_GLOBO_AMARILLO, numeroNivel))
+
+		{
+			PezGloboAmarillo actor = new PezGloboAmarillo(
+					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions(), 0.1f, Animation.PlayMode.LOOP,
+					pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+		}
+
+		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_GOBO_NARANJA, numeroNivel))
+
+		{
+			PezGloboNaranja actor = new PezGloboNaranja(
+					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
+					Animation.PlayMode.LOOP, pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+		}
+
+		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_ANGEL, numeroNivel))
+
+		{
+			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
+					Animation.PlayMode.LOOP, pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+		}
+
+		for (Vector2 posicion : dato.getPosicionActores(Dato.BOMBA, numeroNivel)) {
+
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+
+			actor.setSize(64, 64);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+
+		}
+
+		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
+
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(posicion.x, posicion.y);
+
+			personajes.add(actor);
+
+		}
+
 		agregarGefe(dato.getNumeroNivel());
 
 		intro();
@@ -133,7 +219,7 @@ public class Niveles extends Nivel {
 
 		if (intro) {
 
-			jugador.setPosition(-320, 384);
+			jugador.setPosition(0, 384);
 
 			jugador.setIntro(!intro);
 
@@ -144,7 +230,7 @@ public class Niveles extends Nivel {
 				}
 			})));
 
-			nivel.addAction(Actions.sequence(Actions.delay(9f), Actions.run(new Runnable() {
+			nivel.addAction(Actions.sequence(Actions.delay(4f), Actions.run(new Runnable() {
 
 				public void run() {
 
@@ -169,7 +255,7 @@ public class Niveles extends Nivel {
 
 		if (numero == 10) {
 
-			gefeUno = new JefeUno(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.1f,
+			gefeUno = new JefeUno(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla);
 
 			gefeUno.setSize(128, 128);
@@ -186,7 +272,7 @@ public class Niveles extends Nivel {
 
 		if (numero == 20) {
 
-			gefeDos = new JefeDos(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.1f,
+			gefeDos = new JefeDos(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla);
 
 			gefeDos.setSize(128, 128);
@@ -203,7 +289,7 @@ public class Niveles extends Nivel {
 
 		if (numero == 30) {
 
-			gefeTres = new JefeTres(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.1f,
+			gefeTres = new JefeTres(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla);
 
 			gefeTres.setSize(128, 128);
@@ -220,7 +306,7 @@ public class Niveles extends Nivel {
 
 		if (numero == 40) {
 
-			gefeCuatro = new JefeCuatro(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.1f,
+			gefeCuatro = new JefeCuatro(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla);
 
 			gefeCuatro.setSize(128, 128);

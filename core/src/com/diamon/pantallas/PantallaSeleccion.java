@@ -130,7 +130,7 @@ public class PantallaSeleccion extends Pantalla {
 
 				{
 
-					recurso.get("audios/musica.ogg", Music.class).stop();
+					recurso.get("audios/creditos.ogg", Music.class).stop();
 
 				}
 
@@ -152,7 +152,7 @@ public class PantallaSeleccion extends Pantalla {
 
 				dato.setBombas(10);
 
-				dato.setHelicoptero(1);
+				dato.setPez(1);
 
 				dato.setNumeroSatelite(0);
 
@@ -172,7 +172,7 @@ public class PantallaSeleccion extends Pantalla {
 
 				{
 
-					recurso.get("audios/musica.ogg", Music.class).stop();
+					recurso.get("audios/creditos.ogg", Music.class).stop();
 
 				}
 

@@ -7,89 +7,28 @@ import com.diamon.nucleo.Personaje;
 public class Dato {
 
 	// item del juego
-	public final static String BALA = "com.diamon.personaje.Bala";
-	public final static String BALA_ENEMIGO = "com.diamon.personaje.BalaEnemigo";
-	public final static String BOMBA = "com.diamon.personaje.Bomba";
-	public final static String BALA_EXPLOSIVA_ENEMIGA = "com.diamon.personaje.BalaExplosivaEnemiga";
-	public final static String BOLA_PLASMA = "com.diamon.personaje.BolaPlasma";
-	public final static String MISIL = "com.diamon.personaje.Misil";
-	public final static String SATELITE = "com.diamon.personaje.Satelite";
-	public final static String BALA_EXPLOSIVA = "com.diamon.personaje.BalaExplosiva";
-	public final static String CAJA_VIDA = "com.diamon.personaje.CajaVida";
-	public final static String CAJA_MISIL = "com.diamon.personaje.CajaMisil";
-	public final static String CAJA_BOMBA = "com.diamon.personaje.CajaBomba";
-	public final static String CAJA_SATELITE = "com.diamon.personaje.CajaSatelite";
-	public final static String CAJA_VELOCIDAD = "com.diamon.personaje.CajaVelocidad";
-	public final static String CAJA_HELICOPTERO_NORMAL = "com.diamon.personaje.CajaHelicopteroNormal";
-	public final static String CAJA_HELICOPTERO_REDONDO = "com.diamon.personaje.CajaHelicopteroRedondo";
-	public final static String CAJA_HELICOPTERO_NEGRO = "com.diamon.personaje.CajaHelicopteroNegro";
-	public final static String CAJA_HELICOPTERO_MEDICO = "com.diamon.personaje.CajaHelicopteroMedico";
-	public final static String CAJA_HELICOPTERO_VERDE = "com.diamon.personaje.CajaHelicopteroVerde";
-	public final static String CAJA_HELICOPTERO_SATELITAL = "com.diamon.personaje.CajaHelicopteroSatelital";
+	public final static String BALA = "com.diamon.personajes.Bala";
+
 	// efectos especiales del juego
-	public final static String EXPLOSION = "com.diamon.personaje.Explosion";
-	public final static String EXPLOSION_TERRENO = "com.diamon.personaje.ExplosionTerreno";
-	public final static String HUMO = "com.diamon.personaje.Humo";
-	public final static String FUEGO = "com.diamon.personaje.Fuego";
+	public final static String EXPLOSION = "com.diamon.personajes.Explosion";
+
 	// escenario del juego
-	public final static String FONDO = "com.diamon.personaje.Fondo";
-	public final static String TERRENO = "com.diamon.personaje.Terreno";
-	public final static String CARRO_GRIS = "com.diamon.personaje.CarroGris";
-	public final static String CARRO_AMARILLO = "com.diamon.personaje.CarroAmarillo";
-	public final static String CAMIONETA_CARGA = "com.diamon.personaje.CamionetaCarga";
-	public final static String CAMIONETA_GRIS = "com.diamon.personaje.CamionetaGris";
-	public final static String CAMIONETA_VERDE = "com.diamon.personaje.CamionetaVerde";
-	public final static String BARCO_VERDE = "com.diamon.personaje.BarcoVerde";
-	public final static String NUBE_LARGA = "com.diamon.personaje.NubeLarga";
-	public final static String NUBE_UNO = "com.diamon.personaje.NubeUno";
-	public final static String NUBE_DOS = "com.diamon.personaje.NubeDos";
-	public final static String NUBE_TRES = "com.diamon.personaje.NubeTres";
-	public final static String NUBE_CUATRO = "com.diamon.personaje.NubeCuatro";
-	public final static String NUBE_CINCO = "com.diamon.personaje.NubeCinco";
-	public final static String NUBE_SEIS = "com.diamon.personaje.NubeSeis";
-	public final static String NUBE_SIETE = "com.diamon.personaje.NubeSiete";
+	public final static String FONDO = "com.diamon.personajes.Fondo";
+	public final static String TERRENO = "com.diamon.personajes.Terreno";
+	public final static String BOMBA = "com.diamon.personajes.Bomba";
+	public final static String ALGAS = "com.diamon.personajes.Algas";
+
 	// UI del juego
-	public final static String CURSOR = "com.diamon.personaje.Cursor";
+	public final static String CURSOR = "com.diamon.personajes.Cursor";
 	// personajes del juego
-	public final static String JUGADOR = "com.diamon.personaje.Jugador";
-	public final static String PARACAISDISTA = "com.diamon.personaje.Paracaidista";
-	public final static String ROBOT = "com.diamon.personaje.Robot";
-	public final static String NAVE_F_UNO = "com.diamon.personaje.NaveFUno";
-	public final static String NAVE_F_DOS = "com.diamon.personaje.NaveFDos";
-	public final static String NAVE_F_TRES = "com.diamon.personaje.NaveFTres";
-	public final static String NAVE_F_CUATRO = "com.diamon.personaje.NaveFCuatro";
-	public final static String NAVE_F_CINCO = "com.diamon.personaje.NaveFCinco";
-	public final static String NAVE_F_SEIS = "com.diamon.personaje.NaveFSeis";
-	public final static String NAVE_F_SIETE = "com.diamon.personaje.NaveFSiete";
-	public final static String NAVE_F_OCHO = "com.diamon.personaje.NaveFOcho";
-	public final static String NAVE_F_NUEVE = "com.diamon.personaje.NaveFNueve";
-	public final static String NAVE_F_DIEZ = "com.diamon.personaje.NaveFDiez";
-	public final static String NAVE_F_ONCE = "com.diamon.personaje.NaveFOnce";
-	public final static String NAVE_F_DOCE = "com.diamon.personaje.NaveFDoce";
-	public final static String NAVE_F_TRECE = "com.diamon.personaje.NaveFTrece";
-	public final static String NAVE_F_CATORCE = "com.diamon.personaje.NaveFCatorce";
-	public final static String NAVE_F_QUINCE = "com.diamon.personaje.NaveFQuince";
-	public final static String NAVE_F_DIESCICEIS = "com.diamon.personaje.NaveFDiesciceis";
-	public final static String ANTI_AEREO = "com.diamon.personaje.AntiAereo";
-	public final static String MAQUINA_PARED_IZQUIERDA = "com.diamon.personaje.MaquinaParedIzquierda";
-	public final static String MAQUINA_PARED_DERECHA = "com.diamon.personaje.MaquinaParedDerecha";
-	public final static String PLATILLO_VOLADOR = "com.diamon.personaje.PlatilloVolador";
-	public final static String PLATILLO_A = "com.diamon.personaje.PlatilloA";
-	public final static String PLATILLO_DE_LUZ = "com.diamon.personaje.PlatilloDeLuz";
-	public final static String SIERRA = "com.diamon.personaje.Sierra";
+	public final static String JUGADOR = "com.diamon.personajes.Jugador";
+	public final static String PULPO = "com.diamon.personajes.Pulpo";
+	public final static String PEZ_ANGEL = "com.diamon.personajes.PezAngel";
+	public final static String PEZ_GOBO_NARANJA = "com.diamon.personajes.PezGloboNaranja";
+	public final static String PEZ_GLOBO_AMARILLO = "com.diamon.personajes.PezGloboAmarillo";
 
 	// helicopteros del juego
-	public final static int HELICOPTERO_NORMAL = 1;
-
-	public final static int HELICOPTERO_REDONDO = 2;
-
-	public final static int HELICOPTERO_NEGRO = 3;
-
-	public final static int HELICOPTERO_MEDICO = 4;
-
-	public final static int HELICOPTERO_VERDE = 5;
-
-	public final static int HELICOPTERO_SATELITAL = 6;
+	public final static int PEZ_PAYASO = 1;
 
 	private final static short NUMERO_NIVELES = 40;
 
@@ -130,7 +69,7 @@ public class Dato {
 
 	private int puntos;
 
-	private int helicoptero;
+	private int pez;
 
 	private int misiles;
 
@@ -151,7 +90,7 @@ public class Dato {
 	@SuppressWarnings("unchecked")
 	public Dato() {
 
-		helicoptero = 1;
+		pez = 1;
 
 		misiles = 10;
 
@@ -167,7 +106,7 @@ public class Dato {
 
 		mostrarFPS = false;
 
-		editor = false;
+		editor = true;
 
 		prueba = false;
 
@@ -311,12 +250,12 @@ public class Dato {
 		return puntuaciones;
 	}
 
-	public int getHelicoptero() {
-		return helicoptero;
+	public int getPez() {
+		return pez;
 	}
 
-	public void setHelicoptero(int helicoptero) {
-		this.helicoptero = helicoptero;
+	public void setPez(int pez) {
+		this.pez = pez;
 	}
 
 	public boolean isSonido() {

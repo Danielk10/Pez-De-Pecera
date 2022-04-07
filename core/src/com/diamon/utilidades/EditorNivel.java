@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,9 +23,15 @@ import com.diamon.datos.Dato;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.personajes.Algas;
+import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.Jugador;
+import com.diamon.personajes.PezAngel;
+import com.diamon.personajes.PezGloboAmarillo;
+import com.diamon.personajes.PezGloboNaranja;
+import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.Terreno;
 
 public class EditorNivel {
@@ -295,17 +303,9 @@ public class EditorNivel {
 
 		tipoActor.setColor(1.0F, 1.0F, 1.0F, 0.7F);
 
-		tipoActor.setItems("Fuego", "NubeLarga", "NubeUno", "NubeDos", "NubeTres", "NubeCuatro", "NubeCinco",
-				"NubeSeis", "NubeSiete", "CarroGris", "CarroAmarillo", "CamionetaCarga", "CamionetaGris",
-				"CamionetaVerde", "BarcoVerde", "AntiAereo", "Sierra", "MaquinaParedIzquierda", "MaquinaParedDerecha",
-				"Robot", "PlatilloVolador", "PlatilloA", "PlatilloDeLuz", "NaveFUno", "NaveFDos", "NaveFTres",
-				"NaveFCuatro", "NaveFCinco", "NaveFSeis", "NaveFSiete", "NaveFOcho", "NaveFNueve", "NaveFDiez",
-				"NaveFOnce", "NaveFDoce", "NaveFTrece", "NaveFCatorce", "NaveFQuince", "NaveFDiesciceis", "CajaVida",
-				"CajaMisil", "CajaBomba", "CajaSatelite", "CajaVelocidad", "CajaHelicopteroNormal",
-				"CajaHelicopteroRedondo", "CajaHelicopteroNegro", "CajaHelicopteroMedico", "CajaHelicopteroVerde",
-				"CajaHelicopteroSatelital");
+		tipoActor.setItems("Pulpo", "PezAngel", "PezGloboNaranja", "PezGloboAmarillo", "Bomba", "Algas");
 
-		tipo = "com.diamon.personaje." + tipoActor.getSelected();
+		tipo = "com.diamon.personajes." + tipoActor.getSelected();
 
 	}
 
@@ -317,7 +317,7 @@ public class EditorNivel {
 
 		actualizar = false;
 
-		tipo = "com.diamon.personaje." + tipoActor.getSelected();
+		tipo = "com.diamon.personajes." + tipoActor.getSelected();
 
 		moverEsenario.setColor(1, 0, 0, 1);
 
@@ -950,7 +950,7 @@ public class EditorNivel {
 				String nombre = ((SelectBox<String>) actor).getItems()
 						.get(((SelectBox<String>) actor).getSelectedIndex());
 
-				tipo = "com.diamon.personaje." + nombre;
+				tipo = "com.diamon.personajes." + nombre;
 
 			}
 		});
@@ -1142,11 +1142,175 @@ public class EditorNivel {
 
 	private void agregarActorTemporal(float x, float y) {
 
+		if (tipo.equals(Dato.PULPO)) {
+
+			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
+					pantalla);
+
+			actor.setSize(32, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
+
+			PezGloboAmarillo actor = new PezGloboAmarillo(
+					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
+
+			PezGloboNaranja actor = new PezGloboNaranja(
+					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_ANGEL)) {
+
+			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
+					pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.BOMBA)) {
+
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+
+			actor.setSize(64, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.ALGAS)) {
+
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			personajes.add(actor);
+
+		}
+
 	}
 
 	private void agregarActor(float x, float y) {
 
 		Array<Personaje> actores = new Array<Personaje>();
+
+		if (tipo.equals(Dato.PULPO)) {
+
+			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
+					pantalla);
+
+			actor.setSize(32, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
+
+			PezGloboAmarillo actor = new PezGloboAmarillo(
+					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
+
+			PezGloboNaranja actor = new PezGloboNaranja(
+					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.PEZ_ANGEL)) {
+
+			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
+					pantalla);
+
+			actor.setSize(64, 32);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.BOMBA)) {
+
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+
+			actor.setSize(64, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
+
+		if (tipo.equals(Dato.ALGAS)) {
+
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+
+			actor.setSize(96, 64);
+
+			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+
+			actores.add(actor);
+
+		}
 
 		agregarActor(actores);
 
