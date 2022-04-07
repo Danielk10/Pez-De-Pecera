@@ -89,7 +89,7 @@ public abstract class Juego extends Game {
 
 			fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
 
-			fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+			fondo[i].setSize(Juego.ANCHO_PANTALLA + 213, Juego.ALTO_PANTALLA);
 
 			fondo[i].setPosition(0, 0);
 
