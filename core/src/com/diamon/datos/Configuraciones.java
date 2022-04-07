@@ -26,7 +26,7 @@ public class Configuraciones {
 
 		if (tipoDato == Configuraciones.INTERNO) {
 
-			configuracionDato = Gdx.files.internal("dato/datos.dat");
+			configuracionDato = Gdx.files.internal("datos/datos.dat");
 
 		}
 
@@ -53,6 +53,7 @@ public class Configuraciones {
 				datos = new Dato();
 
 				escribirDatos(datos);
+
 			}
 
 		} else {
@@ -60,6 +61,7 @@ public class Configuraciones {
 			datos = new Dato();
 
 			escribirDatos(datos);
+
 		}
 
 		return datos;

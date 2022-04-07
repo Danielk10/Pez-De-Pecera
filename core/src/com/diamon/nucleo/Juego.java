@@ -41,7 +41,7 @@ public abstract class Juego extends Game {
 
 	private Image[] fondo = new Image[2];
 
-	private float xFondo;
+	private float posicionFondoX;
 
 	protected Stage nivelMenu;
 
@@ -77,7 +77,7 @@ public abstract class Juego extends Game {
 
 		}
 
-		xFondo = 0;
+		posicionFondoX = 0;
 
 		renderizar = false;
 
@@ -109,16 +109,16 @@ public abstract class Juego extends Game {
 
 		if (renderizar) {
 
-			xFondo -= 0.5f / Juego.DELTA_A_PIXEL * Gdx.graphics.getDeltaTime();
+			posicionFondoX -= 0.5f / Juego.DELTA_A_PIXEL * Gdx.graphics.getDeltaTime();
 
-			if (xFondo <= -Juego.ANCHO_PANTALLA) {
+			if (posicionFondoX <= -Juego.ANCHO_PANTALLA) {
 
-				xFondo = 0;
+				posicionFondoX = 0;
 			}
 
-			fondo[0].setPosition(xFondo, 0);
+			fondo[0].setPosition(posicionFondoX, 0);
 
-			fondo[1].setPosition(xFondo + Juego.ANCHO_PANTALLA, 0);
+			fondo[1].setPosition(posicionFondoX + Juego.ANCHO_PANTALLA, 0);
 
 			nivelMenu.draw();
 
@@ -156,7 +156,7 @@ public abstract class Juego extends Game {
 
 			for (int i = 0; i < fondo.length; i++) {
 
-				fondo[i] = new Image(new Texture(Gdx.files.internal("textura/fondo1.png")));
+				fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
 
 				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
