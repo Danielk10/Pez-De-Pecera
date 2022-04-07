@@ -85,7 +85,7 @@ public class PezDePecera extends Juego {
 
 		recurso.load("texturas/titulo.png", Texture.class);
 
-		recurso.load("texturas/DiamondBlack.png", Texture.class);
+		recurso.load("texturas/diamondBlack.png", Texture.class);
 
 		recurso.load("texturas/icono.png", Texture.class);
 

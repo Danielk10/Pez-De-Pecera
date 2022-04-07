@@ -130,7 +130,7 @@ public class PantallaCarga extends Pantalla {
 			recurso.get("texturas/titulo.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			recurso.get("texturas/inicio.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			recurso.get("texturas/icono.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/DiamondBlack.png", Texture.class).setFilter(TextureFilter.Linear,
+			recurso.get("texturas/diamondBlack.png", Texture.class).setFilter(TextureFilter.Linear,
 					TextureFilter.Linear);
 
 			for (Texture tetura : recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {
@@ -208,7 +208,7 @@ public class PantallaCarga extends Pantalla {
 			recurso.get("texturas/titulo.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			recurso.get("texturas/inicio.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			recurso.get("texturas/icono.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/DiamondBlack.png", Texture.class).setFilter(TextureFilter.Nearest,
+			recurso.get("texturas/diamondBlack.png", Texture.class).setFilter(TextureFilter.Nearest,
 					TextureFilter.Nearest);
 
 			for (Texture tetura : recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {

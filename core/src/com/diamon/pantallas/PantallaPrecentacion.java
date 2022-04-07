@@ -13,7 +13,9 @@ import com.diamon.nucleo.Pantalla;
 
 public class PantallaPrecentacion extends Pantalla {
 
-	private Image[] fondos;
+	private Image fondo;
+
+	private Image fondo1;
 
 	public PantallaPrecentacion(Juego juego) {
 
@@ -24,49 +26,37 @@ public class PantallaPrecentacion extends Pantalla {
 	@Override
 	public void mostrar() {
 
-		fondos = new Image[2];
+		fondo = new Image(new TextureRegion(new Texture(Gdx.files.internal("texturas/badlogic.jpg"))));
 
-		float transparecia = 0;
+		fondo1 = new Image(new TextureRegion(new Texture(Gdx.files.internal("texturas/diamondBlack.png"))));
 
-		float duracion = 2;
+		fondo.setSize(256, 256);
 
-		for (int i = 0; i < fondos.length; i++) {
+		fondo.setPosition(192, 112);
 
-			if (i == 0) {
+		fondo1.setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
-				fondos[i] = new Image(new TextureRegion(new Texture(Gdx.files.internal("texturas/badlogic.jpg"))));
+		fondo1.setPosition(0, 0);
 
-				fondos[i].setSize(256, 256);
+		nivel.addActor(fondo1);
 
-				fondos[i].setPosition(192, 112);
+		float alphaTo = 0;
 
-			} else {
+		float duration = 2;
 
-				fondos[i] = new Image(new TextureRegion(new Texture(Gdx.files.internal("texturas/diamondBlack.png"))));
-
-				fondos[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
-
-				fondos[i].setPosition(0, 0);
-
-				nivel.addActor(fondos[i]);
-
-				fondos[i].addAction(Actions.sequence(Actions.alpha(transparecia, duracion)));
-
-			}
-
-		}
+		fondo1.addAction(Actions.sequence(Actions.alpha(alphaTo, duration)));
 
 		nivel.addAction(Actions.sequence(Actions.delay(2), Actions.run(new Runnable() {
 
 			public void run() {
 
-				float transparecia = 0;
+				float alphaTo = 0;
 
-				float duracion = 2;
+				float duration = 2;
 
-				nivel.addActor(fondos[0]);
+				nivel.addActor(fondo);
 
-				fondos[0].addAction(Actions.sequence(Actions.alpha(transparecia, duracion)));
+				fondo.addAction(Actions.sequence(Actions.alpha(alphaTo, duration)));
 
 			}
 		})));
