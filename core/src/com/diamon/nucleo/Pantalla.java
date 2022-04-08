@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -40,7 +43,15 @@ public abstract class Pantalla implements Screen {
 
 	protected Publicidad publicidad;
 
+	protected World mundoVirtual;
+
+	protected Array<Body> cuerpos = new Array<Body>();
+
+	private Box2DDebugRenderer debugRenderer;
+
 	public Pantalla(Juego juego) {
+
+		mundoVirtual = juego.mundoVirtual;
 
 		this.juego = juego;
 
@@ -61,6 +72,8 @@ public abstract class Pantalla implements Screen {
 		pincel = new SpriteBatch();
 
 		pincelPrueba = new ShapeRenderer();
+
+		debugRenderer = new Box2DDebugRenderer();
 
 		personajes = new Array<Personaje>();
 
@@ -118,12 +131,15 @@ public abstract class Pantalla implements Screen {
 		nivel.draw();
 
 		nivel.act();
+
+		debugRenderer.render(mundoVirtual, camara.combined);
 	}
 
 	@Override
 	public void resize(int ancho, int alto) {
 
 		nivel.getViewport().update(ancho, alto);
+
 	}
 
 	@Override
@@ -158,6 +174,18 @@ public abstract class Pantalla implements Screen {
 
 		nivel.dispose();
 
+		mundoVirtual.getBodies(cuerpos);
+
+		if (cuerpos.size > 0) {
+
+			for (Body cuerpo : cuerpos) {
+
+				mundoVirtual.destroyBody(cuerpo);
+
+			}
+
+		}
+
 	}
 
 	@Override
@@ -176,6 +204,20 @@ public abstract class Pantalla implements Screen {
 		Gdx.input.setInputProcessor(null);
 
 		nivel.dispose();
+
+		mundoVirtual.getBodies(cuerpos);
+
+		if (cuerpos.size > 0) {
+
+			for (Body cuerpo : cuerpos) {
+
+				mundoVirtual.destroyBody(cuerpo);
+
+			}
+
+		}
+
+		debugRenderer.dispose();
 
 	}
 

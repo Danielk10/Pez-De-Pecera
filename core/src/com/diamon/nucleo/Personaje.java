@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Configuraciones;
@@ -42,6 +47,10 @@ public abstract class Personaje extends Sprite {
 
 	protected Configuraciones configuracion;
 
+	protected World mundoVirtual;
+
+	protected Body cuerpo;
+
 	public Personaje(Texture textura, Pantalla pantalla) {
 
 		super(textura);
@@ -70,7 +79,10 @@ public abstract class Personaje extends Sprite {
 
 		dato = pantalla.dato;
 
+		this.mundoVirtual = pantalla.mundoVirtual;
+
 		configuracion = pantalla.configuracion;
+
 	}
 
 	public Personaje(TextureRegion texturaRegion, Pantalla pantalla) {
@@ -100,6 +112,8 @@ public abstract class Personaje extends Sprite {
 		camara = pantalla.camara;
 
 		dato = pantalla.dato;
+
+		this.mundoVirtual = pantalla.mundoVirtual;
 
 		configuracion = pantalla.configuracion;
 	}
@@ -137,7 +151,37 @@ public abstract class Personaje extends Sprite {
 
 		dato = pantalla.dato;
 
+		this.mundoVirtual = pantalla.mundoVirtual;
+
 		configuracion = pantalla.configuracion;
+	}
+
+	@Override
+	public void setSize(float width, float height) {
+
+		super.setSize(width, height);
+
+		BodyDef bodyDef = new BodyDef();
+
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+
+		FixtureDef fixtureDef = new FixtureDef();
+
+		PolygonShape shape = new PolygonShape();
+
+		shape.setAsBox(width / 2, height / 2);
+
+		fixtureDef.shape = shape;
+
+		if (mundoVirtual != null) {
+
+			cuerpo = mundoVirtual.createBody(bodyDef);
+
+			cuerpo.createFixture(fixtureDef);
+
+		}
+
+		shape.dispose();
 	}
 
 	public void dibujar(Batch pincel, float delta) {
@@ -193,6 +237,13 @@ public abstract class Personaje extends Sprite {
 		this.x = x;
 
 		this.y = y;
+
+		if (cuerpo != null) {
+
+			cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+
+		}
+
 	}
 
 	public boolean isVivo() {

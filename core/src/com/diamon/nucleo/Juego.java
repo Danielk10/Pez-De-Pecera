@@ -6,6 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -49,6 +52,16 @@ public abstract class Juego extends Game {
 
 	protected Publicidad publicidad;
 
+	protected World mundoVirtual;
+
+	protected static final float STEP_TIME = 1f / 60f;
+
+	protected static final int VELOCITY_ITERATIONS = 6;
+
+	protected static final int POSITION_ITERATIONS = 2;
+
+	private float accumulator = 0;
+
 	public Juego(Publicidad publicidad) {
 		super();
 
@@ -58,6 +71,10 @@ public abstract class Juego extends Game {
 
 	@Override
 	public void create() {
+
+		Box2D.init();
+
+		mundoVirtual = new World(new Vector2(0, Juego.GRAVEDAD), true);
 
 		recurso = new AssetManager();
 
@@ -102,6 +119,16 @@ public abstract class Juego extends Game {
 
 	@Override
 	public void render() {
+
+		float delta = Gdx.graphics.getDeltaTime();
+
+		accumulator += Math.min(delta, 0.25f);
+
+		if (accumulator >= STEP_TIME) {
+			accumulator -= STEP_TIME;
+
+			mundoVirtual.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+		}
 
 		ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0f, true);
 
@@ -203,6 +230,8 @@ public abstract class Juego extends Game {
 		Gdx.input.setInputProcessor(null);
 
 		nivelMenu.dispose();
+
+		mundoVirtual.dispose();
 
 	}
 

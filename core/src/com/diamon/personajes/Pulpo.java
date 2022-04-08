@@ -26,6 +26,7 @@ public class Pulpo extends Personaje {
 	public Pulpo(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla) {
 		super(texturaRegion, tiempoAnimacion, modo, pantalla);
 		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
