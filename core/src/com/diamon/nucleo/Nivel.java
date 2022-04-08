@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Configuraciones;
 import com.diamon.datos.Dato;
+import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.Jugador;
 
@@ -81,6 +83,21 @@ public abstract class Nivel {
 		dato = pantalla.dato;
 
 		fondo = new Fondo[2];
+
+		mundoVirtual.getBodies(pantalla.cuerpos);
+
+		if (pantalla.cuerpos.size > 0) {
+
+			for (Body cuerpo : pantalla.cuerpos) {
+
+				if (!(cuerpo.getUserData() instanceof Jugador || cuerpo.getUserData() instanceof Cursor)) {
+
+					mundoVirtual.destroyBody(cuerpo);
+				}
+
+			}
+
+		}
 
 		iniciar();
 	}

@@ -163,7 +163,7 @@ public abstract class Personaje extends Sprite {
 
 		BodyDef bodyDef = new BodyDef();
 
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.type = BodyDef.BodyType.KinematicBody;
 
 		FixtureDef fixtureDef = new FixtureDef();
 
@@ -176,6 +176,8 @@ public abstract class Personaje extends Sprite {
 		if (mundoVirtual != null) {
 
 			cuerpo = mundoVirtual.createBody(bodyDef);
+			
+			cuerpo.setUserData(this); 
 
 			cuerpo.createFixture(fixtureDef);
 
@@ -227,6 +229,13 @@ public abstract class Personaje extends Sprite {
 		setX(x);
 
 		setY(y);
+		
+		
+		if (cuerpo != null) {
+
+			cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+
+		}
 	}
 
 	@Override
