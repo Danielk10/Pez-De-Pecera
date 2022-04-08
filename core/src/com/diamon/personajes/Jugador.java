@@ -3,8 +3,8 @@ package com.diamon.personajes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Array;
@@ -70,8 +70,10 @@ public class Jugador extends Personaje {
 
 	private boolean deltaToque;
 
-	public Jugador(Texture texture, Pantalla pantalla) {
-		super(texture, pantalla);
+	public Jugador(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla,
+			float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
+		// TODO Auto-generated constructor stub
 
 		misil = dato.getMisiles();
 
@@ -114,11 +116,11 @@ public class Jugador extends Personaje {
 		velocidadCamaraItem = 1;
 
 		numeroDeSatelites = dato.getNumeroSatelite();
-
 	}
 
-	public Jugador(TextureRegion region, Pantalla pantalla) {
-		super(region, pantalla);
+	public Jugador(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
+		// TODO Auto-generated constructor stub
 
 		misil = dato.getMisiles();
 
@@ -161,12 +163,10 @@ public class Jugador extends Personaje {
 		velocidadCamaraItem = 1;
 
 		numeroDeSatelites = dato.getNumeroSatelite();
-
 	}
 
-	public Jugador(Array<TextureAtlas.AtlasRegion> texturaRegion, float tiempoAnimacion, Animation.PlayMode modo,
-			Pantalla pantalla) {
-		super(texturaRegion, tiempoAnimacion, modo, pantalla);
+	public Jugador(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 
 		misil = dato.getMisiles();
 

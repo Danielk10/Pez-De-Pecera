@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.diamon.nucleo.Juego;
@@ -120,6 +121,10 @@ public class PezDePecera extends Juego {
 		recurso.load("uis/general/uiskin.json", Skin.class);
 
 		recurso.load("uis/carga/neon-ui.json", Skin.class);
+
+		recurso.load("particulas/test.p", ParticleEffect.class);
+		
+		recurso.load("particulas/Particle Park Flame.p", ParticleEffect.class);
 
 		setScreen(new PantallaPrecentacion(this));
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.diamon.datos.Dato;
 import com.diamon.nucleo.Juego;
@@ -16,6 +17,7 @@ import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
+import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.JefeCuatro;
 import com.diamon.personajes.JefeDos;
@@ -57,7 +59,7 @@ public class Niveles extends Nivel {
 				indice = 1;
 
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
-						pantalla);
+						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
 				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -75,7 +77,7 @@ public class Niveles extends Nivel {
 			for (int i = 0; i < fondo.length; i++) {
 
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
-						pantalla);
+						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
 				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -93,7 +95,7 @@ public class Niveles extends Nivel {
 			for (int i = 0; i < fondo.length; i++) {
 
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
-						pantalla);
+						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
 				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -111,7 +113,7 @@ public class Niveles extends Nivel {
 			for (int i = 0; i < fondo.length; i++) {
 
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
-						pantalla);
+						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
 				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -122,13 +124,32 @@ public class Niveles extends Nivel {
 
 		}
 
+		///////////////////////
+
+		mundoVirtual.getBodies(cuerpos);
+
+		if (cuerpos.size > 0) {
+
+			for (Body cuerpo : cuerpos) {
+
+				if (!(cuerpo.getUserData() instanceof Jugador || cuerpo.getUserData() instanceof Cursor)) {
+
+					mundoVirtual.destroyBody(cuerpo);
+				}
+
+			}
+
+		}
+
+		///////////////////////
+
 		String numeroNivel = "Nivel " + dato.getNumeroNivel();
 
 		for (Vector2 posicion : dato.getPosicionActores(Dato.PULPO, numeroNivel))
 
 		{
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 32, 64, Pulpo.ESTATICO);
 
 			actor.setSize(32, 64);
 
@@ -142,7 +163,7 @@ public class Niveles extends Nivel {
 		{
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions(), 0.1f, Animation.PlayMode.LOOP,
-					pantalla);
+					pantalla, 64, 32, PezGloboAmarillo.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -156,7 +177,7 @@ public class Niveles extends Nivel {
 		{
 			PezGloboNaranja actor = new PezGloboNaranja(
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 96, 64, PezGloboNaranja.ESTATICO);
 
 			actor.setSize(96, 64);
 
@@ -169,7 +190,7 @@ public class Niveles extends Nivel {
 
 		{
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 64, 32, PezAngel.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -180,7 +201,8 @@ public class Niveles extends Nivel {
 
 		for (Vector2 posicion : dato.getPosicionActores(Dato.BOMBA, numeroNivel)) {
 
-			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
+					Bomba.DIANAMICO);
 
 			actor.setSize(64, 64);
 
@@ -192,7 +214,7 @@ public class Niveles extends Nivel {
 
 		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
 
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
 
 			actor.setSize(96, 64);
 
@@ -256,7 +278,7 @@ public class Niveles extends Nivel {
 		if (numero == 10) {
 
 			gefeUno = new JefeUno(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeUno.ESTATICO);
 
 			gefeUno.setSize(128, 128);
 
@@ -273,7 +295,7 @@ public class Niveles extends Nivel {
 		if (numero == 20) {
 
 			gefeDos = new JefeDos(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeDos.ESTATICO);
 
 			gefeDos.setSize(128, 128);
 
@@ -290,7 +312,7 @@ public class Niveles extends Nivel {
 		if (numero == 30) {
 
 			gefeTres = new JefeTres(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeTres.ESTATICO);
 
 			gefeTres.setSize(128, 128);
 
@@ -307,7 +329,7 @@ public class Niveles extends Nivel {
 		if (numero == 40) {
 
 			gefeCuatro = new JefeCuatro(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeCuatro.ESTATICO);
 
 			gefeCuatro.setSize(128, 128);
 

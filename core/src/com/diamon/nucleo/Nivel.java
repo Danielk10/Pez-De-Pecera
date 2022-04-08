@@ -50,6 +50,8 @@ public abstract class Nivel {
 
 	protected World mundoVirtual;
 
+	protected Array<Body> cuerpos = new Array<Body>();
+
 	public Nivel(Pantalla pantalla, Jugador jugador) {
 
 		this.pantalla = pantalla;
@@ -84,11 +86,13 @@ public abstract class Nivel {
 
 		fondo = new Fondo[2];
 
-		mundoVirtual.getBodies(pantalla.cuerpos);
+		cuerpos = pantalla.cuerpos;
 
-		if (pantalla.cuerpos.size > 0) {
+		mundoVirtual.getBodies(cuerpos);
 
-			for (Body cuerpo : pantalla.cuerpos) {
+		if (cuerpos.size > 0) {
+
+			for (Body cuerpo : cuerpos) {
 
 				if (!(cuerpo.getUserData() instanceof Jugador || cuerpo.getUserData() instanceof Cursor)) {
 

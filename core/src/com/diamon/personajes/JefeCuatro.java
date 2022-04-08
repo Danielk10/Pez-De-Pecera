@@ -14,25 +14,24 @@ public class JefeCuatro extends Personaje {
 
 	private Jugador jugador;
 
-	public JefeCuatro(Texture textura, Pantalla pantalla) {
-		super(textura, pantalla);
+	public JefeCuatro(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla,
+			float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 
 		obtenerJugador();
-
 	}
 
-	public JefeCuatro(TextureRegion texturaRegion, Pantalla pantalla) {
-		super(texturaRegion, pantalla);
-
+	public JefeCuatro(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
+		// TODO Auto-generated constructor stub
 		obtenerJugador();
-
 	}
 
-	public JefeCuatro(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla) {
-		super(texturaRegion, tiempoAnimacion, modo, pantalla);
+	public JefeCuatro(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
+		// TODO Auto-generated constructor stub
 
 		obtenerJugador();
-
 	}
 
 	private void obtenerJugador() {

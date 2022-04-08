@@ -13,20 +13,20 @@ public class Pulpo extends Personaje {
 
 	public static final int VELOCIDAD_PEZ = 1;
 
-	public Pulpo(Texture textura, Pantalla pantalla) {
-		super(textura, pantalla);
+	public Pulpo(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla, float ancho,
+			float alto, int tipoDeCuerpo) {
+		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pulpo(TextureRegion texturaRegion, Pantalla pantalla) {
-		super(texturaRegion, pantalla);
+	public Pulpo(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pulpo(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla) {
-		super(texturaRegion, tiempoAnimacion, modo, pantalla);
+	public Pulpo(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
-
 	}
 
 	@Override

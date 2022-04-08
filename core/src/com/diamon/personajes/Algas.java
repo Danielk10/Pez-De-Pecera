@@ -10,18 +10,19 @@ import com.diamon.nucleo.Personaje;
 
 public class Algas extends Personaje {
 
-	public Algas(Texture textura, Pantalla pantalla) {
-		super(textura, pantalla);
+	public Algas(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla, float ancho,
+			float alto, int tipoDeCuerpo) {
+		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Algas(TextureRegion texturaRegion, Pantalla pantalla) {
-		super(texturaRegion, pantalla);
+	public Algas(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Algas(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla) {
-		super(texturaRegion, tiempoAnimacion, modo, pantalla);
+	public Algas(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 

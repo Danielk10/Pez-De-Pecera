@@ -10,18 +10,19 @@ import com.diamon.nucleo.Personaje;
 
 public class Terreno extends Personaje {
 
-	public Terreno(Texture textura, Pantalla pantalla) {
-		super(textura, pantalla);
+	public Terreno(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla,
+			float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Terreno(TextureRegion texturaRegion, Pantalla pantalla) {
-		super(texturaRegion, pantalla);
+	public Terreno(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Terreno(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla) {
-		super(texturaRegion, tiempoAnimacion, modo, pantalla);
+	public Terreno(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
+		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 	}
 

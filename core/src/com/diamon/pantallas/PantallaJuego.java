@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g3d.particles.emitters.Emitter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,11 +24,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.diamon.escenarios.Niveles;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.particulas.Particula;
 import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Jugador;
 import com.diamon.utilidades.EditorNivel;
@@ -94,6 +99,14 @@ public class PantallaJuego extends Pantalla {
 
 	private boolean inmunidadJugador;
 
+	/////////////////
+
+	public Particula particuala;
+
+	public Array<ParticleEmitter> emisor;
+
+	///////////////////
+
 	public PantallaJuego(Juego juego) {
 		super(juego);
 
@@ -102,6 +115,16 @@ public class PantallaJuego extends Pantalla {
 	@SuppressWarnings("static-access")
 	@Override
 	public void mostrar() {
+
+		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class));
+
+		particuala.setPosicion(400, 300);
+
+		emisor = new Array<ParticleEmitter>(particuala.getEfectoParticula().getEmitters());
+
+		particuala.getEfectoParticula().getEmitters().clear();
+
+		particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
 
 		if (publicidad != null) {
 
@@ -269,7 +292,7 @@ public class PantallaJuego extends Pantalla {
 		nivel.addActor(textoPausa);
 
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this);
+				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
 
 		jugador.setSize(64, 64);
 
@@ -277,7 +300,7 @@ public class PantallaJuego extends Pantalla {
 
 		jugador.setTerminarNivel(true);
 
-		cursor = new Cursor(recurso.get("texturas/invisible.png", Texture.class), this);
+		cursor = new Cursor(recurso.get("texturas/invisible.png", Texture.class), this, 16, 16, Cursor.ESTATICO);
 
 		cursor.setSize(16, 16);
 
@@ -625,6 +648,16 @@ public class PantallaJuego extends Pantalla {
 
 					editor.toquePresionado(ev, x, y, puntero, boton);
 
+					/////////////////////
+
+					particuala.setPosicion(x + (camara.position.x - Juego.ANCHO_PANTALLA / 2), y);
+
+					particuala.getEfectoParticula().getEmitters().clear();
+
+					particuala.getEfectoParticula().getEmitters().add(emisor.get(boton));
+
+					//////////////////////
+
 					if (mundo.isIntro()) {
 
 						return true;
@@ -895,6 +928,8 @@ public class PantallaJuego extends Pantalla {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actualizar(float delta) {
+
+		particuala.actualizar(delta);
 
 		if (!pausar) {
 
@@ -1235,6 +1270,8 @@ public class PantallaJuego extends Pantalla {
 		pincel.begin();
 
 		cursor.dibujar(pincel, delta);
+
+		particuala.dibujar(pincel, delta);
 
 		pincel.end();
 

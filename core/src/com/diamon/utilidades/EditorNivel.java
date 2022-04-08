@@ -1145,7 +1145,7 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PULPO)) {
 
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
-					pantalla);
+					pantalla, 32, 64, Pulpo.ESTATICO);
 
 			actor.setSize(32, 64);
 
@@ -1159,7 +1159,8 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
 
 			PezGloboAmarillo actor = new PezGloboAmarillo(
-					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
+					PezGloboAmarillo.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -1173,7 +1174,8 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
 
 			PezGloboNaranja actor = new PezGloboNaranja(
-					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
+					PezGloboNaranja.ESTATICO);
 
 			actor.setSize(96, 64);
 
@@ -1187,7 +1189,7 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_ANGEL)) {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
-					pantalla);
+					pantalla, 64, 32, PezAngel.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -1200,7 +1202,8 @@ public class EditorNivel {
 
 		if (tipo.equals(Dato.BOMBA)) {
 
-			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
+					Bomba.DIANAMICO);
 
 			actor.setSize(64, 64);
 
@@ -1213,7 +1216,7 @@ public class EditorNivel {
 
 		if (tipo.equals(Dato.ALGAS)) {
 
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
 
 			actor.setSize(96, 64);
 
@@ -1233,7 +1236,7 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PULPO)) {
 
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
-					pantalla);
+					pantalla, 32, 64, Pulpo.ESTATICO);
 
 			actor.setSize(32, 64);
 
@@ -1247,7 +1250,8 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
 
 			PezGloboAmarillo actor = new PezGloboAmarillo(
-					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
+					PezGloboAmarillo.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -1261,7 +1265,8 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
 
 			PezGloboNaranja actor = new PezGloboNaranja(
-					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla);
+					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
+					PezGloboNaranja.ESTATICO);
 
 			actor.setSize(96, 64);
 
@@ -1275,7 +1280,7 @@ public class EditorNivel {
 		if (tipo.equals(Dato.PEZ_ANGEL)) {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
-					pantalla);
+					pantalla, 64, 32, PezAngel.ESTATICO);
 
 			actor.setSize(64, 32);
 
@@ -1288,7 +1293,8 @@ public class EditorNivel {
 
 		if (tipo.equals(Dato.BOMBA)) {
 
-			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla);
+			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
+					Bomba.DIANAMICO);
 
 			actor.setSize(64, 64);
 
@@ -1301,7 +1307,7 @@ public class EditorNivel {
 
 		if (tipo.equals(Dato.ALGAS)) {
 
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla);
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
 
 			actor.setSize(96, 64);
 
