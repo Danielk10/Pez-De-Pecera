@@ -19,6 +19,8 @@ import com.diamon.datos.Configuraciones;
 import com.diamon.datos.Dato;
 import com.diamon.pez.publicidad.Publicidad;
 
+import box2dLight.RayHandler;
+
 public abstract class Pantalla implements Screen {
 
 	protected final Juego juego;
@@ -47,11 +49,31 @@ public abstract class Pantalla implements Screen {
 
 	protected Array<Body> cuerpos = new Array<Body>();
 
-	private Box2DDebugRenderer debugRenderer;
+	public World getMundoVirtual() {
+		return mundoVirtual;
+	}
+
+	public void setMundoVirtual(World mundoVirtual) {
+		this.mundoVirtual = mundoVirtual;
+	}
+
+	public Array<Body> getCuerpos() {
+		return cuerpos;
+	}
+
+	public void setCuerpos(Array<Body> cuerpos) {
+		this.cuerpos = cuerpos;
+	}
+
+	protected Box2DDebugRenderer debugRenderer;
+
+	protected RayHandler luz;
 
 	public Pantalla(Juego juego) {
 
 		mundoVirtual = juego.mundoVirtual;
+
+		luz = new RayHandler(mundoVirtual);
 
 		this.juego = juego;
 
@@ -133,6 +155,7 @@ public abstract class Pantalla implements Screen {
 		nivel.act();
 
 		debugRenderer.render(mundoVirtual, camara.combined);
+
 	}
 
 	@Override
@@ -173,6 +196,8 @@ public abstract class Pantalla implements Screen {
 		Gdx.input.setInputProcessor(null);
 
 		nivel.dispose();
+
+		luz.dispose();
 
 		mundoVirtual.getBodies(cuerpos);
 
@@ -216,6 +241,8 @@ public abstract class Pantalla implements Screen {
 			}
 
 		}
+
+		luz.dispose();
 
 		debugRenderer.dispose();
 

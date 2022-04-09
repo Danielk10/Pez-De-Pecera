@@ -12,9 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Configuraciones;
 import com.diamon.datos.Dato;
-import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.Jugador;
+
+import box2dLight.RayHandler;
 
 public abstract class Nivel {
 
@@ -52,11 +53,15 @@ public abstract class Nivel {
 
 	protected Array<Body> cuerpos = new Array<Body>();
 
+	protected RayHandler luz;
+
 	public Nivel(Pantalla pantalla, Jugador jugador) {
 
 		this.pantalla = pantalla;
 
 		this.mundoVirtual = pantalla.mundoVirtual;
+
+		luz = pantalla.luz;
 
 		this.jugador = jugador;
 
@@ -94,7 +99,7 @@ public abstract class Nivel {
 
 			for (Body cuerpo : cuerpos) {
 
-				if (!(cuerpo.getUserData() instanceof Jugador || cuerpo.getUserData() instanceof Cursor)) {
+				if (!(cuerpo.getUserData() instanceof Jugador )) {
 
 					mundoVirtual.destroyBody(cuerpo);
 				}

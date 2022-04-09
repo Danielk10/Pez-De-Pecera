@@ -125,6 +125,7 @@ public abstract class Juego extends Game {
 		accumulator += Math.min(delta, 0.25f);
 
 		if (accumulator >= STEP_TIME) {
+
 			accumulator -= STEP_TIME;
 
 			mundoVirtual.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);

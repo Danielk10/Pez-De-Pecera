@@ -1,23 +1,28 @@
 package com.diamon.escenarios;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Dato;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.particulas.Particula;
 import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
-import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.JefeCuatro;
 import com.diamon.personajes.JefeDos;
@@ -28,6 +33,8 @@ import com.diamon.personajes.PezAngel;
 import com.diamon.personajes.PezGloboAmarillo;
 import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
+
+import box2dLight.PointLight;
 
 public class Niveles extends Nivel {
 
@@ -44,6 +51,16 @@ public class Niveles extends Nivel {
 	private JefeCuatro gefeCuatro;
 
 	private Personaje jefeNivel;
+
+	private PointLight puntoDeLuz;
+
+	/////////////////
+
+	public Particula particuala;
+
+	public Array<ParticleEmitter> emisor;
+
+	///////////////////
 
 	public Niveles(Pantalla pantalla, Jugador jugador) {
 		super(pantalla, jugador);
@@ -125,6 +142,11 @@ public class Niveles extends Nivel {
 		}
 
 		///////////////////////
+		luz.setAmbientLight(0.1f);
+
+		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 200, 200, 400);
+
+		puntoDeLuz.setSoftnessLength(0);
 
 		mundoVirtual.getBodies(cuerpos);
 
@@ -132,14 +154,38 @@ public class Niveles extends Nivel {
 
 			for (Body cuerpo : cuerpos) {
 
-				if (!(cuerpo.getUserData() instanceof Jugador || cuerpo.getUserData() instanceof Cursor)) {
+				if (!(cuerpo.getUserData() instanceof Jugador)) {
 
 					mundoVirtual.destroyBody(cuerpo);
+
+				} else {
+
+					puntoDeLuz.attachToBody(cuerpo);
 				}
 
 			}
 
 		}
+		
+		for (int i = 0;i < 10; i++)
+		{
+			
+			new PointLight(luz, 1000, Color.BLACK, 600, MathUtils.random()*13440-200, 400);
+			
+		}
+		
+	
+		
+
+		//particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+
+	//	particuala.setPosicion(400, 300);
+
+		//emisor = new Array<ParticleEmitter>(particuala.getEfectoParticula().getEmitters());
+
+		//particuala.getEfectoParticula().getEmitters().clear();
+
+		//particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
 
 		///////////////////////
 
@@ -227,6 +273,7 @@ public class Niveles extends Nivel {
 		agregarGefe(dato.getNumeroNivel());
 
 		intro();
+
 	}
 
 	public Personaje getJefeNivel() {
@@ -512,6 +559,9 @@ public class Niveles extends Nivel {
 
 		}
 
+		luz.update();
+		
+		//particuala.actualizar(delta);
 	}
 
 	@Override
@@ -540,10 +590,18 @@ public class Niveles extends Nivel {
 			if (!(personaje instanceof Fondo)) {
 
 				personaje.dibujar(pincel, delta);
+
 			}
 		}
 
+		//particuala.dibujar(pincel, delta);
+
 		pincel.end();
+
+		luz.setCombinedMatrix(camara);
+
+		luz.render();
+
 	}
 
 	@Override
