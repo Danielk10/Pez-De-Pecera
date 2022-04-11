@@ -34,6 +34,7 @@ import com.diamon.personajes.PezAngel;
 import com.diamon.personajes.PezGloboAmarillo;
 import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
+import com.diamon.utilidades.ColicionBox2DListener;
 
 import box2dLight.PointLight;
 
@@ -185,6 +186,8 @@ public class Niveles extends Nivel {
 		// particuala.getEfectoParticula().getEmitters().get(0));
 
 		// p.setPosition(400 / Juego.UNIDAD_DEL_MUNDO, 300 / Juego.UNIDAD_DEL_MUNDO);
+
+		this.mundoVirtual.setContactListener(new ColicionBox2DListener());
 
 		///////////////////////
 

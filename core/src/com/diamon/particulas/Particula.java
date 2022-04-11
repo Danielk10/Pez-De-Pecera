@@ -28,7 +28,7 @@ public class Particula {
 
 		this.pantalla = pantalla;
 
-		this.mundoVirtual = pantalla.getMundoVirtual();
+		//this.mundoVirtual = pantalla.getMundoVirtual();
 
 		BodyDef bodyDef = new BodyDef();
 

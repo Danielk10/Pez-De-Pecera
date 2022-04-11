@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -881,8 +882,28 @@ public class PantallaJuego extends Pantalla {
 			Personaje personaje = personajes.get(i);
 
 			if (personaje.isRemover()) {
+				// Box2D
+				mundoVirtual.getBodies(cuerpos);
+
+				if (cuerpos.size > 0) {
+
+					for (Body cuerpo : cuerpos) {
+
+						if (cuerpo.getUserData() instanceof Personaje) {
+
+							if (((Personaje) cuerpo.getUserData()).isRemover()) {
+
+								mundoVirtual.destroyBody(cuerpo);
+							}
+
+						}
+
+					}
+
+				}
 
 				personajes.removeIndex(i);
+
 			}
 		}
 

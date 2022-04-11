@@ -40,7 +40,7 @@ public class PezAngel extends Personaje {
 
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2/ Juego.UNIDAD_DEL_MUNDO + getWidth()) ) {
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
 
 			remover = true;
 
@@ -50,7 +50,11 @@ public class PezAngel extends Personaje {
 
 	@Override
 	public void colision(Personaje personaje) {
-		// TODO Auto-generated method stub
+
+		if (personaje instanceof Jugador) {
+
+			remover = true;
+		}
 
 	}
 

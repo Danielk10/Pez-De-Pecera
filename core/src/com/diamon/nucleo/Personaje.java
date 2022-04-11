@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Configuraciones;
 import com.diamon.datos.Dato;
@@ -97,24 +98,6 @@ public abstract class Personaje extends Sprite {
 
 		BodyDef bodyDef = new BodyDef();
 
-		if (tipoDeCuerpo == Personaje.ESTATICO) {
-
-			bodyDef.type = BodyDef.BodyType.StaticBody;
-
-		}
-
-		if (tipoDeCuerpo == Personaje.CINESTECICO) {
-
-			bodyDef.type = BodyDef.BodyType.KinematicBody;
-
-		}
-
-		if (tipoDeCuerpo == Personaje.DIANAMICO) {
-
-			bodyDef.type = BodyDef.BodyType.DynamicBody;
-
-		}
-
 		FixtureDef fixtureDef = new FixtureDef();
 
 		PolygonShape shape = new PolygonShape();
@@ -123,13 +106,59 @@ public abstract class Personaje extends Sprite {
 
 		fixtureDef.shape = shape;
 
-		if (mundoVirtual != null) {
+		if (tipoDeCuerpo == Personaje.ESTATICO) {
 
-			cuerpo = mundoVirtual.createBody(bodyDef);
+			bodyDef.type = BodyDef.BodyType.StaticBody;
 
-			cuerpo.setUserData(this);
+			if (mundoVirtual != null) {
 
-			cuerpo.createFixture(fixtureDef);
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+			}
+
+		}
+
+		if (tipoDeCuerpo == Personaje.CINESTECICO) {
+
+			bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+				cuerpo.setAngularVelocity(MathUtils.degreesToRadians * 360f);
+
+			}
+
+		}
+
+		if (tipoDeCuerpo == Personaje.DIANAMICO) {
+
+			bodyDef.type = BodyDef.BodyType.DynamicBody;
+
+			fixtureDef.density = 1f;
+
+			fixtureDef.friction = 0.5f;
+
+			fixtureDef.restitution = 1f;
+
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+			}
 
 		}
 
@@ -175,6 +204,14 @@ public abstract class Personaje extends Sprite {
 
 		BodyDef bodyDef = new BodyDef();
 
+		FixtureDef fixtureDef = new FixtureDef();
+
+		PolygonShape shape = new PolygonShape();
+
+		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
+
+		fixtureDef.shape = shape;
+
 		if (tipoDeCuerpo == Personaje.ESTATICO) {
 
 			bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -191,15 +228,13 @@ public abstract class Personaje extends Sprite {
 
 			bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+			fixtureDef.density = 1f;
+
+			fixtureDef.friction = 0.5f;
+
+			fixtureDef.restitution = 0.7f;
+
 		}
-
-		FixtureDef fixtureDef = new FixtureDef();
-
-		PolygonShape shape = new PolygonShape();
-
-		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
-
-		fixtureDef.shape = shape;
 
 		if (mundoVirtual != null) {
 
@@ -257,6 +292,14 @@ public abstract class Personaje extends Sprite {
 
 		BodyDef bodyDef = new BodyDef();
 
+		FixtureDef fixtureDef = new FixtureDef();
+
+		PolygonShape shape = new PolygonShape();
+
+		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
+
+		fixtureDef.shape = shape;
+
 		if (tipoDeCuerpo == Personaje.ESTATICO) {
 
 			bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -273,15 +316,13 @@ public abstract class Personaje extends Sprite {
 
 			bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+			fixtureDef.density = 15f;
+
+			fixtureDef.friction = 0.5f;
+
+			fixtureDef.restitution = 0.7f;
+
 		}
-
-		FixtureDef fixtureDef = new FixtureDef();
-
-		PolygonShape shape = new PolygonShape();
-
-		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
-
-		fixtureDef.shape = shape;
 
 		if (mundoVirtual != null) {
 
@@ -336,17 +377,47 @@ public abstract class Personaje extends Sprite {
 
 		}
 
+		if (tipoDeCuerpo == Personaje.CINESTECICO) {
+
+			if (cuerpo != null) {
+
+				x = cuerpo.getPosition().x - this.getWidth() / 2;
+
+				y = cuerpo.getPosition().y - this.getHeight() / 2;
+
+				setX(x);
+
+				setY(y);
+
+				this.setOriginCenter();
+
+				this.setRotation(cuerpo.getAngle() * Juego.UNIDAD_DEL_MUNDO);
+
+			}
+
+		}
+
 		if (tipoDeCuerpo == Personaje.DIANAMICO) {
 
 			if (cuerpo != null) {
 
-				setX(cuerpo.getPosition().x - this.getWidth() / 2);
+				x = cuerpo.getPosition().x - this.getWidth() / 2;
 
-				setY(cuerpo.getPosition().y - this.getHeight() / 2);
+				y = cuerpo.getPosition().y - this.getHeight() / 2;
+
+				setX(x);
+
+				setY(y);
+				
+				this.setOriginCenter();
+
+				this.setRotation(cuerpo.getAngle() * Juego.UNIDAD_DEL_MUNDO);
 
 			}
 
-		} else {
+		}
+
+		if (tipoDeCuerpo == Personaje.ESTATICO) {
 
 			setX(x);
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 
@@ -27,8 +28,30 @@ public class Bomba extends Personaje {
 	}
 
 	@Override
-	public void colision(Personaje personaje) {
+	public void actualizar(float delta) {
 		// TODO Auto-generated method stub
+		super.actualizar(delta);
+
+		if (y <= camara.position.y - (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getHeight())) {
+
+			remover = true;
+		}
+
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
+
+			remover = true;
+
+		}
+
+	}
+
+	@Override
+	public void colision(Personaje personaje) {
+
+		if (personaje instanceof Jugador) {
+
+			remover = true;
+		}
 
 	}
 

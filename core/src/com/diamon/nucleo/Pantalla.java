@@ -49,22 +49,6 @@ public abstract class Pantalla implements Screen {
 
 	protected Array<Body> cuerpos = new Array<Body>();
 
-	public World getMundoVirtual() {
-		return mundoVirtual;
-	}
-
-	public void setMundoVirtual(World mundoVirtual) {
-		this.mundoVirtual = mundoVirtual;
-	}
-
-	public Array<Body> getCuerpos() {
-		return cuerpos;
-	}
-
-	public void setCuerpos(Array<Body> cuerpos) {
-		this.cuerpos = cuerpos;
-	}
-
 	protected Box2DDebugRenderer debugRenderer;
 
 	protected RayHandler luz;
@@ -157,8 +141,10 @@ public abstract class Pantalla implements Screen {
 
 		if (dato.isPrueba()) {
 
-			debugRenderer.render(mundoVirtual, camara.combined);
+			//debugRenderer.render(mundoVirtual, camara.combined);
 		}
+		
+		debugRenderer.render(mundoVirtual, camara.combined);
 
 	}
 

@@ -40,7 +40,7 @@ public class Pulpo extends Personaje {
 
 		}
 
-		if (y >= camara.position.y + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getHeight())) {
+		if (y >= camara.position.y + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight())) {
 
 			remover = true;
 
