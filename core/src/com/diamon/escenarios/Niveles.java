@@ -57,11 +57,11 @@ public class Niveles extends Nivel {
 
 	/////////////////
 
-	public Particula particuala;
+	// public Particula particuala;
 
-	public Array<ParticleEmitter> emisor;
+	// public Array<ParticleEmitter> emisor;
 
-	ParticleEmitterBox2D p;
+	// ParticleEmitterBox2D p;
 
 	///////////////////
 
@@ -81,8 +81,6 @@ public class Niveles extends Nivel {
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
 						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
-				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
-
 				fondo[i].setPosition(0, 0);
 
 				personajes.add(fondo[i]);
@@ -98,8 +96,6 @@ public class Niveles extends Nivel {
 
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
 						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
-
-				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
 				fondo[i].setPosition(0, 0);
 
@@ -117,8 +113,6 @@ public class Niveles extends Nivel {
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
 						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
-				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
-
 				fondo[i].setPosition(0, 0);
 
 				personajes.add(fondo[i]);
@@ -135,8 +129,6 @@ public class Niveles extends Nivel {
 				fondo[i] = new Fondo(new TextureRegion(recurso.get("texturas/fondo" + indice + ".png", Texture.class)),
 						pantalla, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA, Fondo.ESTATICO);
 
-				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
-
 				fondo[i].setPosition(0, 0);
 
 				personajes.add(fondo[i]);
@@ -145,7 +137,7 @@ public class Niveles extends Nivel {
 		}
 
 		///////////////////////
-		luz.setAmbientLight(0.3f);
+		luz.setAmbientLight(0.5f);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 
@@ -172,11 +164,13 @@ public class Niveles extends Nivel {
 
 		for (int i = 0; i < 10; i++) {
 
-			new PointLight(luz, 1000, Color.BLACK, 600/Juego.UNIDAD_DEL_MUNDO, MathUtils.random() * 13440/Juego.UNIDAD_DEL_MUNDO - 2, 4);
+			new PointLight(luz, 1000, Color.BLACK, 600 / Juego.UNIDAD_DEL_MUNDO,
+					MathUtils.random() * 13440 / Juego.UNIDAD_DEL_MUNDO - 2, 4);
 
 		}
 
-		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+		// particuala = new Particula(recurso.get("particulas/Particle Park Flame.p",
+		// ParticleEffect.class), pantalla);
 
 		// particuala.setPosicion(400, 300);
 
@@ -187,9 +181,10 @@ public class Niveles extends Nivel {
 
 		// particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
 
-		p = new ParticleEmitterBox2D(mundoVirtual, particuala.getEfectoParticula().getEmitters().get(0));
+		// p = new ParticleEmitterBox2D(mundoVirtual,
+		// particuala.getEfectoParticula().getEmitters().get(0));
 
-		p.setPosition(400 / Juego.UNIDAD_DEL_MUNDO, 300 / Juego.UNIDAD_DEL_MUNDO);
+		// p.setPosition(400 / Juego.UNIDAD_DEL_MUNDO, 300 / Juego.UNIDAD_DEL_MUNDO);
 
 		///////////////////////
 
@@ -200,8 +195,6 @@ public class Niveles extends Nivel {
 		{
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
 					Animation.PlayMode.LOOP, pantalla, 32, 64, Pulpo.ESTATICO);
-
-			actor.setSize(32, 64);
 
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
@@ -215,8 +208,6 @@ public class Niveles extends Nivel {
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions(), 0.1f, Animation.PlayMode.LOOP,
 					pantalla, 64, 32, PezGloboAmarillo.ESTATICO);
 
-			actor.setSize(64, 32);
-
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
@@ -229,8 +220,6 @@ public class Niveles extends Nivel {
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 96, 64, PezGloboNaranja.ESTATICO);
 
-			actor.setSize(96, 64);
-
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
@@ -242,8 +231,6 @@ public class Niveles extends Nivel {
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 64, 32, PezAngel.ESTATICO);
 
-			actor.setSize(64, 32);
-
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
@@ -254,8 +241,6 @@ public class Niveles extends Nivel {
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
 
-			actor.setSize(64, 64);
-
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
@@ -265,8 +250,6 @@ public class Niveles extends Nivel {
 		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
-
-			actor.setSize(96, 64);
 
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
@@ -331,9 +314,7 @@ public class Niveles extends Nivel {
 			gefeUno = new JefeUno(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeUno.ESTATICO);
 
-			gefeUno.setSize(128, 128);
-
-			gefeUno.setPosition(13440 - gefeUno.getWidth(), 240);
+			gefeUno.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeUno.setDureza(300);
 
@@ -348,9 +329,7 @@ public class Niveles extends Nivel {
 			gefeDos = new JefeDos(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeDos.ESTATICO);
 
-			gefeDos.setSize(128, 128);
-
-			gefeDos.setPosition(13440 - gefeDos.getWidth(), 240);
+			gefeDos.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeDos.setDureza(500);
 
@@ -365,9 +344,7 @@ public class Niveles extends Nivel {
 			gefeTres = new JefeTres(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeTres.ESTATICO);
 
-			gefeTres.setSize(128, 128);
-
-			gefeTres.setPosition(13440 - gefeTres.getWidth(), 240);
+			gefeTres.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeTres.setDureza(700);
 
@@ -382,9 +359,7 @@ public class Niveles extends Nivel {
 			gefeCuatro = new JefeCuatro(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeCuatro.ESTATICO);
 
-			gefeCuatro.setSize(128, 128);
-
-			gefeCuatro.setPosition(13440 - gefeCuatro.getWidth(), 240);
+			gefeCuatro.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeCuatro.setDureza(900);
 
@@ -561,14 +536,14 @@ public class Niveles extends Nivel {
 			} else {
 
 				camara.position.x += (Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO;
-         
+
 			}
 
 		}
 
 		luz.update();
 
-		p.update(delta);
+		// p.update(delta);
 
 	}
 
@@ -602,7 +577,7 @@ public class Niveles extends Nivel {
 			}
 		}
 
-		p.draw(pincel, delta);
+		// p.draw(pincel, delta);
 
 		pincel.end();
 

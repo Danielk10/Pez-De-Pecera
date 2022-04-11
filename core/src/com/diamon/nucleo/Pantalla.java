@@ -155,7 +155,11 @@ public abstract class Pantalla implements Screen {
 
 		nivel.act();
 
-		debugRenderer.render(mundoVirtual, camara.combined);
+		if (dato.isPrueba()) {
+
+			debugRenderer.render(mundoVirtual, camara.combined);
+		}
+
 	}
 
 	@Override

@@ -1158,8 +1158,6 @@ public class EditorNivel {
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 32, 64, Pulpo.ESTATICO);
 
-			actor.setSize(32, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1172,8 +1170,6 @@ public class EditorNivel {
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
 					PezGloboAmarillo.ESTATICO);
-
-			actor.setSize(64, 32);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
@@ -1188,8 +1184,6 @@ public class EditorNivel {
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
 					PezGloboNaranja.ESTATICO);
 
-			actor.setSize(96, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1201,8 +1195,6 @@ public class EditorNivel {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 64, 32, PezAngel.ESTATICO);
-
-			actor.setSize(64, 32);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
@@ -1216,8 +1208,6 @@ public class EditorNivel {
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
 
-			actor.setSize(64, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1228,8 +1218,6 @@ public class EditorNivel {
 		if (tipo.equals(Dato.ALGAS)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
-
-			actor.setSize(96, 64);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
@@ -1249,8 +1237,6 @@ public class EditorNivel {
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 32, 64, Pulpo.ESTATICO);
 
-			actor.setSize(32, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1263,8 +1249,6 @@ public class EditorNivel {
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
 					PezGloboAmarillo.ESTATICO);
-
-			actor.setSize(64, 32);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
@@ -1279,8 +1263,6 @@ public class EditorNivel {
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
 					PezGloboNaranja.ESTATICO);
 
-			actor.setSize(96, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1292,8 +1274,6 @@ public class EditorNivel {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 64, 32, PezAngel.ESTATICO);
-
-			actor.setSize(64, 32);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
@@ -1307,8 +1287,6 @@ public class EditorNivel {
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
 
-			actor.setSize(64, 64);
-
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
@@ -1319,8 +1297,6 @@ public class EditorNivel {
 		if (tipo.equals(Dato.ALGAS)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
-
-			actor.setSize(96, 64);
 
 			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
 					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));

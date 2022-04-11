@@ -354,7 +354,10 @@ public abstract class Personaje extends Sprite {
 
 			if (cuerpo != null) {
 
-				cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+				if (this.equals(cuerpo.getUserData())) {
+
+					cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+				}
 
 			}
 
@@ -373,7 +376,10 @@ public abstract class Personaje extends Sprite {
 
 		if (cuerpo != null) {
 
-			cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+			if (this.equals(cuerpo.getUserData())) {
+
+				cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+			}
 
 		}
 
