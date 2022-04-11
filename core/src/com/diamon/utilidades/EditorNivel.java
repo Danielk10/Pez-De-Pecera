@@ -484,7 +484,8 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
@@ -500,7 +501,8 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
@@ -516,7 +518,8 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
@@ -532,7 +535,8 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
@@ -561,8 +565,9 @@ public class EditorNivel {
 
 			if (agregar) {
 
-				personajes.get(personajes.size - 1).setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-						y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+				personajes.get(personajes.size - 1).setPosition(
+						x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+						y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			}
 
@@ -578,7 +583,8 @@ public class EditorNivel {
 
 							if ((personajes.get(i) instanceof Fondo)) {
 
-								personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+								personajes.get(i).setPosition(
+										(camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 							}
 
@@ -598,7 +604,8 @@ public class EditorNivel {
 
 						if ((personajes.get(i) instanceof Fondo)) {
 
-							personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+							personajes.get(i).setPosition(
+									(camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 						}
 
@@ -632,7 +639,8 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
@@ -714,8 +722,9 @@ public class EditorNivel {
 
 				agregarActorTemporal(x, y);
 
-				personajes.get(personajes.size - 1).setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-						y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+				personajes.get(personajes.size - 1).setPosition(
+						x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+						y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			}
 
@@ -860,7 +869,8 @@ public class EditorNivel {
 
 					if ((personajes.get(i) instanceof Fondo)) {
 
-						personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+						personajes.get(i).setPosition(
+								(camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 					}
 
@@ -905,7 +915,8 @@ public class EditorNivel {
 
 					if ((personajes.get(i) instanceof Fondo)) {
 
-						personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+						personajes.get(i).setPosition(
+								(camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 					}
 
@@ -1149,8 +1160,8 @@ public class EditorNivel {
 
 			actor.setSize(32, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1164,8 +1175,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1179,8 +1190,8 @@ public class EditorNivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1193,8 +1204,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1207,8 +1218,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1220,8 +1231,8 @@ public class EditorNivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			personajes.add(actor);
 
@@ -1240,8 +1251,8 @@ public class EditorNivel {
 
 			actor.setSize(32, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1255,8 +1266,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1270,8 +1281,8 @@ public class EditorNivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1284,8 +1295,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1298,8 +1309,8 @@ public class EditorNivel {
 
 			actor.setSize(64, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1311,8 +1322,8 @@ public class EditorNivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(x + (camara.position.x - (Juego.ANCHO_PANTALLA / 2)),
-					y + (camara.position.y - (Juego.ALTO_PANTALLA / 2)));
+			actor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - (Juego.ANCHO_PANTALLA / 2)),
+					y + (camara.position.y * Juego.UNIDAD_DEL_MUNDO - (Juego.ALTO_PANTALLA / 2)));
 
 			actores.add(actor);
 
@@ -1330,13 +1341,14 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
 			}
 
-			camara.position.x += velocidadCamara;
+			camara.position.x += velocidadCamara / Juego.UNIDAD_DEL_MUNDO;
 
 		}
 
@@ -1346,13 +1358,14 @@ public class EditorNivel {
 
 				if ((personajes.get(i) instanceof Fondo)) {
 
-					personajes.get(i).setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+					personajes.get(i)
+							.setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 				}
 
 			}
 
-			camara.position.x -= velocidadCamara;
+			camara.position.x -= velocidadCamara / Juego.UNIDAD_DEL_MUNDO;
 
 		}
 

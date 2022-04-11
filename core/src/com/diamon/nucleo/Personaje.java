@@ -93,6 +93,8 @@ public abstract class Personaje extends Sprite {
 
 		configuracion = pantalla.configuracion;
 
+		this.tipoDeCuerpo = tipoDeCuerpo;
+
 		BodyDef bodyDef = new BodyDef();
 
 		if (tipoDeCuerpo == Personaje.ESTATICO) {
@@ -117,7 +119,7 @@ public abstract class Personaje extends Sprite {
 
 		PolygonShape shape = new PolygonShape();
 
-		shape.setAsBox(ancho / 2, alto / 2);
+		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
 
 		fixtureDef.shape = shape;
 
@@ -169,6 +171,8 @@ public abstract class Personaje extends Sprite {
 
 		configuracion = pantalla.configuracion;
 
+		this.tipoDeCuerpo = tipoDeCuerpo;
+
 		BodyDef bodyDef = new BodyDef();
 
 		if (tipoDeCuerpo == Personaje.ESTATICO) {
@@ -193,7 +197,7 @@ public abstract class Personaje extends Sprite {
 
 		PolygonShape shape = new PolygonShape();
 
-		shape.setAsBox(ancho / 2, alto / 2);
+		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
 
 		fixtureDef.shape = shape;
 
@@ -249,6 +253,8 @@ public abstract class Personaje extends Sprite {
 
 		configuracion = pantalla.configuracion;
 
+		this.tipoDeCuerpo = tipoDeCuerpo;
+
 		BodyDef bodyDef = new BodyDef();
 
 		if (tipoDeCuerpo == Personaje.ESTATICO) {
@@ -273,7 +279,7 @@ public abstract class Personaje extends Sprite {
 
 		PolygonShape shape = new PolygonShape();
 
-		shape.setAsBox(ancho / 2, alto / 2);
+		shape.setAsBox(this.getWidth() / 2, this.getHeight() / 2);
 
 		fixtureDef.shape = shape;
 
@@ -330,9 +336,40 @@ public abstract class Personaje extends Sprite {
 
 		}
 
-		setX(x);
+		if (tipoDeCuerpo == Personaje.DIANAMICO) {
 
-		setY(y);
+			if (cuerpo != null) {
+
+				setX(cuerpo.getPosition().x - this.getWidth() / 2);
+
+				setY(cuerpo.getPosition().y - this.getHeight() / 2);
+
+			}
+
+		} else {
+
+			setX(x);
+
+			setY(y);
+
+			if (cuerpo != null) {
+
+				cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+
+			}
+
+		}
+
+	}
+
+	@Override
+	public void setPosition(float x, float y) {
+
+		super.setPosition(x / Juego.UNIDAD_DEL_MUNDO, y / Juego.UNIDAD_DEL_MUNDO);
+
+		this.x = x / Juego.UNIDAD_DEL_MUNDO;
+
+		this.y = y / Juego.UNIDAD_DEL_MUNDO;
 
 		if (cuerpo != null) {
 
@@ -343,20 +380,9 @@ public abstract class Personaje extends Sprite {
 	}
 
 	@Override
-	public void setPosition(float x, float y) {
+	public void setSize(float width, float height) {
 
-		super.setPosition(x, y);
-
-		this.x = x;
-
-		this.y = y;
-
-		if (cuerpo != null) {
-
-			cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
-
-		}
-
+		super.setSize(width / Juego.UNIDAD_DEL_MUNDO, height / Juego.UNIDAD_DEL_MUNDO);
 	}
 
 	public boolean isVivo() {

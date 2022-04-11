@@ -24,25 +24,27 @@ public abstract class Juego extends Game {
 
 	protected AssetManager recurso;
 
-	public static final int ANCHO_PANTALLA = 640;
+	public static final float ANCHO_PANTALLA = 640f;
 
-	public static final int ALTO_PANTALLA = 480;
+	public static final float ALTO_PANTALLA = 480f;
 
-	public static final int LARGO_NIVEL = 13440;
+	public static final float UNIDAD_DEL_MUNDO = 100f;
 
-	public static final float GRAVEDAD = -10.0F;
+	public static final float LARGO_NIVEL = 13440f;
 
-	public static final float VELOCIDAD_CAMARA = 1;
+	public static final float GRAVEDAD = -10.0f;
 
-	public static final float DELTA_A_PIXEL = 0.0166666666666667F;
+	public static final float VELOCIDAD_CAMARA = 1f;
 
-	public static final int FPS = 60;
+	public static final float DELTA_A_PIXEL = 0.0166666666666667f;
+
+	public static final float FPS = 60f;
 
 	protected Dato dato;
 
 	protected Configuraciones configuracion;
 
-	private Image[] fondo = new Image[2];
+	private Image[] fondo;
 
 	private float posicionFondoX;
 
@@ -77,6 +79,8 @@ public abstract class Juego extends Game {
 		mundoVirtual = new World(new Vector2(0, Juego.GRAVEDAD), true);
 
 		recurso = new AssetManager();
+
+		fondo = new Image[2];
 
 		configuracion = new Configuraciones();
 
@@ -129,7 +133,10 @@ public abstract class Juego extends Game {
 			accumulator -= STEP_TIME;
 
 			mundoVirtual.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
 		}
+
+		// mundoVirtual.step(delta, 8, 6);
 
 		ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0f, true);
 

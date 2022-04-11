@@ -271,15 +271,11 @@ public class PantallaJuego extends Pantalla {
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
 				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
 
-		jugador.setSize(64, 64);
-
 		mundo = new Niveles(this, jugador);
 
 		jugador.setTerminarNivel(true);
 
 		cursor = new Cursor(recurso.get("texturas/invisible.png", Texture.class), this, 16, 16, Cursor.ESTATICO);
-
-		cursor.setSize(16, 16);
 
 		cursor.setPosition(0, 0);
 
@@ -621,7 +617,7 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public boolean touchDown(InputEvent ev, float x, float y, int puntero, int boton) {
 
-					cursor.setPosition(x + (camara.position.x - Juego.ANCHO_PANTALLA / 2), y);
+					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
 
 					editor.toquePresionado(ev, x, y, puntero, boton);
 
@@ -661,7 +657,7 @@ public class PantallaJuego extends Pantalla {
 
 					editor.toqueDeslizando(ev, x, y, puntero);
 
-					cursor.setPosition(x + (camara.position.x - Juego.ANCHO_PANTALLA / 2), y);
+					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
 
 				}
 
@@ -674,7 +670,7 @@ public class PantallaJuego extends Pantalla {
 
 					}
 
-					cursor.setPosition(x + (camara.position.x - Juego.ANCHO_PANTALLA / 2), y);
+					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
 
 					editor.ratonMoviendo(ev, x, y);
 

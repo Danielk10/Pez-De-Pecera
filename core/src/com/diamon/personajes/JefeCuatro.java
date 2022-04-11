@@ -51,13 +51,13 @@ public class JefeCuatro extends Personaje {
 	@Override
 	public void actualizar(float delta) {
 
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2) {
+		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
 			super.actualizar(delta);
 
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 + getWidth())) {
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2/ Juego.UNIDAD_DEL_MUNDO + getWidth()) ) {
 
 			remover = true;
 

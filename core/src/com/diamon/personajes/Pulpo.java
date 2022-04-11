@@ -32,21 +32,21 @@ public class Pulpo extends Personaje {
 	@Override
 	public void actualizar(float delta) {
 
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2) {
+		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
 			super.actualizar(delta);
 
-			y += Pulpo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta;
+			y += Pulpo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
 
 		}
 
-		if (y >= camara.position.y + (Juego.ANCHO_PANTALLA / 2 + getHeight())) {
+		if (y >= camara.position.y + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getHeight())) {
 
 			remover = true;
 
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 + getWidth())) {
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
 
 			remover = true;
 

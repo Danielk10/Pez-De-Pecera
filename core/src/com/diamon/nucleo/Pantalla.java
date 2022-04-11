@@ -87,7 +87,8 @@ public abstract class Pantalla implements Screen {
 
 		camara = new OrthographicCamera();
 
-		camara.setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+		camara.setToOrtho(false, Juego.ANCHO_PANTALLA / Juego.UNIDAD_DEL_MUNDO,
+				Juego.ALTO_PANTALLA / Juego.UNIDAD_DEL_MUNDO);
 
 		camara.update();
 
@@ -155,7 +156,6 @@ public abstract class Pantalla implements Screen {
 		nivel.act();
 
 		debugRenderer.render(mundoVirtual, camara.combined);
-
 	}
 
 	@Override

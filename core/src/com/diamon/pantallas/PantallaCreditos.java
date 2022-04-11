@@ -71,7 +71,7 @@ public class PantallaCreditos extends Pantalla {
 
 		creditos = new Array<Label>();
 
-		posicionEspecial = -1450.0f;
+		posicionEspecial = -1474.0f;
 
 		musica = recurso.get("audios/creditos.ogg", Music.class);
 
@@ -259,7 +259,7 @@ public class PantallaCreditos extends Pantalla {
 
 		nivelMenu.addActor(creditoMotor);
 
-		creditoMotorNombre = new Label("LibGDX - www.libgdx.com", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditoMotorNombre = new Label("libGDX - www.libgdx.com", recurso.get("uis/general/uiskin.json", Skin.class));
 
 		creditoMotorNombre.setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 

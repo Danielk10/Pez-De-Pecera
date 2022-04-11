@@ -28,7 +28,7 @@ public class Jugador extends Personaje {
 
 	private float velocidad;
 
-	private static final int VELOCIDAD_JUGADOR = 5;
+	private static final float VELOCIDAD_JUGADOR = 5 / Juego.UNIDAD_DEL_MUNDO;
 
 	private boolean arriba, abajo, izquierda, derecha, disparar, dispararBomba, dispararMisil;
 
@@ -452,30 +452,34 @@ public class Jugador extends Personaje {
 
 			if (!dato.isDiparoAutomatico()) {
 
-				x1 = x - deltaXTactil;
+				x1 = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
 
-				y1 = y - deltaYTactil;
+				y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
 
-				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
+				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
-					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2;
-
-				}
-
-				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
-
-					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
-				}
-
-				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
-
-					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
 
-				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
-					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
+				}
+
+				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+						- 32 / Juego.UNIDAD_DEL_MUNDO)) {
+
+					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+							- 32 / Juego.UNIDAD_DEL_MUNDO);
+
+				}
+
+				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+						+ 32 / Juego.UNIDAD_DEL_MUNDO) {
+
+					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+							+ 32 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
 
@@ -506,37 +510,41 @@ public class Jugador extends Personaje {
 
 						y1 = this.getY();
 
-						deltaXTactil = x - x1;
+						deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
 
-						deltaYTactil = y - y1;
+						deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
 
 						deltaToque = false;
 					}
 
-					x1 = x - deltaXTactil;
+					x1 = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
 
-					y1 = y - deltaYTactil;
+					y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
 
-					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
+					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
-						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2;
-
-					}
-
-					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
-
-						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
-					}
-
-					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
-
-						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
 
 					}
 
-					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
-						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
+					}
+
+					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+							- 32 / Juego.UNIDAD_DEL_MUNDO)) {
+
+						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+								- 32 / Juego.UNIDAD_DEL_MUNDO);
+
+					}
+
+					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+							+ 32 / Juego.UNIDAD_DEL_MUNDO) {
+
+						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+								+ 32 / Juego.UNIDAD_DEL_MUNDO;
 
 					}
 
@@ -550,30 +558,34 @@ public class Jugador extends Personaje {
 
 			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-				x1 = x - deltaXTactil;
+				x1 = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
 
-				y1 = y - deltaYTactil;
+				y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
 
-				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
+				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
-					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2;
-
-				}
-
-				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
-
-					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
-				}
-
-				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
-
-					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
 
-				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
-					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
+				}
+
+				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+						- 32 / Juego.UNIDAD_DEL_MUNDO)) {
+
+					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+							- 32 / Juego.UNIDAD_DEL_MUNDO);
+
+				}
+
+				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+						+ 32 / Juego.UNIDAD_DEL_MUNDO) {
+
+					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+							+ 32 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
 
@@ -643,30 +655,34 @@ public class Jugador extends Personaje {
 
 					y1 = this.getY();
 
-					deltaXTactil = x - x1;
+					deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
 
-					deltaYTactil = y - y1;
+					deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
 
-					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
+					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
-						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2;
-
-					}
-
-					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
-
-						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
 
 					}
 
-					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+							- 32 / Juego.UNIDAD_DEL_MUNDO)) {
 
-						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+								- 32 / Juego.UNIDAD_DEL_MUNDO);
 
 					}
-					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
 
-						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
+					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+							+ 32 / Juego.UNIDAD_DEL_MUNDO) {
+
+						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+								+ 32 / Juego.UNIDAD_DEL_MUNDO;
+
+					}
+					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
+
+						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
 					}
 
 					if (boton == 0) {
@@ -687,32 +703,36 @@ public class Jugador extends Personaje {
 
 					y1 = this.getY();
 
-					deltaXTactil = x - x1;
+					deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
 
-					deltaYTactil = y - y1;
-
-				}
-
-				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
-
-					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2;
+					deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
 
 				}
 
-				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
+				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
-					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
+
+				}
+
+				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+						- 32 / Juego.UNIDAD_DEL_MUNDO)) {
+
+					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+							- 32 / Juego.UNIDAD_DEL_MUNDO);
 
 				}
 
-				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+						+ 32 / Juego.UNIDAD_DEL_MUNDO) {
 
-					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+							+ 32 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
-				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
+				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
-					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
+					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
 				}
 
 				if (boton == 0) {
@@ -747,11 +767,11 @@ public class Jugador extends Personaje {
 
 					if (itemVelocidad) {
 
-						deltaXTactil -= velocidadCamaraItem / Juego.DELTA_A_PIXEL * delta;
+						deltaXTactil -= velocidadCamaraItem / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
 
 					} else {
 
-						deltaXTactil -= Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta;
+						deltaXTactil -= Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
 
 					}
 
@@ -763,11 +783,11 @@ public class Jugador extends Personaje {
 
 				if (itemVelocidad) {
 
-					x += velocidadCamaraItem / Juego.DELTA_A_PIXEL * delta;
+					x += velocidadCamaraItem / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
 
 				} else {
 
-					x += Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta;
+					x += Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
 
 				}
 
@@ -777,31 +797,34 @@ public class Jugador extends Personaje {
 
 			y += velocidadY / Juego.DELTA_A_PIXEL * delta;
 
-			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
+			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
-				x = camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth());
+				x = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
 
 			}
 
-			if (x <= camara.position.x - Juego.ANCHO_PANTALLA / 2) {
+			if (x <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
 				if (intro) {
 
-					x = camara.position.x - Juego.ANCHO_PANTALLA / 2;
+					x = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
 
 				}
 
 			}
 
-			if (y >= camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32)) {
+			if (y >= camara.position.y
+					+ (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight() - 32 / Juego.UNIDAD_DEL_MUNDO)) {
 
-				y = camara.position.y + (Juego.ALTO_PANTALLA / 2 - getHeight() - 32);
+				y = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
+						- 32 / Juego.UNIDAD_DEL_MUNDO);
 
 			}
 
-			if (y <= camara.position.y - Juego.ALTO_PANTALLA / 2 + 32) {
+			if (y <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
+					+ 32 / Juego.UNIDAD_DEL_MUNDO) {
 
-				y = camara.position.y - Juego.ALTO_PANTALLA / 2 + 32;
+				y = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + 32 / Juego.UNIDAD_DEL_MUNDO;
 
 			}
 
@@ -813,8 +836,8 @@ public class Jugador extends Personaje {
 
 						if (velocidadX > 0) {
 
-							if (getX() + this.getWidth() - velocidadX - Juego.VELOCIDAD_CAMARA <= personajes.get(i)
-									.getX()) {
+							if (getX() + this.getWidth() - velocidadX
+									- Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO <= personajes.get(i).getX()) {
 
 								x = getX() - velocidadX;
 
@@ -828,8 +851,8 @@ public class Jugador extends Personaje {
 
 						{
 
-							if (getX() + this.getWidth() - Juego.VELOCIDAD_CAMARA - velocidadX <= personajes.get(i)
-									.getX()) {
+							if (getX() + this.getWidth() - Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO
+									- velocidadX <= personajes.get(i).getX()) {
 
 								x = getX();
 
@@ -908,9 +931,9 @@ public class Jugador extends Personaje {
 
 		} else {
 
-			x += Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta;
+			x += Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
 
-			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 - getWidth())) {
+			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 
 				vivo = false;
 

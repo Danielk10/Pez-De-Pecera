@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.graphics.ParticleEmitterBox2D;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Dato;
@@ -40,7 +41,7 @@ public class Niveles extends Nivel {
 
 	private TiledMapRenderer render;
 
-	private float xFondo = camara.position.x - Juego.ANCHO_PANTALLA / 2;
+	private float xFondo = camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2;
 
 	private JefeUno gefeUno;
 
@@ -59,6 +60,8 @@ public class Niveles extends Nivel {
 	public Particula particuala;
 
 	public Array<ParticleEmitter> emisor;
+
+	ParticleEmitterBox2D p;
 
 	///////////////////
 
@@ -142,9 +145,9 @@ public class Niveles extends Nivel {
 		}
 
 		///////////////////////
-		luz.setAmbientLight(0.1f);
+		luz.setAmbientLight(0.3f);
 
-		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 200, 200, 400);
+		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 
 		puntoDeLuz.setSoftnessLength(0);
 
@@ -166,26 +169,27 @@ public class Niveles extends Nivel {
 			}
 
 		}
-		
-		for (int i = 0;i < 10; i++)
-		{
-			
-			new PointLight(luz, 1000, Color.BLACK, 600, MathUtils.random()*13440-200, 400);
-			
+
+		for (int i = 0; i < 10; i++) {
+
+			new PointLight(luz, 1000, Color.BLACK, 600/Juego.UNIDAD_DEL_MUNDO, MathUtils.random() * 13440/Juego.UNIDAD_DEL_MUNDO - 2, 4);
+
 		}
-		
-	
-		
 
-		//particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
 
-	//	particuala.setPosicion(400, 300);
+		// particuala.setPosicion(400, 300);
 
-		//emisor = new Array<ParticleEmitter>(particuala.getEfectoParticula().getEmitters());
+		// emisor = new
+		// Array<ParticleEmitter>(particuala.getEfectoParticula().getEmitters());
 
-		//particuala.getEfectoParticula().getEmitters().clear();
+		// particuala.getEfectoParticula().getEmitters().clear();
 
-		//particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
+		// particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
+
+		p = new ParticleEmitterBox2D(mundoVirtual, particuala.getEfectoParticula().getEmitters().get(0));
+
+		p.setPosition(400 / Juego.UNIDAD_DEL_MUNDO, 300 / Juego.UNIDAD_DEL_MUNDO);
 
 		///////////////////////
 
@@ -199,7 +203,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(32, 64);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 		}
@@ -213,7 +217,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 		}
@@ -227,7 +231,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 		}
@@ -240,7 +244,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(64, 32);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 		}
@@ -252,7 +256,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(64, 64);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 
@@ -264,7 +268,7 @@ public class Niveles extends Nivel {
 
 			actor.setSize(96, 64);
 
-			actor.setPosition(posicion.x, posicion.y);
+			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
 			personajes.add(actor);
 
@@ -395,13 +399,14 @@ public class Niveles extends Nivel {
 	@Override
 	protected void iniciar() {
 
-		camara.position.x = Juego.ANCHO_PANTALLA / 2;
+		camara.position.x = Juego.ANCHO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
 
-		camara.position.y = Juego.ANCHO_PANTALLA / 2;
+		camara.position.y = Juego.ANCHO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
 
 		camara.zoom = 1;
 
-		camara.setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+		camara.setToOrtho(false, Juego.ANCHO_PANTALLA / Juego.UNIDAD_DEL_MUNDO,
+				Juego.ALTO_PANTALLA / Juego.UNIDAD_DEL_MUNDO);
 
 		camara.update();
 
@@ -429,9 +434,10 @@ public class Niveles extends Nivel {
 
 			if (dato.isFondoScroll()) {
 
-				if (xFondo <= camara.position.x - Juego.ANCHO_PANTALLA / 2 - Juego.ANCHO_PANTALLA) {
+				if (xFondo <= camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2
+						- Juego.ANCHO_PANTALLA) {
 
-					xFondo = camara.position.x - Juego.ANCHO_PANTALLA / 2;
+					xFondo = camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2;
 				}
 
 				fondo[0].setPosition(xFondo, 0);
@@ -442,7 +448,7 @@ public class Niveles extends Nivel {
 
 			if (dato.isFondoParallax()) {
 
-				fondo[1].setPosition((camara.position.x - Juego.ANCHO_PANTALLA / 2), 0);
+				fondo[1].setPosition((camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), 0);
 
 			}
 
@@ -453,7 +459,7 @@ public class Niveles extends Nivel {
 			personaje.actualizar(delta);
 		}
 
-		if (Juego.ANCHO_PANTALLA / 2 + camara.position.x >= Juego.LARGO_NIVEL) {
+		if (Juego.ANCHO_PANTALLA / 2 + camara.position.x * Juego.UNIDAD_DEL_MUNDO >= Juego.LARGO_NIVEL) {
 
 			if (dato.getNumeroNivel() == 10 || dato.getNumeroNivel() == 20 || dato.getNumeroNivel() == 30
 					|| dato.getNumeroNivel() == 40) {
@@ -549,19 +555,21 @@ public class Niveles extends Nivel {
 
 			if (jugador.isItemVelocidad()) {
 
-				camara.position.x += jugador.getVelocidadCamaraItem() / Juego.DELTA_A_PIXEL * delta;
+				camara.position.x += (jugador.getVelocidadCamaraItem() / Juego.DELTA_A_PIXEL * delta)
+						/ Juego.UNIDAD_DEL_MUNDO;
 
 			} else {
 
-				camara.position.x += Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta;
-
+				camara.position.x += (Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO;
+         
 			}
 
 		}
 
 		luz.update();
-		
-		//particuala.actualizar(delta);
+
+		p.update(delta);
+
 	}
 
 	@Override
@@ -594,7 +602,7 @@ public class Niveles extends Nivel {
 			}
 		}
 
-		//particuala.dibujar(pincel, delta);
+		p.draw(pincel, delta);
 
 		pincel.end();
 

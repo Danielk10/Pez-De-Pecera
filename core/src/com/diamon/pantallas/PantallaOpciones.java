@@ -965,7 +965,7 @@ public class PantallaOpciones extends Pantalla {
 
 					if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-						Gdx.graphics.setWindowedMode(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+						Gdx.graphics.setWindowedMode((int) Juego.ANCHO_PANTALLA, (int) Juego.ALTO_PANTALLA);
 					}
 
 				}

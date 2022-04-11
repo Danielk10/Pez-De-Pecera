@@ -32,15 +32,15 @@ public class PezGloboAmarillo extends Personaje {
 	@Override
 	public void actualizar(float delta) {
 
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2) {
+		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
 			super.actualizar(delta);
 
-			x -= PezGloboAmarillo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta;
+			x -= PezGloboAmarillo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
 
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 + getWidth())) {
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2/ Juego.UNIDAD_DEL_MUNDO + getWidth()) ) {
 
 			remover = true;
 

@@ -38,7 +38,7 @@ public class PezDePecera extends Juego {
 
 			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-				Gdx.graphics.setWindowedMode(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+				Gdx.graphics.setWindowedMode((int) Juego.ANCHO_PANTALLA, (int) Juego.ALTO_PANTALLA);
 
 			}
 
@@ -123,7 +123,7 @@ public class PezDePecera extends Juego {
 		recurso.load("uis/carga/neon-ui.json", Skin.class);
 
 		recurso.load("particulas/test.p", ParticleEffect.class);
-		
+
 		recurso.load("particulas/Particle Park Flame.p", ParticleEffect.class);
 
 		setScreen(new PantallaPrecentacion(this));
