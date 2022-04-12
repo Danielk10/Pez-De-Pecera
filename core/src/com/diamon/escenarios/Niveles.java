@@ -138,7 +138,7 @@ public class Niveles extends Nivel {
 		}
 
 		///////////////////////
-		luz.setAmbientLight(0.5f);
+		luz.setAmbientLight(0.1f);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 

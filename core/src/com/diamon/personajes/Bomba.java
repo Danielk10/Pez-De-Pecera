@@ -48,10 +48,7 @@ public class Bomba extends Personaje {
 	@Override
 	public void colision(Personaje personaje) {
 
-		if (personaje instanceof Jugador) {
-
-			remover = true;
-		}
+		
 
 	}
 

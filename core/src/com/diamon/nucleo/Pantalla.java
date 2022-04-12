@@ -141,10 +141,9 @@ public abstract class Pantalla implements Screen {
 
 		if (dato.isPrueba()) {
 
-			//debugRenderer.render(mundoVirtual, camara.combined);
+			debugRenderer.render(mundoVirtual, camara.combined);
 		}
-		
-		debugRenderer.render(mundoVirtual, camara.combined);
+	
 
 	}
 
