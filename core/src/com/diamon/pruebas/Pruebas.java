@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -79,11 +80,11 @@ public class Pruebas extends Game {
 
 		actor.setSize(64f / 100f, 64f / 100f);
 
-		actor.setPosition(310f / 100f, 480f / 100f);
+		actor.setPosition(310f / 100f, 300f / 100f);
 
 		BodyDef bodyDef = new BodyDef();
 
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.type = BodyDef.BodyType.KinematicBody;
 
 		FixtureDef fixtureDef = new FixtureDef();
 
@@ -106,6 +107,8 @@ public class Pruebas extends Game {
 		cuerpo.setUserData(this);
 
 		cuerpo.createFixture(fixtureDef);
+		
+		cuerpo.setAngularVelocity(MathUtils.degreesToRadians * 360f);
 
 		shape.dispose();
 
@@ -175,10 +178,16 @@ public class Pruebas extends Game {
 
 		actor.setPosition(cuerpo.getPosition().x - actor.getWidth() / 2f,
 				cuerpo.getPosition().y - actor.getHeight() / 2f);
-
+		
+		actor.setOriginCenter();
+		
+		actor.setRotation(cuerpo.getAngle()*MathUtils.radiansToDegrees);
+		
 		pincel.begin();
 
 		actor.draw((Batch) pincel);
+		
+	
 
 		pincel.end();
 

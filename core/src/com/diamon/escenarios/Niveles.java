@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -13,15 +11,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.graphics.ParticleEmitterBox2D;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Array;
 import com.diamon.datos.Dato;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
-import com.diamon.particulas.Particula;
 import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Fondo;
@@ -37,6 +32,7 @@ import com.diamon.personajes.Pulpo;
 import com.diamon.utilidades.ColicionBox2DListener;
 
 import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 public class Niveles extends Nivel {
 
@@ -138,7 +134,16 @@ public class Niveles extends Nivel {
 		}
 
 		///////////////////////
-		luz.setAmbientLight(0.1f);
+
+		
+
+		RayHandler.setGammaCorrection(true);
+
+		//RayHandler.useDiffuseLight(true);
+		
+		luz.setAmbientLight(0f, 0f, 0f, 0.1f);
+		
+		luz.setBlurNum(3);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 
@@ -163,12 +168,14 @@ public class Niveles extends Nivel {
 
 		}
 
-		for (int i = 0; i < 10; i++) {
-
-			new PointLight(luz, 1000, Color.BLACK, 600 / Juego.UNIDAD_DEL_MUNDO,
-					MathUtils.random() * 13440 / Juego.UNIDAD_DEL_MUNDO - 2, 4);
-
-		}
+		
+		  for (int i = 0; i < 10; i++) {
+		  
+		  new PointLight(luz, 1000, Color.BLACK, 600 / Juego.UNIDAD_DEL_MUNDO,
+		  MathUtils.random() * 13440 / Juego.UNIDAD_DEL_MUNDO - 2, 4);
+		  
+		  }
+		 
 
 		// particuala = new Particula(recurso.get("particulas/Particle Park Flame.p",
 		// ParticleEffect.class), pantalla);
@@ -260,6 +267,18 @@ public class Niveles extends Nivel {
 
 		}
 
+		mundoVirtual.getBodies(cuerpos);
+
+		if (cuerpos.size > 0) {
+
+			for (Body cuerpo : cuerpos) {
+
+				new PointLight(luz, 1000, Color.BLACK, 2, 2, 2).attachToBody(cuerpo);
+
+			}
+
+		}
+
 		agregarGefe(dato.getNumeroNivel());
 
 		intro();
@@ -332,7 +351,7 @@ public class Niveles extends Nivel {
 			gefeDos = new JefeDos(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeDos.ESTATICO);
 
-			gefeDos.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
+			gefeDos.setPosition(13440 - gefeDos.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeDos.setDureza(500);
 
@@ -347,7 +366,7 @@ public class Niveles extends Nivel {
 			gefeTres = new JefeTres(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeTres.ESTATICO);
 
-			gefeTres.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
+			gefeTres.setPosition(13440 - gefeTres.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeTres.setDureza(700);
 
@@ -362,7 +381,7 @@ public class Niveles extends Nivel {
 			gefeCuatro = new JefeCuatro(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
 					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeCuatro.ESTATICO);
 
-			gefeCuatro.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
+			gefeCuatro.setPosition(13440 - gefeCuatro.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 
 			gefeCuatro.setDureza(900);
 

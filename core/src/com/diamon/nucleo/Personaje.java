@@ -391,7 +391,7 @@ public abstract class Personaje extends Sprite {
 
 				this.setOriginCenter();
 
-				this.setRotation(cuerpo.getAngle() * Juego.UNIDAD_DEL_MUNDO);
+				setRotation(cuerpo.getAngle() * MathUtils.radiansToDegrees);
 
 			}
 
@@ -408,10 +408,10 @@ public abstract class Personaje extends Sprite {
 				setX(x);
 
 				setY(y);
-				
+
 				this.setOriginCenter();
 
-				this.setRotation(cuerpo.getAngle() * Juego.UNIDAD_DEL_MUNDO);
+				setRotation(cuerpo.getAngle() * MathUtils.radiansToDegrees);
 
 			}
 

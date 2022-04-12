@@ -19,6 +19,8 @@ public class DesktopLauncher {
 		config.setResizable(false);
 
 		// new Lwjgl3Application(new Pruebas(),config);
+		
+		// new Lwjgl3Application(new Box2dLightTest(),config);
 
 		new Lwjgl3Application(new PezDePecera(new Publicidad() {
 
