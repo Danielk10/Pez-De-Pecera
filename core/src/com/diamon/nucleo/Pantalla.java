@@ -19,6 +19,7 @@ import com.diamon.datos.Configuraciones;
 import com.diamon.datos.Dato;
 import com.diamon.pez.publicidad.Publicidad;
 
+import box2dLight.Light;
 import box2dLight.RayHandler;
 
 public abstract class Pantalla implements Screen {
@@ -53,11 +54,15 @@ public abstract class Pantalla implements Screen {
 
 	protected RayHandler luz;
 
-	public Pantalla(Juego juego) {
+	protected Array<Light> luces;
+
+	protected Pantalla(Juego juego) {
 
 		mundoVirtual = juego.mundoVirtual;
 
 		luz = new RayHandler(mundoVirtual);
+
+		luces = new Array<Light>();
 
 		this.juego = juego;
 
@@ -143,7 +148,6 @@ public abstract class Pantalla implements Screen {
 
 			debugRenderer.render(mundoVirtual, camara.combined);
 		}
-	
 
 	}
 
@@ -200,6 +204,10 @@ public abstract class Pantalla implements Screen {
 
 		}
 
+		cuerpos.clear();
+
+		luces.clear();
+
 	}
 
 	@Override
@@ -230,6 +238,9 @@ public abstract class Pantalla implements Screen {
 			}
 
 		}
+		cuerpos.clear();
+
+		luces.clear();
 
 		luz.dispose();
 

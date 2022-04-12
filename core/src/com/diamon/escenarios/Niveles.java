@@ -135,19 +135,19 @@ public class Niveles extends Nivel {
 
 		///////////////////////
 
-		
-
 		RayHandler.setGammaCorrection(true);
 
-		//RayHandler.useDiffuseLight(true);
-		
+		// RayHandler.useDiffuseLight(true);
+
 		luz.setAmbientLight(0f, 0f, 0f, 0.1f);
-		
+
 		luz.setBlurNum(3);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 
 		puntoDeLuz.setSoftnessLength(0);
+
+		luces.add(puntoDeLuz);
 
 		mundoVirtual.getBodies(cuerpos);
 
@@ -168,14 +168,14 @@ public class Niveles extends Nivel {
 
 		}
 
-		
-		  for (int i = 0; i < 10; i++) {
-		  
-		  new PointLight(luz, 1000, Color.BLACK, 600 / Juego.UNIDAD_DEL_MUNDO,
-		  MathUtils.random() * 13440 / Juego.UNIDAD_DEL_MUNDO - 2, 4);
-		  
-		  }
-		 
+		for (int i = 0; i < 10; i++) {
+
+			PointLight punto = new PointLight(luz, 1000, Color.BLACK, 600 / Juego.UNIDAD_DEL_MUNDO,
+					MathUtils.random() * 13440 / Juego.UNIDAD_DEL_MUNDO - 2, 4);
+
+			luces.add(punto);
+
+		}
 
 		// particuala = new Particula(recurso.get("particulas/Particle Park Flame.p",
 		// ParticleEffect.class), pantalla);
@@ -273,8 +273,11 @@ public class Niveles extends Nivel {
 
 			for (Body cuerpo : cuerpos) {
 
-				new PointLight(luz, 1000, Color.BLACK, 2, 2, 2).attachToBody(cuerpo);
+				PointLight punto = new PointLight(luz, 1000, Color.BLACK, 2, 2, 2);
 
+				punto.attachToBody(cuerpo);
+
+				luces.add(punto);
 			}
 
 		}
@@ -617,6 +620,14 @@ public class Niveles extends Nivel {
 
 	@Override
 	public void liberarRecursos() {
+
+		mundoVirtual.getBodies(cuerpos);
+
+		luces.clear();
+
+		luz.removeAll();
+
+		cuerpos.clear();
 
 		personajes.clear();
 

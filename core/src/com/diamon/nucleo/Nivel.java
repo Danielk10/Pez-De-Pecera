@@ -15,6 +15,7 @@ import com.diamon.datos.Dato;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.Jugador;
 
+import box2dLight.Light;
 import box2dLight.RayHandler;
 
 public abstract class Nivel {
@@ -51,9 +52,11 @@ public abstract class Nivel {
 
 	protected World mundoVirtual;
 
-	protected Array<Body> cuerpos = new Array<Body>();
+	protected Array<Body> cuerpos;
 
 	protected RayHandler luz;
+
+	protected Array<Light> luces;
 
 	public Nivel(Pantalla pantalla, Jugador jugador) {
 
@@ -93,13 +96,15 @@ public abstract class Nivel {
 
 		cuerpos = pantalla.cuerpos;
 
+		luces = pantalla.luces;
+
 		mundoVirtual.getBodies(cuerpos);
 
 		if (cuerpos.size > 0) {
 
 			for (Body cuerpo : cuerpos) {
 
-				if (!(cuerpo.getUserData() instanceof Jugador )) {
+				if (!(cuerpo.getUserData() instanceof Jugador)) {
 
 					mundoVirtual.destroyBody(cuerpo);
 				}

@@ -31,6 +31,8 @@ import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Jugador;
 import com.diamon.utilidades.EditorNivel;
 
+import box2dLight.Light;
+
 public class PantallaJuego extends Pantalla {
 
 	private Nivel mundo;
@@ -882,6 +884,31 @@ public class PantallaJuego extends Pantalla {
 			Personaje personaje = personajes.get(i);
 
 			if (personaje.isRemover()) {
+
+				// Luz
+
+				for (Light puntoLuz : luces) {
+
+					if (puntoLuz.getBody() != null) {
+
+						Body cu = puntoLuz.getBody();
+
+						if (cu.getUserData() instanceof Personaje) {
+
+							Personaje p = (Personaje) cu.getUserData();
+
+							if (p.isRemover()) {
+
+								puntoLuz.remove();
+
+							}
+
+						}
+
+					}
+
+				}
+
 				// Box2D
 				mundoVirtual.getBodies(cuerpos);
 
