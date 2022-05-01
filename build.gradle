@@ -73,6 +73,11 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.1.0"
+		implementation 'com.startapp:inapp-sdk:4.9.+'
+		def appCenterSdkVersion = '4.3.1'
+        implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+        implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+		
         
     }
 }

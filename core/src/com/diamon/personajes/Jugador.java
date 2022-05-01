@@ -340,6 +340,10 @@ public class Jugador extends Personaje {
 
 			derecha = true;
 
+			//cuerpo.setAngularVelocity(0);
+
+			//cuerpo.setTransform(cuerpo.getPosition(), 0);
+
 			break;
 
 		case Keys.UP:
@@ -796,6 +800,12 @@ public class Jugador extends Personaje {
 			x += velocidadX / Juego.DELTA_A_PIXEL * delta;
 
 			y += velocidadY / Juego.DELTA_A_PIXEL * delta;
+
+			//cuerpo.setGravityScale(0);
+
+			/*cuerpo.setLinearVelocity((Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta)
+					* Juego.UNIDAD_DEL_MUNDO * (Juego.FPS / Juego.UNIDAD_DEL_MUNDO)
+					+ velocidadX * Juego.UNIDAD_DEL_MUNDO, velocidadY * Juego.UNIDAD_DEL_MUNDO);*/
 
 			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 

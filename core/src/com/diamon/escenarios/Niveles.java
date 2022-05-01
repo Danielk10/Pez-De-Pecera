@@ -139,9 +139,9 @@ public class Niveles extends Nivel {
 
 		// RayHandler.useDiffuseLight(true);
 
-		luz.setAmbientLight(0f, 0f, 0f, 0.1f);
+		luz.setAmbientLight(0f, 0f, 0f, 1f);
 
-		luz.setBlurNum(3);
+		//luz.setBlurNum(3);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
 
@@ -259,7 +259,7 @@ public class Niveles extends Nivel {
 
 		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
 
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.CINESTECICO);
 
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 

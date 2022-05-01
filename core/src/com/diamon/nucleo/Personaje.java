@@ -66,6 +66,8 @@ public abstract class Personaje extends Sprite {
 
 		setSize(ancho, alto);
 
+		setOriginCenter();
+
 		remover = false;
 
 		animar = false;
@@ -172,6 +174,8 @@ public abstract class Personaje extends Sprite {
 
 		setSize(ancho, alto);
 
+		setOriginCenter();
+
 		remover = false;
 
 		animar = false;
@@ -216,11 +220,33 @@ public abstract class Personaje extends Sprite {
 
 			bodyDef.type = BodyDef.BodyType.StaticBody;
 
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+			}
+
 		}
 
 		if (tipoDeCuerpo == Personaje.CINESTECICO) {
 
 			bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+				cuerpo.setAngularVelocity(MathUtils.degreesToRadians * 360f);
+
+			}
 
 		}
 
@@ -232,27 +258,30 @@ public abstract class Personaje extends Sprite {
 
 			fixtureDef.friction = 0.5f;
 
-			fixtureDef.restitution = 0.7f;
+			fixtureDef.restitution = 1f;
 
-		}
+			if (mundoVirtual != null) {
 
-		if (mundoVirtual != null) {
+				cuerpo = mundoVirtual.createBody(bodyDef);
 
-			cuerpo = mundoVirtual.createBody(bodyDef);
+				cuerpo.setUserData(this);
 
-			cuerpo.setUserData(this);
+				cuerpo.createFixture(fixtureDef);
 
-			cuerpo.createFixture(fixtureDef);
+			}
 
 		}
 
 		shape.dispose();
+
 	}
 
 	public Personaje(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, Animation.PlayMode modo,
 			Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
 
 		setSize(ancho, alto);
+
+		setOriginCenter();
 
 		setRegion(texturaRegion.get(0));
 
@@ -304,11 +333,33 @@ public abstract class Personaje extends Sprite {
 
 			bodyDef.type = BodyDef.BodyType.StaticBody;
 
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+			}
+
 		}
 
 		if (tipoDeCuerpo == Personaje.CINESTECICO) {
 
 			bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+			if (mundoVirtual != null) {
+
+				cuerpo = mundoVirtual.createBody(bodyDef);
+
+				cuerpo.setUserData(this);
+
+				cuerpo.createFixture(fixtureDef);
+
+				cuerpo.setAngularVelocity(MathUtils.degreesToRadians * 360f);
+
+			}
 
 		}
 
@@ -316,25 +367,26 @@ public abstract class Personaje extends Sprite {
 
 			bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-			fixtureDef.density = 15f;
+			fixtureDef.density = 1f;
 
 			fixtureDef.friction = 0.5f;
 
-			fixtureDef.restitution = 0.7f;
+			fixtureDef.restitution = 1f;
 
-		}
+			if (mundoVirtual != null) {
 
-		if (mundoVirtual != null) {
+				cuerpo = mundoVirtual.createBody(bodyDef);
 
-			cuerpo = mundoVirtual.createBody(bodyDef);
+				cuerpo.setUserData(this);
 
-			cuerpo.setUserData(this);
+				cuerpo.createFixture(fixtureDef);
 
-			cuerpo.createFixture(fixtureDef);
+			}
 
 		}
 
 		shape.dispose();
+
 	}
 
 	public void dibujar(Batch pincel, float delta) {
@@ -389,8 +441,6 @@ public abstract class Personaje extends Sprite {
 
 				setY(y);
 
-				this.setOriginCenter();
-
 				setRotation(cuerpo.getAngle() * MathUtils.radiansToDegrees);
 
 			}
@@ -409,8 +459,6 @@ public abstract class Personaje extends Sprite {
 
 				setY(y);
 
-				this.setOriginCenter();
-
 				setRotation(cuerpo.getAngle() * MathUtils.radiansToDegrees);
 
 			}
@@ -428,6 +476,7 @@ public abstract class Personaje extends Sprite {
 				if (this.equals(cuerpo.getUserData())) {
 
 					cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
+
 				}
 
 			}

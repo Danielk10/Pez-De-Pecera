@@ -271,8 +271,11 @@ public class PantallaJuego extends Pantalla {
 
 		nivel.addActor(textoPausa);
 
-		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
+		//jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
+				//Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
+		
+		jugador = new Jugador(recurso.get("texturas/tiburon.atlas", TextureAtlas.class).getRegions(), 0.3f,
+				Animation.PlayMode.LOOP, this, 256, 256, Jugador.ESTATICO);
 
 		mundo = new Niveles(this, jugador);
 
@@ -886,7 +889,6 @@ public class PantallaJuego extends Pantalla {
 			if (personaje.isRemover()) {
 
 				// Luz
-
 				for (Light puntoLuz : luces) {
 
 					if (puntoLuz.getBody() != null) {
@@ -939,6 +941,24 @@ public class PantallaJuego extends Pantalla {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actualizar(float delta) {
+
+		/*
+		 * // Box2D mundoVirtual.getBodies(cuerpos);
+		 * 
+		 * if (cuerpos.size > 0) {
+		 * 
+		 * for (Body cuerpo : cuerpos) {
+		 * 
+		 * cuerpo.setActive(!pausar);
+		 * 
+		 * cuerpo.setBullet(!pausar);
+		 * 
+		 * cuerpo.setAwake(!pausar);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
 
 		if (!pausar) {
 
@@ -1328,11 +1348,11 @@ public class PantallaJuego extends Pantalla {
 
 			pincelPrueba.begin(ShapeRenderer.ShapeType.Line);
 
-			Rectangle r = personaje.getBoundingRectangle();
-
-			pincelPrueba.rect(r.x, r.y, r.width, r.height);
+			pincelPrueba.rect(personaje.getX(), personaje.getY(), personaje.getWidth() / 2, personaje.getHeight() / 2,
+					personaje.getWidth(), personaje.getHeight(), 1, 1, personaje.getRotation());
 
 			pincelPrueba.end();
+
 		}
 
 	}
