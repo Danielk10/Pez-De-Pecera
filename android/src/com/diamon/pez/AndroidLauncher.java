@@ -15,6 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		AppCenter.start(getApplication(), "4942c9c2-c670-4a16-89ab-23bfc270ca4d",Analytics.class, Crashes.class);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new PezDePecera(), config);
+		initialize(new PezDePecera(null), config);
 	}
 }
