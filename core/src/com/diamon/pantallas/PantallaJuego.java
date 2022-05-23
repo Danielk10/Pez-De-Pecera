@@ -29,6 +29,7 @@ import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Jugador;
+import com.diamon.personajes.TiburonAzul;
 import com.diamon.utilidades.EditorNivel;
 
 import box2dLight.Light;
@@ -271,11 +272,8 @@ public class PantallaJuego extends Pantalla {
 
 		nivel.addActor(textoPausa);
 
-		//jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				//Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
-		
-		jugador = new Jugador(recurso.get("texturas/tiburon.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this, 256, 256, Jugador.ESTATICO);
+		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
+				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
 
 		mundo = new Niveles(this, jugador);
 

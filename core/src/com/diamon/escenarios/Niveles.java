@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -17,6 +18,7 @@ import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.particulas.Particula;
 import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Fondo;
@@ -29,6 +31,7 @@ import com.diamon.personajes.PezAngel;
 import com.diamon.personajes.PezGloboAmarillo;
 import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
+import com.diamon.personajes.TiburonAzul;
 import com.diamon.utilidades.ColicionBox2DListener;
 
 import box2dLight.PointLight;
@@ -52,15 +55,7 @@ public class Niveles extends Nivel {
 
 	private PointLight puntoDeLuz;
 
-	/////////////////
-
-	// public Particula particuala;
-
-	// public Array<ParticleEmitter> emisor;
-
-	// ParticleEmitterBox2D p;
-
-	///////////////////
+	private Particula particuala;
 
 	public Niveles(Pantalla pantalla, Jugador jugador) {
 		super(pantalla, jugador);
@@ -133,19 +128,23 @@ public class Niveles extends Nivel {
 
 		}
 
+		TiburonAzul tiburon = new TiburonAzul(recurso.get("texturas/tiburon.atlas", TextureAtlas.class).getRegions(),
+				0.3f, Animation.PlayMode.LOOP, pantalla, 192, 192, TiburonAzul.ESTATICO);
+
+		tiburon.setPosition(50, 200);
+		
+		
+		
+
+		personajes.add(tiburon);
+
 		///////////////////////
 
 		RayHandler.setGammaCorrection(true);
 
-		// RayHandler.useDiffuseLight(true);
-
-		luz.setAmbientLight(0f, 0f, 0f, 1f);
-
-		//luz.setBlurNum(3);
+		luz.setAmbientLight(0f, 0f, 0f, 0.3f);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
-
-		puntoDeLuz.setSoftnessLength(0);
 
 		luces.add(puntoDeLuz);
 
@@ -177,26 +176,19 @@ public class Niveles extends Nivel {
 
 		}
 
-		// particuala = new Particula(recurso.get("particulas/Particle Park Flame.p",
-		// ParticleEffect.class), pantalla);
+		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
 
-		// particuala.setPosicion(400, 300);
+		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 220 / Juego.UNIDAD_DEL_MUNDO);
 
-		// emisor = new
-		// Array<ParticleEmitter>(particuala.getEfectoParticula().getEmitters());
+		particuala.setEscala(2);
 
-		// particuala.getEfectoParticula().getEmitters().clear();
+		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
 
-		// particuala.getEfectoParticula().getEmitters().add(emisor.get(0));
+		luces.add(puntoL);
 
-		// p = new ParticleEmitterBox2D(mundoVirtual,
-		// particuala.getEfectoParticula().getEmitters().get(0));
-
-		// p.setPosition(400 / Juego.UNIDAD_DEL_MUNDO, 300 / Juego.UNIDAD_DEL_MUNDO);
+		particuala.setPuntoLuz(puntoL);
 
 		this.mundoVirtual.setContactListener(new ColicionBox2DListener());
-
-		///////////////////////
 
 		String numeroNivel = "Nivel " + dato.getNumeroNivel();
 
@@ -259,7 +251,8 @@ public class Niveles extends Nivel {
 
 		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
 
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.CINESTECICO);
+			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64,
+					Algas.CINESTECICO);
 
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 
@@ -568,7 +561,7 @@ public class Niveles extends Nivel {
 
 		luz.update();
 
-		// p.update(delta);
+		particuala.actualizar(delta);
 
 	}
 
@@ -602,7 +595,7 @@ public class Niveles extends Nivel {
 			}
 		}
 
-		// p.draw(pincel, delta);
+		particuala.dibujar(pincel, delta);
 
 		pincel.end();
 
@@ -624,6 +617,8 @@ public class Niveles extends Nivel {
 		mundoVirtual.getBodies(cuerpos);
 
 		luces.clear();
+
+		particuala.liberarRecursos();
 
 		luz.removeAll();
 

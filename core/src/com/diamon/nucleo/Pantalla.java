@@ -158,6 +158,14 @@ public abstract class Pantalla implements Screen {
 
 	}
 
+	public World getMundoVirtual() {
+		return mundoVirtual;
+	}
+
+	public void setMundoVirtual(World mundoVirtual) {
+		this.mundoVirtual = mundoVirtual;
+	}
+
 	@Override
 	public void pause() {
 

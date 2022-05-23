@@ -107,7 +107,7 @@ public class Dato {
 		mostrarFPS = false;
 
 		editor = true;
-
+ 
 		prueba = false;
 
 		partida = false;

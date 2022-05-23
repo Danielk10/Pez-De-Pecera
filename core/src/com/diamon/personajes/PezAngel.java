@@ -51,7 +51,7 @@ public class PezAngel extends Personaje {
 	@Override
 	public void colision(Personaje personaje) {
 
-		if (personaje instanceof Jugador) {
+		if (personaje instanceof Jugador || personaje instanceof TiburonAzul) {
 
 			remover = true;
 		}

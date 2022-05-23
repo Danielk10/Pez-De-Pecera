@@ -2,25 +2,27 @@ package com.diamon.particulas;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.graphics.ParticleEmitterBox2D;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
+
+import box2dLight.Light;
 
 public class Particula {
 
 	private ParticleEffect efectoParticula;
 
+	private ParticleEmitterBox2D emisor;
+
 	protected World mundoVirtual;
 
-	protected Body cuerpo;
-
-	private float x, y;
+	private Vector2 posicion;
 
 	protected Pantalla pantalla;
+
+	private Light puntoLuz;
 
 	public Particula(ParticleEffect efectoParticula, Pantalla pantalla) {
 
@@ -28,40 +30,32 @@ public class Particula {
 
 		this.pantalla = pantalla;
 
-		//this.mundoVirtual = pantalla.getMundoVirtual();
+		mundoVirtual = pantalla.getMundoVirtual();
 
-		BodyDef bodyDef = new BodyDef();
+		emisor = new ParticleEmitterBox2D(mundoVirtual, efectoParticula.getEmitters().get(1));
 
-		bodyDef.type = BodyDef.BodyType.StaticBody;
-
-		FixtureDef fixtureDef = new FixtureDef();
-
-		PolygonShape shape = new PolygonShape();
-
-		shape.setAsBox(efectoParticula.getBoundingBox().getWidth() / 2,
-				efectoParticula.getBoundingBox().getHeight() / 2);
-
-		fixtureDef.shape = shape;
-
-		if (mundoVirtual != null) {
-
-			cuerpo = mundoVirtual.createBody(bodyDef);
-
-			cuerpo.setUserData(this);
-
-			cuerpo.createFixture(fixtureDef);
-
-		}
-
-		shape.dispose();
+		efectoParticula.getEmitters().add(emisor);
+		
+		
 
 	}
 
 	public ParticleEffect getEfectoParticula() {
+
 		return efectoParticula;
 	}
 
+	public Light getPuntoLuz() {
+		return puntoLuz;
+	}
+
+	public void setPuntoLuz(Light puntoLuz) {
+
+		this.puntoLuz = puntoLuz;
+	}
+
 	public void setEfectoParticula(ParticleEffect efectoParticula) {
+
 		this.efectoParticula = efectoParticula;
 	}
 
@@ -69,14 +63,11 @@ public class Particula {
 
 		efectoParticula.setPosition(x, y);
 
-		this.x = x;
+		posicion = new Vector2(x, y);
 
-		this.y = y;
+		if (puntoLuz != null) {
 
-		if (cuerpo != null) {
-
-			cuerpo.setTransform(this.x + efectoParticula.getBoundingBox().getWidth() / 2,
-					this.y + efectoParticula.getBoundingBox().getHeight() / 2, 0);
+			puntoLuz.setPosition(posicion);
 
 		}
 
@@ -89,22 +80,34 @@ public class Particula {
 	}
 
 	public void setDuracion(int duracion) {
+
 		efectoParticula.setDuration(duracion);
+
+	}
+
+	public void setEscala(float proporsion) {
+
+		emisor.scaleSize(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
+
+		emisor.scaleMotion(proporsion / Juego.UNIDAD_DEL_MUNDO);
+
+		//efectoParticula.scaleEffect(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
 
 	}
 
 	public void actualizar(float delta) {
 
-		efectoParticula.update(delta);
+		//efectoParticula.update(delta);
 
-		x += 1 / Juego.DELTA_A_PIXEL * delta;
+		emisor.update(delta);
 
-		efectoParticula.setPosition(x, y);
+		posicion.x += (1 / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO;
 
-		if (cuerpo != null) {
+		emisor.setPosition(posicion.x, posicion.y);
 
-			cuerpo.setTransform(this.x + efectoParticula.getBoundingBox().getWidth() / 2,
-					efectoParticula.getBoundingBox().getHeight() / 2, 0);
+		if (puntoLuz != null) {
+
+			puntoLuz.setPosition(posicion);
 
 		}
 
@@ -112,13 +115,15 @@ public class Particula {
 
 	public void dibujar(Batch pincel, float delta) {
 
-		efectoParticula.draw(pincel, delta);
+		//efectoParticula.draw(pincel);
+
+		emisor.draw(pincel);
 
 	}
 
 	public void liberarRecursos() {
 
-		efectoParticula.dispose();
+		// efectoParticula.dispose();
 
 	}
 
