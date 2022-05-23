@@ -176,17 +176,17 @@ public class Niveles extends Nivel {
 
 		}
 
-		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+		//particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
 
-		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 220 / Juego.UNIDAD_DEL_MUNDO);
+		//particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 220 / Juego.UNIDAD_DEL_MUNDO);
 
-		particuala.setEscala(2);
+		//particuala.setEscala(2);
 
-		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
+		//PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
 
-		luces.add(puntoL);
+		//luces.add(puntoL);
 
-		particuala.setPuntoLuz(puntoL);
+		//particuala.setPuntoLuz(puntoL);
 
 		this.mundoVirtual.setContactListener(new ColicionBox2DListener());
 
@@ -561,7 +561,7 @@ public class Niveles extends Nivel {
 
 		luz.update();
 
-		particuala.actualizar(delta);
+		//particuala.actualizar(delta);
 
 	}
 
@@ -595,7 +595,7 @@ public class Niveles extends Nivel {
 			}
 		}
 
-		particuala.dibujar(pincel, delta);
+		//particuala.dibujar(pincel, delta);
 
 		pincel.end();
 
@@ -618,7 +618,7 @@ public class Niveles extends Nivel {
 
 		luces.clear();
 
-		particuala.liberarRecursos();
+		//particuala.liberarRecursos();
 
 		luz.removeAll();
 
