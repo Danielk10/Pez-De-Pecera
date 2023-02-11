@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "30.0.3"
-    compileSdkVersion "android-Tiramisu"
+    compileSdkVersion 32
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "com.diamon.pez"
         minSdkVersion 21
-        targetSdkVersion "Tiramisu"
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0.0"
 		//Cambiando ruta de salida .aab y .apk
