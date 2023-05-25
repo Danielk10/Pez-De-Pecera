@@ -173,13 +173,13 @@ public class Niveles extends Nivel {
 
 		}
 
-		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+		particuala = new Particula(recurso.get("particulas/test.p", ParticleEffect.class), pantalla);
 
-		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 200 / Juego.UNIDAD_DEL_MUNDO);
+		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 10 / Juego.UNIDAD_DEL_MUNDO);
 
 		particuala.setEscala(15);
 
-		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
+		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 8, 2, 4);
 
 		luces.add(puntoL);
 

@@ -37,6 +37,8 @@ public class Particula {
 
 		this.efectoParticula.getEmitters().removeIndex(0);
 
+		posicion = new Vector2(0, 0);
+
 	}
 
 	public ParticleEffect getEfectoParticula() {
@@ -67,7 +69,9 @@ public class Particula {
 
 		efectoParticula.setPosition(x, y);
 
-		posicion = new Vector2(x, y);
+		posicion.x = x;
+
+		posicion.y = y;
 
 		if (puntoLuz != null) {
 
@@ -118,8 +122,6 @@ public class Particula {
 	}
 
 	public void liberarRecursos() {
-		
-		
 
 	}
 
