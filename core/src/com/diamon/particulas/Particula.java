@@ -14,8 +14,6 @@ public class Particula {
 
 	private ParticleEffect efectoParticula;
 
-	private ParticleEmitterBox2D emisor;
-
 	protected World mundoVirtual;
 
 	private Vector2 posicion;
@@ -32,17 +30,23 @@ public class Particula {
 
 		mundoVirtual = pantalla.getMundoVirtual();
 
-		emisor = new ParticleEmitterBox2D(mundoVirtual, efectoParticula.getEmitters().get(1));
+		ParticleEmitterBox2D emisorBox2D = new ParticleEmitterBox2D(mundoVirtual,
+				efectoParticula.getEmitters().first());
 
-		efectoParticula.getEmitters().add(emisor);
-		
-		
+		this.efectoParticula.getEmitters().add(emisorBox2D);
+
+		this.efectoParticula.getEmitters().removeIndex(0);
 
 	}
 
 	public ParticleEffect getEfectoParticula() {
 
 		return efectoParticula;
+	}
+
+	public void iniciar() {
+
+		this.efectoParticula.start();
 	}
 
 	public Light getPuntoLuz() {
@@ -87,23 +91,17 @@ public class Particula {
 
 	public void setEscala(float proporsion) {
 
-		emisor.scaleSize(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
-
-		emisor.scaleMotion(proporsion / Juego.UNIDAD_DEL_MUNDO);
-
-		//efectoParticula.scaleEffect(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
+		efectoParticula.scaleEffect(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
 
 	}
 
 	public void actualizar(float delta) {
 
-		//efectoParticula.update(delta);
-
-		emisor.update(delta);
+		efectoParticula.update(delta);
 
 		posicion.x += (1 / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO;
 
-		emisor.setPosition(posicion.x, posicion.y);
+		this.efectoParticula.setPosition(posicion.x, posicion.y);
 
 		if (puntoLuz != null) {
 
@@ -115,15 +113,13 @@ public class Particula {
 
 	public void dibujar(Batch pincel, float delta) {
 
-		//efectoParticula.draw(pincel);
-
-		emisor.draw(pincel);
+		efectoParticula.draw(pincel);
 
 	}
 
 	public void liberarRecursos() {
-
-		// efectoParticula.dispose();
+		
+		
 
 	}
 

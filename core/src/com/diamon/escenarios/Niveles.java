@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -131,9 +132,6 @@ public class Niveles extends Nivel {
 				0.3f, Animation.PlayMode.LOOP, pantalla, 192, 192, TiburonAzul.ESTATICO);
 
 		tiburon.setPosition(50, 200);
-		
-		
-		
 
 		personajes.add(tiburon);
 
@@ -175,17 +173,19 @@ public class Niveles extends Nivel {
 
 		}
 
-		//particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
+		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
 
-		//particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 220 / Juego.UNIDAD_DEL_MUNDO);
+		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 200 / Juego.UNIDAD_DEL_MUNDO);
 
-		//particuala.setEscala(2);
+		particuala.setEscala(15);
 
-		//PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
+		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 4, 2, 4);
 
-		//luces.add(puntoL);
+		luces.add(puntoL);
 
-		//particuala.setPuntoLuz(puntoL);
+		particuala.setPuntoLuz(puntoL);
+
+		particuala.iniciar();
 
 		this.mundoVirtual.setContactListener(new ColicionBox2DListener());
 
@@ -560,7 +560,7 @@ public class Niveles extends Nivel {
 
 		luz.update();
 
-		//particuala.actualizar(delta);
+		particuala.actualizar(delta);
 
 	}
 
@@ -594,7 +594,7 @@ public class Niveles extends Nivel {
 			}
 		}
 
-		//particuala.dibujar(pincel, delta);
+		particuala.dibujar(pincel, delta);
 
 		pincel.end();
 
@@ -616,8 +616,6 @@ public class Niveles extends Nivel {
 		mundoVirtual.getBodies(cuerpos);
 
 		luces.clear();
-
-		//particuala.liberarRecursos();
 
 		luz.removeAll();
 
