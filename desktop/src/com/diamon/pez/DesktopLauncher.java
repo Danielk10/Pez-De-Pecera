@@ -5,9 +5,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.diamon.pez.PezDePecera;
 import com.diamon.pez.publicidad.Publicidad;
-import com.diamon.pruebas.Box2dLightTest;
-import com.diamon.pruebas.Pruebas;
-import com.diamon.pruebas.SimpleTest;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
@@ -17,10 +14,6 @@ public class DesktopLauncher {
 		config.setWindowIcon(FileType.Internal, "texturas/icono.png");
 		config.setTitle("Pez De Pecera");
 		config.setResizable(false);
-
-		// new Lwjgl3Application(new Pruebas(),config);
-		
-		// new Lwjgl3Application(new Box2dLightTest(),config);
 
 		new Lwjgl3Application(new PezDePecera(new Publicidad() {
 

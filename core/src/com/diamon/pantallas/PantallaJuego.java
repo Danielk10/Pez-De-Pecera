@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,7 +30,6 @@ import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 import com.diamon.personajes.Cursor;
 import com.diamon.personajes.Jugador;
-import com.diamon.personajes.TiburonAzul;
 import com.diamon.utilidades.EditorNivel;
 
 import box2dLight.Light;
@@ -940,23 +940,80 @@ public class PantallaJuego extends Pantalla {
 	@Override
 	public void actualizar(float delta) {
 
-		/*
-		 * // Box2D mundoVirtual.getBodies(cuerpos);
-		 * 
-		 * if (cuerpos.size > 0) {
-		 * 
-		 * for (Body cuerpo : cuerpos) {
-		 * 
-		 * cuerpo.setActive(!pausar);
-		 * 
-		 * cuerpo.setBullet(!pausar);
-		 * 
-		 * cuerpo.setAwake(!pausar);
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
+		//////////////////
+
+		mundoVirtual.getBodies(cuerpos); // Ojo recusos
+
+		if (pausar&&!editar) { // Box2D Ojo
+
+			if (cuerpos.size > 0) {
+
+				for (Body cuerpo : cuerpos) {
+
+					cuerpo.setActive(false);
+
+					cuerpo.setBullet(false);
+
+					cuerpo.setAwake(false);
+
+				}
+
+			}
+
+		} else {
+
+			if (cuerpos.size > 0) {
+
+				for (Body cuerpo : cuerpos) {
+
+					cuerpo.setActive(true);
+
+					cuerpo.setBullet(true);
+
+					cuerpo.setAwake(true);
+
+				}
+
+			}
+
+		}
+
+		if (editar&&!pausar) {
+
+			if (cuerpos.size > 0) {
+
+				for (Body cuerpo : cuerpos) {
+
+					cuerpo.setActive(false);
+
+					cuerpo.setBullet(false);
+
+					cuerpo.setAwake(false);
+
+
+				}
+
+			}
+
+		} else {
+
+			if (cuerpos.size > 0) {
+
+				for (Body cuerpo : cuerpos) {
+
+					cuerpo.setActive(true);
+
+					cuerpo.setBullet(true);
+
+					cuerpo.setAwake(true);
+
+				}
+
+			}
+
+		}
+
+		///////////////////
 
 		if (!pausar) {
 

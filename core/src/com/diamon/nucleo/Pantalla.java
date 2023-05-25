@@ -124,7 +124,7 @@ public abstract class Pantalla implements Screen {
 	@Override
 	public void render(float delta) {
 
-		ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0F, true);
+		//ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0F, true);
 
 		pincel.setProjectionMatrix(camara.combined);
 
