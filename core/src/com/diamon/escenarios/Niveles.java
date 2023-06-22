@@ -12,8 +12,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.diamon.datos.Dato;
+import com.diamon.datos.DatosNiveles;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
@@ -33,7 +34,6 @@ import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.TiburonAzul;
 import com.diamon.utilidades.ColicionBox2DListener;
-
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
@@ -64,7 +64,7 @@ public class Niveles extends Nivel {
 
 		render = new OrthogonalTiledMapRenderer(mapa, 1);
 
-		if ((dato.getNumeroNivel() <= 10)) {
+		if ((datosNiveles.getNumeroNivel() <= 10)) {
 
 			for (int i = 0; i < fondo.length; i++) {
 
@@ -80,7 +80,7 @@ public class Niveles extends Nivel {
 
 		}
 
-		if ((dato.getNumeroNivel() >= 11) && (dato.getNumeroNivel() <= 20)) {
+		if ((datosNiveles.getNumeroNivel() >= 11) && (datosNiveles.getNumeroNivel() <= 20)) {
 
 			indice = 2;
 
@@ -96,7 +96,7 @@ public class Niveles extends Nivel {
 
 		}
 
-		if ((dato.getNumeroNivel() >= 21) && (dato.getNumeroNivel() <= 30)) {
+		if ((datosNiveles.getNumeroNivel() >= 21) && (datosNiveles.getNumeroNivel() <= 30)) {
 
 			indice = 3;
 
@@ -112,7 +112,7 @@ public class Niveles extends Nivel {
 
 		}
 
-		if ((dato.getNumeroNivel() >= 31) && (dato.getNumeroNivel() <= 40)) {
+		if ((datosNiveles.getNumeroNivel() >= 31) && (datosNiveles.getNumeroNivel() <= 40)) {
 
 			indice = 4;
 
@@ -142,6 +142,10 @@ public class Niveles extends Nivel {
 		luz.setAmbientLight(0f, 0f, 0f, 0.3f);
 
 		puntoDeLuz = new PointLight(luz, 1000, Color.BLACK, 2, 2, 4);
+
+		luz.setShadows(true);
+		puntoDeLuz.setStaticLight(false);
+		puntoDeLuz.setSoft(true);
 
 		luces.add(puntoDeLuz);
 
@@ -173,11 +177,11 @@ public class Niveles extends Nivel {
 
 		}
 
-		particuala = new Particula(recurso.get("particulas/test.p", ParticleEffect.class), pantalla);
+		particuala = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
 
 		particuala.setPosicion(400 / Juego.UNIDAD_DEL_MUNDO, 10 / Juego.UNIDAD_DEL_MUNDO);
 
-		particuala.setEscala(15);
+		particuala.setEscala(3f);
 
 		PointLight puntoL = new PointLight(luz, 1000, Color.BLACK, 8, 2, 4);
 
@@ -189,9 +193,9 @@ public class Niveles extends Nivel {
 
 		this.mundoVirtual.setContactListener(new ColicionBox2DListener());
 
-		String numeroNivel = "Nivel " + dato.getNumeroNivel();
+		String numeroNivel = "Nivel " + datosNiveles.getNumeroNivel();
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.PULPO, numeroNivel))
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PULPO, numeroNivel))
 
 		{
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
@@ -202,7 +206,7 @@ public class Niveles extends Nivel {
 			personajes.add(actor);
 		}
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_GLOBO_AMARILLO, numeroNivel))
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GLOBO_AMARILLO, numeroNivel))
 
 		{
 			PezGloboAmarillo actor = new PezGloboAmarillo(
@@ -214,7 +218,7 @@ public class Niveles extends Nivel {
 			personajes.add(actor);
 		}
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_GOBO_NARANJA, numeroNivel))
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GOBO_NARANJA, numeroNivel))
 
 		{
 			PezGloboNaranja actor = new PezGloboNaranja(
@@ -226,7 +230,7 @@ public class Niveles extends Nivel {
 			personajes.add(actor);
 		}
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.PEZ_ANGEL, numeroNivel))
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_ANGEL, numeroNivel))
 
 		{
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
@@ -237,7 +241,7 @@ public class Niveles extends Nivel {
 			personajes.add(actor);
 		}
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.BOMBA, numeroNivel)) {
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.BOMBA, numeroNivel)) {
 
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
@@ -248,7 +252,7 @@ public class Niveles extends Nivel {
 
 		}
 
-		for (Vector2 posicion : dato.getPosicionActores(Dato.ALGAS, numeroNivel)) {
+		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.ALGAS, numeroNivel)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64,
 					Algas.CINESTECICO);
@@ -274,9 +278,36 @@ public class Niveles extends Nivel {
 
 		}
 
-		agregarGefe(dato.getNumeroNivel());
+		agregarGefe(datosNiveles.getNumeroNivel());
 
 		intro();
+
+		///////////////////////////////////// Union
+
+		mundoVirtual.getBodies(cuerpos);
+
+		if (cuerpos.size > 0) {
+
+			RevoluteJointDef jointDef = new RevoluteJointDef();
+
+			for (int i = 0; i < cuerpos.size; i++) {
+
+				jointDef.localAnchorA.set(0.8f, 0.8f);
+
+				jointDef.localAnchorB.set(0.8f, 0.8f);
+
+				if (i >= 0 && i <= cuerpos.size - 2) {
+
+					jointDef.bodyB = cuerpos.get(i);
+
+					jointDef.bodyA = cuerpos.get(i + 1);
+
+					mundoVirtual.createJoint(jointDef);
+				}
+
+			}
+
+		}
 
 	}
 
@@ -286,7 +317,7 @@ public class Niveles extends Nivel {
 
 	public void intro() {
 
-		intro = (dato.getNumeroNivel() == 1);
+		intro = (datosNiveles.getNumeroNivel() == 1);
 
 		this.moverCamara = !intro;
 
@@ -453,8 +484,8 @@ public class Niveles extends Nivel {
 
 		if (Juego.ANCHO_PANTALLA / 2 + camara.position.x * Juego.UNIDAD_DEL_MUNDO >= Juego.LARGO_NIVEL) {
 
-			if (dato.getNumeroNivel() == 10 || dato.getNumeroNivel() == 20 || dato.getNumeroNivel() == 30
-					|| dato.getNumeroNivel() == 40) {
+			if (datosNiveles.getNumeroNivel() == 10 || datosNiveles.getNumeroNivel() == 20
+					|| datosNiveles.getNumeroNivel() == 30 || datosNiveles.getNumeroNivel() == 40) {
 
 				jugador.setGefe(true);
 
@@ -624,6 +655,8 @@ public class Niveles extends Nivel {
 		personajes.clear();
 
 		mapa.dispose();
+
+		particuala.liberarRecursos();
 
 	}
 

@@ -74,13 +74,13 @@ public class PantallaPuntuaciones extends Pantalla {
 
 		nivelMenu.addActor(ponerACero);
 
-		textosPunto = new Label[dato.getPuntuaciones().length];
+		textosPunto = new Label[datosNiveles.getPuntuaciones().length];
 
-		punto = new Label[dato.getPuntuaciones().length];
+		punto = new Label[datosNiveles.getPuntuaciones().length];
 
-		numeroNivel = new Label[dato.getPuntuaciones().length];
+		numeroNivel = new Label[datosNiveles.getPuntuaciones().length];
 
-		estado = new Label[dato.getPuntuaciones().length];
+		estado = new Label[datosNiveles.getPuntuaciones().length];
 
 		int o = 360;
 
@@ -92,17 +92,18 @@ public class PantallaPuntuaciones extends Pantalla {
 
 			textosPunto[i].setPosition(Juego.ANCHO_PANTALLA / 5, o);
 
-			numeroNivel[i] = new Label("" + dato.getNumeroNivelPuntuaciones()[i],
+			numeroNivel[i] = new Label("" + datosNiveles.getNumeroNivelPuntuaciones()[i],
 					recurso.get("uis/general/uiskin.json", Skin.class));
 
 			numeroNivel[i].setPosition(Juego.ANCHO_PANTALLA / 3 + 48, o);
 
-			estado[i] = new Label("" + dato.getEstadoPuntuaciones()[i],
+			estado[i] = new Label("" + datosNiveles.getEstadoPuntuaciones()[i],
 					recurso.get("uis/general/uiskin.json", Skin.class));
 
 			estado[i].setPosition(Juego.ANCHO_PANTALLA / 2 + 64, o);
 
-			punto[i] = new Label("" + dato.getPuntuaciones()[i], recurso.get("uis/general/uiskin.json", Skin.class));
+			punto[i] = new Label("" + datosNiveles.getPuntuaciones()[i],
+					recurso.get("uis/general/uiskin.json", Skin.class));
 
 			punto[i].setPosition(Juego.ANCHO_PANTALLA / 2 + 160, o);
 
@@ -140,27 +141,29 @@ public class PantallaPuntuaciones extends Pantalla {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 
-				for (int i = 0; i < dato.getPuntuaciones().length; i++)
+				for (int i = 0; i < datosNiveles.getPuntuaciones().length; i++)
 
 				{
 
-					dato.getPuntuaciones()[i] = 0;
+					datosNiveles.getPuntuaciones()[i] = 0;
 
-					dato.getNumeroNivelPuntuaciones()[i] = "----";
+					datosNiveles.getNumeroNivelPuntuaciones()[i] = "----";
 
-					dato.getEstadoPuntuaciones()[i] = "----";
+					datosNiveles.getEstadoPuntuaciones()[i] = "----";
 
 					textosPunto[i].setText("Puntos ");
 
-					numeroNivel[i].setText("" + dato.getNumeroNivelPuntuaciones()[i]);
+					numeroNivel[i].setText("" + datosNiveles.getNumeroNivelPuntuaciones()[i]);
 
-					estado[i].setText("" + dato.getEstadoPuntuaciones()[i]);
+					estado[i].setText("" + datosNiveles.getEstadoPuntuaciones()[i]);
 
-					punto[i].setText("" + dato.getPuntuaciones()[i]);
+					punto[i].setText("" + datosNiveles.getPuntuaciones()[i]);
 
 				}
 
 				configuracion.escribirDatos(dato);
+
+				informacionNiveles.escribirDatos(datosNiveles);
 
 				super.clicked(event, x, y);
 			}

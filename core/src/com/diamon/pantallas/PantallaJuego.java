@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -132,11 +131,11 @@ public class PantallaJuego extends Pantalla {
 
 		if (dato.isPartida()) {
 
-			dato.setNumeroNivel(1);
+			datosNiveles.setNumeroNivel(1);
 
 		}
 
-		numeroNivel = dato.getNumeroNivel();
+		numeroNivel = datosNiveles.getNumeroNivel();
 
 		fps = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
 
@@ -300,9 +299,10 @@ public class PantallaJuego extends Pantalla {
 
 		}
 
-		editor = new EditorNivel(nivel, configuracion, dato, camara, personajes, this, recurso, cursor);
+		editor = new EditorNivel(nivel, informacionNiveles, datosNiveles, configuracion, dato, camara, personajes, this,
+				recurso, cursor);
 
-		puntos = dato.getPuntos();
+		puntos = datosNiveles.getPuntos();
 
 	}
 
@@ -319,25 +319,25 @@ public class PantallaJuego extends Pantalla {
 
 		}
 
-		if ((dato.getNumeroNivel() <= 10)) {
+		if ((datosNiveles.getNumeroNivel() <= 10)) {
 
 			indice = 0;
 
 		}
 
-		if ((dato.getNumeroNivel() >= 11) && (dato.getNumeroNivel() <= 20)) {
+		if ((datosNiveles.getNumeroNivel() >= 11) && (datosNiveles.getNumeroNivel() <= 20)) {
 
 			indice = 1;
 
 		}
 
-		if ((dato.getNumeroNivel() >= 21) && (dato.getNumeroNivel() <= 30)) {
+		if ((datosNiveles.getNumeroNivel() >= 21) && (datosNiveles.getNumeroNivel() <= 30)) {
 
 			indice = 2;
 
 		}
 
-		if ((dato.getNumeroNivel() >= 31) && (dato.getNumeroNivel() <= 40)) {
+		if ((datosNiveles.getNumeroNivel() >= 31) && (datosNiveles.getNumeroNivel() <= 40)) {
 
 			indice = 3;
 
@@ -527,11 +527,13 @@ public class PantallaJuego extends Pantalla {
 
 				configuracion.escribirDatos(dato);
 
+				informacionNiveles.escribirDatos(datosNiveles);
+
 				terminarEdicion.remove();
 
 				editor.eliminarUI();
 
-				numeroNivel = dato.getNumeroNivel();
+				numeroNivel = datosNiveles.getNumeroNivel();
 
 				jugador.setTerminarNivel(true);
 
@@ -941,78 +943,7 @@ public class PantallaJuego extends Pantalla {
 	public void actualizar(float delta) {
 
 		//////////////////
-
-		mundoVirtual.getBodies(cuerpos); // Ojo recusos
-
-		if (pausar&&!editar) { // Box2D Ojo
-
-			if (cuerpos.size > 0) {
-
-				for (Body cuerpo : cuerpos) {
-
-					cuerpo.setActive(false);
-
-					cuerpo.setBullet(false);
-
-					cuerpo.setAwake(false);
-
-				}
-
-			}
-
-		} else {
-
-			if (cuerpos.size > 0) {
-
-				for (Body cuerpo : cuerpos) {
-
-					cuerpo.setActive(true);
-
-					cuerpo.setBullet(true);
-
-					cuerpo.setAwake(true);
-
-				}
-
-			}
-
-		}
-
-		if (editar&&!pausar) {
-
-			if (cuerpos.size > 0) {
-
-				for (Body cuerpo : cuerpos) {
-
-					cuerpo.setActive(false);
-
-					cuerpo.setBullet(false);
-
-					cuerpo.setAwake(false);
-
-
-				}
-
-			}
-
-		} else {
-
-			if (cuerpos.size > 0) {
-
-				for (Body cuerpo : cuerpos) {
-
-					cuerpo.setActive(true);
-
-					cuerpo.setBullet(true);
-
-					cuerpo.setAwake(true);
-
-				}
-
-			}
-
-		}
-
+		// Box2D
 		///////////////////
 
 		if (!pausar) {
@@ -1063,9 +994,9 @@ public class PantallaJuego extends Pantalla {
 
 			if (jugador.isFinNivel()) {
 
-				if (dato.getNumeroNivel() != 40) {
+				if (datosNiveles.getNumeroNivel() != 40) {
 
-					dato.anadirPuntuaciones(puntos, dato.getNumeroNivel(), "Gana");
+					datosNiveles.anadirPuntuaciones(puntos, datosNiveles.getNumeroNivel(), "Gana");
 
 				}
 
@@ -1112,25 +1043,25 @@ public class PantallaJuego extends Pantalla {
 
 					public void run() {
 
-						if (dato.getNumeroNivel() == 40 && jugador.isFinNivel()) {
+						if (datosNiveles.getNumeroNivel() == 40 && jugador.isFinNivel()) {
 
-							dato.setPuntos(0);
+							datosNiveles.setPuntos(0);
 
-							dato.setVidas(3);
+							datosNiveles.setVidas(3);
 
-							dato.setMisiles(10);
+							datosNiveles.setMisiles(10);
 
-							dato.setBombas(10);
+							datosNiveles.setBombas(10);
 
 							dato.setContinuar(false);
 
-							dato.setPez(1);
+							datosNiveles.setPez(1);
 
-							dato.setNumeroSatelite(0);
+							datosNiveles.setNumeroSatelite(0);
 
-							dato.anadirPuntuaciones(puntos, dato.getNumeroNivel(), "Gana");
+							datosNiveles.anadirPuntuaciones(puntos, datosNiveles.getNumeroNivel(), "Gana");
 
-							dato.setNumeroNivel(1);
+							datosNiveles.setNumeroNivel(1);
 
 							dato.setEditor(true);
 
@@ -1155,19 +1086,19 @@ public class PantallaJuego extends Pantalla {
 
 						} else {
 
-							dato.setPuntos(0);
+							datosNiveles.setPuntos(0);
 
-							dato.setVidas(3);
+							datosNiveles.setVidas(3);
 
-							dato.setMisiles(10);
+							datosNiveles.setMisiles(10);
 
-							dato.setBombas(10);
+							datosNiveles.setBombas(10);
 
-							dato.setPez(1);
+							datosNiveles.setPez(1);
 
-							dato.setNumeroSatelite(0);
+							datosNiveles.setNumeroSatelite(0);
 
-							dato.anadirPuntuaciones(puntos, dato.getNumeroNivel(), "Pierde");
+							datosNiveles.anadirPuntuaciones(puntos, datosNiveles.getNumeroNivel(), "Pierde");
 
 							if (publicidad != null) {
 
@@ -1201,7 +1132,7 @@ public class PantallaJuego extends Pantalla {
 
 			if (editar) {
 
-				numeroNivel = dato.getNumeroNivel();
+				numeroNivel = datosNiveles.getNumeroNivel();
 
 			}
 
@@ -1211,7 +1142,7 @@ public class PantallaJuego extends Pantalla {
 
 					jugador.setTerminarNivel(false);
 
-					dato.setNumeroNivel(numeroNivel);
+					datosNiveles.setNumeroNivel(numeroNivel);
 
 					mundo.liberarRecursos();
 
@@ -1246,17 +1177,17 @@ public class PantallaJuego extends Pantalla {
 
 					}
 
-					dato.setPuntos(puntos);
+					datosNiveles.setPuntos(puntos);
 
-					dato.setVidas(jugador.getVida());
+					datosNiveles.setVidas(jugador.getVida());
 
-					dato.setMisiles(jugador.getMisil());
+					datosNiveles.setMisiles(jugador.getMisil());
 
-					dato.setBombas(jugador.getBomba());
+					datosNiveles.setBombas(jugador.getBomba());
 
-					dato.setPez(jugador.getTipo());
+					datosNiveles.setPez(jugador.getTipo());
 
-					dato.setNumeroSatelite(jugador.getNumeroDeSatelites());
+					datosNiveles.setNumeroSatelite(jugador.getNumeroDeSatelites());
 
 					gefe = false;
 
@@ -1359,7 +1290,7 @@ public class PantallaJuego extends Pantalla {
 
 		textoPuntos.setText("Puntos " + puntos);
 
-		textoNumeroNivel.setText("Nivel " + dato.getNumeroNivel());
+		textoNumeroNivel.setText("Nivel " + datosNiveles.getNumeroNivel());
 
 		textoVida.setText("" + jugador.getVida());
 
@@ -1387,6 +1318,8 @@ public class PantallaJuego extends Pantalla {
 		mundo.guardarDatos();
 
 		configuracion.escribirDatos(dato);
+
+		informacionNiveles.escribirDatos(datosNiveles);
 
 	}
 

@@ -5,17 +5,17 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 
-public class Configuraciones {
+public class InformacionNiveles {
 
-	private static final String DATOS_DE_CONFIGURACIONES = ".pezdepecera/datosConfiguraciones.dat";
+	private static final String DATOS_DE_NIVELES = ".pezdepecera/datosNiveles.dat";
 
-	private Datos datos;
+	private DatosNiveles datos;
 
 	public static final int INTERNO = 0;
 
 	public static final int LOCAL = 1;
 
-	public Datos leerDatos(int tipoDato) {
+	public DatosNiveles leerDatos(int tipoDato) {
 
 		if (datos != null) {
 
@@ -26,13 +26,13 @@ public class Configuraciones {
 
 		if (tipoDato == InformacionNiveles.INTERNO) {
 
-			configuracionDato = Gdx.files.internal("datos/datosConfiguraciones.dat");
+			configuracionDato = Gdx.files.internal("datos/datosNiveles.dat");
 
 		}
 
 		if (tipoDato == InformacionNiveles.LOCAL) {
 
-			configuracionDato = Gdx.files.local(Configuraciones.DATOS_DE_CONFIGURACIONES);
+			configuracionDato = Gdx.files.local(InformacionNiveles.DATOS_DE_NIVELES);
 
 		}
 
@@ -46,11 +46,11 @@ public class Configuraciones {
 
 				String archivoDecodificado = Base64Coder.decodeString(archivoCodificado);
 
-				datos = json.fromJson(Datos.class, archivoDecodificado);
+				datos = json.fromJson(DatosNiveles.class, archivoDecodificado);
 
 			} catch (Exception e) {
 
-				datos = new Datos();
+				datos = new DatosNiveles();
 
 				escribirDatos(datos);
 
@@ -58,7 +58,7 @@ public class Configuraciones {
 
 		} else {
 
-			datos = new Datos();
+			datos = new DatosNiveles();
 
 			escribirDatos(datos);
 
@@ -67,13 +67,13 @@ public class Configuraciones {
 		return datos;
 	}
 
-	public void escribirDatos(Datos dato) {
+	public void escribirDatos(DatosNiveles dato) {
 
 		Json json = new Json();
 
 		FileHandle configuracionDato = null;
 
-		configuracionDato = Gdx.files.local(Configuraciones.DATOS_DE_CONFIGURACIONES);
+		configuracionDato = Gdx.files.local(InformacionNiveles.DATOS_DE_NIVELES);
 
 		String archivoDecodifcado = json.toJson(dato);
 

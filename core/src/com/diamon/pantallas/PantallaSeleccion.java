@@ -144,17 +144,17 @@ public class PantallaSeleccion extends Pantalla {
 
 				dato.setPartida(true);
 
-				dato.setPuntos(0);
+				datosNiveles.setPuntos(0);
 
-				dato.setVidas(3);
+				datosNiveles.setVidas(3);
 
-				dato.setMisiles(10);
+				datosNiveles.setMisiles(10);
 
-				dato.setBombas(10);
+				datosNiveles.setBombas(10);
 
-				dato.setPez(1);
+				datosNiveles.setPez(1);
 
-				dato.setNumeroSatelite(0);
+				datosNiveles.setNumeroSatelite(0);
 
 				juego.setScreen(new PantallaJuego(juego));
 

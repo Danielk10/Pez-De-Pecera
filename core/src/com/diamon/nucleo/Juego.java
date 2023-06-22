@@ -13,8 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.diamon.datos.InformacionNiveles;
+import com.diamon.datos.DatosNiveles;
+import com.diamon.datos.Datos;
 import com.diamon.datos.Configuraciones;
-import com.diamon.datos.Dato;
 import com.diamon.pantallas.PantallaCarga;
 import com.diamon.pantallas.PantallaJuego;
 import com.diamon.pantallas.PantallaPrecentacion;
@@ -30,7 +32,7 @@ public abstract class Juego extends Game {
 
 	public static final float UNIDAD_DEL_MUNDO = 100f;
 
-	public static final float LARGO_NIVEL = 13440f;
+	public static final float LARGO_NIVEL = 6400.0f;
 
 	public static final float GRAVEDAD = -10.0f;
 
@@ -40,7 +42,11 @@ public abstract class Juego extends Game {
 
 	public static final float FPS = 60f;
 
-	protected Dato dato;
+	protected DatosNiveles datosNiveles;
+
+	protected InformacionNiveles informacionNiveles;
+
+	protected Datos dato;
 
 	protected Configuraciones configuracion;
 
@@ -81,6 +87,22 @@ public abstract class Juego extends Game {
 		recurso = new AssetManager();
 
 		fondo = new Image[2];
+
+		informacionNiveles = new InformacionNiveles();
+
+		datosNiveles = informacionNiveles.leerDatos(InformacionNiveles.LOCAL);
+
+		if (datosNiveles.isLeerDatosAsset()) {
+
+			InformacionNiveles informacionNivelesInterna = new InformacionNiveles();
+
+			datosNiveles = informacionNivelesInterna.leerDatos(InformacionNiveles.INTERNO);
+
+			datosNiveles.setLeerDatosAsset(false);
+
+			informacionNivelesInterna.escribirDatos(datosNiveles);
+
+		}
 
 		configuracion = new Configuraciones();
 

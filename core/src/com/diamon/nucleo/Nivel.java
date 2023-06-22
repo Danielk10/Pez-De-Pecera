@@ -10,8 +10,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.diamon.datos.InformacionNiveles;
 import com.diamon.datos.Configuraciones;
-import com.diamon.datos.Dato;
+import com.diamon.datos.Datos;
+import com.diamon.datos.DatosNiveles;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.Jugador;
 
@@ -42,7 +44,11 @@ public abstract class Nivel {
 
 	protected TiledMap mapa;
 
-	protected Dato dato;
+	protected DatosNiveles datosNiveles;
+
+	protected InformacionNiveles informacionNiveles;
+
+	protected Datos dato;
 
 	protected Configuraciones configuracion;
 
@@ -91,6 +97,10 @@ public abstract class Nivel {
 		configuracion = pantalla.configuracion;
 
 		dato = pantalla.dato;
+
+		informacionNiveles = pantalla.informacionNiveles;
+
+		datosNiveles = pantalla.datosNiveles;
 
 		fondo = new Fondo[2];
 

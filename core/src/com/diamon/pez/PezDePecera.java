@@ -109,7 +109,7 @@ public class PezDePecera extends Juego {
 		recurso.load("texturas/controles.atlas", TextureAtlas.class);
 
 		recurso.load("texturas/dedos.atlas", TextureAtlas.class);
-		
+
 		recurso.load("texturas/tiburon.atlas", TextureAtlas.class);
 
 		recurso.load("audios/explosion.ogg", Sound.class);
@@ -125,9 +125,6 @@ public class PezDePecera extends Juego {
 		recurso.load("uis/carga/neon-ui.json", Skin.class);
 
 		recurso.load("particulas/Particle Park Flame.p", ParticleEffect.class);
-
-		
-		recurso.load("particulas/test.p", ParticleEffect.class);
 
 		setScreen(new PantallaPrecentacion(this));
 

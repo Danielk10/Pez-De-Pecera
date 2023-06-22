@@ -15,8 +15,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.diamon.datos.InformacionNiveles;
 import com.diamon.datos.Configuraciones;
-import com.diamon.datos.Dato;
+import com.diamon.datos.Datos;
+import com.diamon.datos.DatosNiveles;
 
 public abstract class Personaje extends Sprite {
 
@@ -50,7 +52,11 @@ public abstract class Personaje extends Sprite {
 
 	protected boolean vivo;
 
-	protected Dato dato;
+	protected DatosNiveles datosNiveles;
+
+	protected InformacionNiveles informacionNiveles;
+
+	protected Datos dato;
 
 	protected Configuraciones configuracion;
 
@@ -90,11 +96,15 @@ public abstract class Personaje extends Sprite {
 
 		camara = pantalla.camara;
 
-		dato = pantalla.dato;
-
 		this.mundoVirtual = pantalla.mundoVirtual;
 
+		dato = pantalla.dato;
+
 		configuracion = pantalla.configuracion;
+
+		datosNiveles = pantalla.datosNiveles;
+
+		informacionNiveles = pantalla.informacionNiveles;
 
 		this.tipoDeCuerpo = tipoDeCuerpo;
 
@@ -198,11 +208,15 @@ public abstract class Personaje extends Sprite {
 
 		camara = pantalla.camara;
 
-		dato = pantalla.dato;
-
 		this.mundoVirtual = pantalla.mundoVirtual;
 
+		dato = pantalla.dato;
+
 		configuracion = pantalla.configuracion;
+
+		datosNiveles = pantalla.datosNiveles;
+
+		informacionNiveles = pantalla.informacionNiveles;
 
 		this.tipoDeCuerpo = tipoDeCuerpo;
 
@@ -311,11 +325,15 @@ public abstract class Personaje extends Sprite {
 
 		camara = pantalla.camara;
 
-		dato = pantalla.dato;
-
 		this.mundoVirtual = pantalla.mundoVirtual;
 
+		dato = pantalla.dato;
+
 		configuracion = pantalla.configuracion;
+
+		datosNiveles = pantalla.datosNiveles;
+
+		informacionNiveles = pantalla.informacionNiveles;
 
 		this.tipoDeCuerpo = tipoDeCuerpo;
 

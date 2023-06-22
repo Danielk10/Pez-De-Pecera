@@ -15,8 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.diamon.datos.InformacionNiveles;
 import com.diamon.datos.Configuraciones;
-import com.diamon.datos.Dato;
+import com.diamon.datos.Datos;
+import com.diamon.datos.DatosNiveles;
 import com.diamon.pez.publicidad.Publicidad;
 
 import box2dLight.Light;
@@ -40,9 +42,13 @@ public abstract class Pantalla implements Screen {
 
 	protected ShapeRenderer pincelPrueba;
 
-	protected Dato dato;
+	protected Datos dato;
 
 	protected Configuraciones configuracion;
+
+	protected DatosNiveles datosNiveles;
+
+	protected InformacionNiveles informacionNiveles;
 
 	protected Publicidad publicidad;
 
@@ -95,6 +101,10 @@ public abstract class Pantalla implements Screen {
 
 		dato = juego.dato;
 
+		informacionNiveles = juego.informacionNiveles;
+
+		datosNiveles = juego.datosNiveles;
+
 	}
 
 	public abstract void mostrar();
@@ -124,7 +134,7 @@ public abstract class Pantalla implements Screen {
 	@Override
 	public void render(float delta) {
 
-		//ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0F, true);
+		ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0F, true);
 
 		pincel.setProjectionMatrix(camara.combined);
 

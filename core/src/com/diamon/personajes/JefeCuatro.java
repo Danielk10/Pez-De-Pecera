@@ -40,7 +40,7 @@ public class JefeCuatro extends Personaje {
 
 			if (personajes.get(i) instanceof Jugador) {
 
-				jugador = (Jugador) personajes.get(i);
+				this.jugador = (Jugador) personajes.get(i);
 
 			}
 
@@ -57,7 +57,7 @@ public class JefeCuatro extends Personaje {
 
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2/ Juego.UNIDAD_DEL_MUNDO + getWidth()) ) {
+		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
 
 			remover = true;
 

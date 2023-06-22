@@ -75,11 +75,11 @@ public class Jugador extends Personaje {
 		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 
-		misil = dato.getMisiles();
+		misil = datosNiveles.getMisiles();
 
-		bomba = dato.getBombas();
+		bomba = datosNiveles.getBombas();
 
-		vida = dato.getVidas();
+		vida = datosNiveles.getVidas();
 
 		deltaToque = false;
 
@@ -115,18 +115,18 @@ public class Jugador extends Personaje {
 
 		velocidadCamaraItem = 1;
 
-		numeroDeSatelites = dato.getNumeroSatelite();
+		numeroDeSatelites = datosNiveles.getNumeroSatelite();
 	}
 
 	public Jugador(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
 		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
 
-		misil = dato.getMisiles();
+		misil = datosNiveles.getMisiles();
 
-		bomba = dato.getBombas();
+		bomba = datosNiveles.getBombas();
 
-		vida = dato.getVidas();
+		vida = datosNiveles.getVidas();
 
 		deltaToque = false;
 
@@ -162,17 +162,17 @@ public class Jugador extends Personaje {
 
 		velocidadCamaraItem = 1;
 
-		numeroDeSatelites = dato.getNumeroSatelite();
+		numeroDeSatelites = datosNiveles.getNumeroSatelite();
 	}
 
 	public Jugador(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
 		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 
-		misil = dato.getMisiles();
+		misil = datosNiveles.getMisiles();
 
-		bomba = dato.getBombas();
+		bomba = datosNiveles.getBombas();
 
-		vida = dato.getVidas();
+		vida = datosNiveles.getVidas();
 
 		deltaToque = false;
 
@@ -208,7 +208,7 @@ public class Jugador extends Personaje {
 
 		velocidadCamaraItem = 1;
 
-		numeroDeSatelites = dato.getNumeroSatelite();
+		numeroDeSatelites = datosNiveles.getNumeroSatelite();
 
 	}
 
@@ -340,9 +340,9 @@ public class Jugador extends Personaje {
 
 			derecha = true;
 
-			//cuerpo.setAngularVelocity(0);
+			// cuerpo.setAngularVelocity(0);
 
-			//cuerpo.setTransform(cuerpo.getPosition(), 0);
+			// cuerpo.setTransform(cuerpo.getPosition(), 0);
 
 			break;
 
@@ -801,11 +801,14 @@ public class Jugador extends Personaje {
 
 			y += velocidadY / Juego.DELTA_A_PIXEL * delta;
 
-			//cuerpo.setGravityScale(0);
+			// cuerpo.setGravityScale(0);
 
-			/*cuerpo.setLinearVelocity((Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta)
-					* Juego.UNIDAD_DEL_MUNDO * (Juego.FPS / Juego.UNIDAD_DEL_MUNDO)
-					+ velocidadX * Juego.UNIDAD_DEL_MUNDO, velocidadY * Juego.UNIDAD_DEL_MUNDO);*/
+			/*
+			 * cuerpo.setLinearVelocity((Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO /
+			 * Juego.DELTA_A_PIXEL * delta) Juego.UNIDAD_DEL_MUNDO * (Juego.FPS /
+			 * Juego.UNIDAD_DEL_MUNDO) + velocidadX * Juego.UNIDAD_DEL_MUNDO, velocidadY *
+			 * Juego.UNIDAD_DEL_MUNDO);
+			 */
 
 			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
 

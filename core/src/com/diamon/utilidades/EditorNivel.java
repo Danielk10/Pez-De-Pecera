@@ -18,8 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.diamon.datos.InformacionNiveles;
 import com.diamon.datos.Configuraciones;
-import com.diamon.datos.Dato;
+import com.diamon.datos.Datos;
+import com.diamon.datos.DatosNiveles;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
@@ -58,9 +60,13 @@ public class EditorNivel {
 
 	protected Stage nivel;
 
-	private Configuraciones configuracion;
+	private InformacionNiveles informacionNiveles;
 
-	private Dato dato;
+	private DatosNiveles datosNiveles;
+
+	protected Configuraciones configuracion;
+
+	protected Datos dato;
 
 	protected String tipo;
 
@@ -104,11 +110,15 @@ public class EditorNivel {
 
 	private int velocidadCamara;
 
-	public EditorNivel(final Stage nivel, final Configuraciones configuracion, final Dato dato,
-			final OrthographicCamera camara, final Array<Personaje> personajes, final Pantalla pantalla,
-			final AssetManager recurso, Cursor cursor) {
+	public EditorNivel(final Stage nivel, final InformacionNiveles informacionNiveles, final DatosNiveles datosNiveles,
+			Configuraciones configuracion, Datos dato, final OrthographicCamera camara,
+			final Array<Personaje> personajes, final Pantalla pantalla, final AssetManager recurso, Cursor cursor) {
 
 		this.camara = camara;
+
+		this.informacionNiveles = informacionNiveles;
+
+		this.datosNiveles = datosNiveles;
 
 		this.configuracion = configuracion;
 
@@ -204,7 +214,7 @@ public class EditorNivel {
 
 		numeroNivel.setItems(niveles);
 
-		numeroNivel.setSelectedIndex(dato.getNumeroNivel() - 1);
+		numeroNivel.setSelectedIndex(datosNiveles.getNumeroNivel() - 1);
 
 		mundo = new Label("Nivel: ", recurso.get("uis/general/uiskin.json", Skin.class), "default-font", Color.GREEN);
 
@@ -678,7 +688,7 @@ public class EditorNivel {
 
 				float ancho = 0, alto = 0;
 
-				String numeroNvel = "Nivel " + dato.getNumeroNivel();
+				String numeroNvel = "Nivel " + datosNiveles.getNumeroNivel();
 
 				for (int i = 0; i < personajes.size; i++) {
 
@@ -703,14 +713,14 @@ public class EditorNivel {
 
 				}
 
-				for (int i = 0; i < dato.getTamanoArray(numeroNvel).size; i++) {
+				for (int i = 0; i < datosNiveles.getTamanoArray(numeroNvel).size; i++) {
 
-					Rectangle r = new Rectangle(dato.getTamanoArray(numeroNvel).get(i).x,
-							dato.getTamanoArray(numeroNvel).get(i).y, ancho, alto);
+					Rectangle r = new Rectangle(datosNiveles.getTamanoArray(numeroNvel).get(i).x,
+							datosNiveles.getTamanoArray(numeroNvel).get(i).y, ancho, alto);
 
 					if (cursor.getBoundingRectangle().overlaps(r)) {
 
-						dato.eliminarActor(numeroNvel, tipo, i);
+						datosNiveles.eliminarActor(numeroNvel, tipo, i);
 
 					}
 
@@ -763,11 +773,13 @@ public class EditorNivel {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 
-				String numeroNvel = "Nivel " + dato.getNumeroNivel();
+				String numeroNvel = "Nivel " + datosNiveles.getNumeroNivel();
 
-				dato.eliminarActores(numeroNvel);
+				datosNiveles.eliminarActores(numeroNvel);
 
 				configuracion.escribirDatos(dato);
+
+				informacionNiveles.escribirDatos(datosNiveles);
 
 				if (agregar) {
 
@@ -801,7 +813,7 @@ public class EditorNivel {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 
-				dato.setNumeroNivel(((SelectBox<String>) actor).getSelectedIndex() + 1);
+				datosNiveles.setNumeroNivel(((SelectBox<String>) actor).getSelectedIndex() + 1);
 
 				for (int i = 0; i < personajes.size; i++) {
 
@@ -1153,7 +1165,7 @@ public class EditorNivel {
 
 	private void agregarActorTemporal(float x, float y) {
 
-		if (tipo.equals(Dato.PULPO)) {
+		if (tipo.equals(DatosNiveles.PULPO)) {
 
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 32, 64, Pulpo.ESTATICO);
@@ -1165,7 +1177,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
+		if (tipo.equals(DatosNiveles.PEZ_GLOBO_AMARILLO)) {
 
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
@@ -1178,7 +1190,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
+		if (tipo.equals(DatosNiveles.PEZ_GOBO_NARANJA)) {
 
 			PezGloboNaranja actor = new PezGloboNaranja(
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
@@ -1191,7 +1203,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_ANGEL)) {
+		if (tipo.equals(DatosNiveles.PEZ_ANGEL)) {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 64, 32, PezAngel.ESTATICO);
@@ -1203,7 +1215,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.BOMBA)) {
+		if (tipo.equals(DatosNiveles.BOMBA)) {
 
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
@@ -1215,7 +1227,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.ALGAS)) {
+		if (tipo.equals(DatosNiveles.ALGAS)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
 
@@ -1232,7 +1244,7 @@ public class EditorNivel {
 
 		Array<Personaje> actores = new Array<Personaje>();
 
-		if (tipo.equals(Dato.PULPO)) {
+		if (tipo.equals(DatosNiveles.PULPO)) {
 
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 32, 64, Pulpo.ESTATICO);
@@ -1244,7 +1256,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_GLOBO_AMARILLO)) {
+		if (tipo.equals(DatosNiveles.PEZ_GLOBO_AMARILLO)) {
 
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 32,
@@ -1257,7 +1269,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_GOBO_NARANJA)) {
+		if (tipo.equals(DatosNiveles.PEZ_GOBO_NARANJA)) {
 
 			PezGloboNaranja actor = new PezGloboNaranja(
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions().get(0), pantalla, 64, 64,
@@ -1270,7 +1282,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.PEZ_ANGEL)) {
+		if (tipo.equals(DatosNiveles.PEZ_ANGEL)) {
 
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions().get(0),
 					pantalla, 64, 32, PezAngel.ESTATICO);
@@ -1282,7 +1294,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.BOMBA)) {
+		if (tipo.equals(DatosNiveles.BOMBA)) {
 
 			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
 					Bomba.DIANAMICO);
@@ -1294,7 +1306,7 @@ public class EditorNivel {
 
 		}
 
-		if (tipo.equals(Dato.ALGAS)) {
+		if (tipo.equals(DatosNiveles.ALGAS)) {
 
 			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Algas.ESTATICO);
 
@@ -1349,9 +1361,9 @@ public class EditorNivel {
 
 	public void agregarActor(Array<Personaje> actores) {
 
-		String nivel = "Nivel " + dato.getNumeroNivel();
+		String nivel = "Nivel " + datosNiveles.getNumeroNivel();
 
-		dato.gurdarActores(actores, tipo, nivel);
+		datosNiveles.gurdarActores(actores, tipo, nivel);
 
 	}
 

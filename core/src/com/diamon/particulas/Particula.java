@@ -2,6 +2,7 @@ package com.diamon.particulas;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.graphics.ParticleEmitterBox2D;
@@ -14,6 +15,8 @@ public class Particula {
 
 	private ParticleEffect efectoParticula;
 
+	private ParticleEffectPool efectoParticulaPiscina;
+
 	protected World mundoVirtual;
 
 	private Vector2 posicion;
@@ -24,14 +27,16 @@ public class Particula {
 
 	public Particula(ParticleEffect efectoParticula, Pantalla pantalla) {
 
-		this.efectoParticula = efectoParticula;
-
 		this.pantalla = pantalla;
 
 		mundoVirtual = pantalla.getMundoVirtual();
 
+		efectoParticulaPiscina = new ParticleEffectPool(efectoParticula, 30, 30);
+
+		this.efectoParticula = efectoParticulaPiscina.obtain();
+
 		ParticleEmitterBox2D emisorBox2D = new ParticleEmitterBox2D(mundoVirtual,
-				efectoParticula.getEmitters().first());
+				this.efectoParticula.getEmitters().first());
 
 		this.efectoParticula.getEmitters().add(emisorBox2D);
 
@@ -43,12 +48,13 @@ public class Particula {
 
 	public ParticleEffect getEfectoParticula() {
 
-		return efectoParticula;
+		return this.efectoParticula;
 	}
 
 	public void iniciar() {
 
 		this.efectoParticula.start();
+
 	}
 
 	public Light getPuntoLuz() {
@@ -95,7 +101,7 @@ public class Particula {
 
 	public void setEscala(float proporsion) {
 
-		efectoParticula.scaleEffect(proporsion / Juego.UNIDAD_DEL_MUNDO, proporsion / Juego.UNIDAD_DEL_MUNDO);
+		efectoParticula.scaleEffect(proporsion / Juego.UNIDAD_DEL_MUNDO);
 
 	}
 
@@ -122,6 +128,8 @@ public class Particula {
 	}
 
 	public void liberarRecursos() {
+
+		this.efectoParticula.dispose();
 
 	}
 
