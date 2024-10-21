@@ -30,6 +30,13 @@ android {
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
+    //Los tres niveles ../../.../ son de libGDX
+    //No de AppCenter
+    //Cambiando ruta de salida vieja .aab y .apk
+  	//buildDir ="${buildDir}../../../build/" 
+  	//Cambiando ruta de salida nueva .aab y .apk
+  	buildDir ="${buildDir}../../../android/build/" 
+
   }
   compileOptions {
     sourceCompatibility "11"
