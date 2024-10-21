@@ -130,7 +130,7 @@ public abstract class Juego extends Game {
 
 		for (int i = 0; i < fondo.length; i++) {
 
-			fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
+			fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/badlogic.jpg")));
 
 			fondo[i].setSize(Juego.ANCHO_PANTALLA + 213, Juego.ALTO_PANTALLA);
 
@@ -173,7 +173,7 @@ public abstract class Juego extends Game {
 				posicionFondoX = 0;
 			}
 
-			fondo[0].setPosition(posicionFondoX, 0);
+        	fondo[0].setPosition(posicionFondoX, 0);
 
 			fondo[1].setPosition(posicionFondoX + Juego.ANCHO_PANTALLA, 0);
 

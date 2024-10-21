@@ -1,17 +1,17 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/android/src/main/java/com/diamon/pez/android/AndroidLauncher.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/nucleo/Juego.java",
       "selection": {
         "end": {
-          "column": 0,
-          "index": 0,
-          "line": 0
+          "column": 2,
+          "index": 3239,
+          "line": 130
         },
         "start": {
-          "column": 0,
-          "index": 0,
-          "line": 0
+          "column": 2,
+          "index": 3239,
+          "line": 130
         }
       }
     },
@@ -19,32 +19,17 @@
       "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pez/PezDePecera.java",
       "selection": {
         "end": {
-          "column": 0,
-          "index": 0,
-          "line": 0
+          "column": 44,
+          "index": 3299,
+          "line": 131
         },
         "start": {
-          "column": 0,
-          "index": 0,
-          "line": 0
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/android/build.gradle",
-      "selection": {
-        "end": {
-          "column": 25,
-          "index": 1243,
-          "line": 40
-        },
-        "start": {
-          "column": 25,
-          "index": 1243,
-          "line": 40
+          "column": 44,
+          "index": 3299,
+          "line": 131
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/android/src/main/java/com/diamon/pez/android/AndroidLauncher.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pez/PezDePecera.java"
 }

@@ -24,6 +24,9 @@ public class PezDePecera extends Juego {
 	public void create() {
 
 		super.create();
+        
+        
+        //setScreen(new Prueba(this));
 
 		if (dato.isPantallaCompleta()) {
 
