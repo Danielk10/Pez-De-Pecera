@@ -24,245 +24,232 @@ import com.diamon.pez.publicidad.Publicidad;
 
 public abstract class Juego extends Game {
 
-	protected AssetManager recurso;
+    protected AssetManager recurso;
 
-	public static final float ANCHO_PANTALLA = 1280f;
+    public static final float ANCHO_PANTALLA = 1280f;
 
-	public static final float ALTO_PANTALLA = 720f;
+    public static final float ALTO_PANTALLA = 720f;
 
-	public static final float UNIDAD_DEL_MUNDO = 100f;
+    public static final float UNIDAD_DEL_MUNDO = 100f;
 
-	public static final float LARGO_NIVEL = 6400.0f;
+    public static final float LARGO_NIVEL = 6400.0f;
 
-	public static final float GRAVEDAD = -10.0f;
+    public static final float GRAVEDAD = -10.0f;
 
-	public static final float VELOCIDAD_CAMARA = 1f;
+    public static final float VELOCIDAD_CAMARA = 1f;
 
-	public static final float DELTA_A_PIXEL = 0.0166666666666667f;
+    public static final float DELTA_A_PIXEL = 0.0166666666666667f;
 
-	public static final float FPS = 60f;
+    public static final float FPS = 60f;
 
-	protected DatosNiveles datosNiveles;
+    protected DatosNiveles datosNiveles;
 
-	protected InformacionNiveles informacionNiveles;
+    protected InformacionNiveles informacionNiveles;
 
-	protected Datos dato;
+    protected Datos dato;
 
-	protected Configuraciones configuracion;
+    protected Configuraciones configuracion;
 
-	private Image[] fondo;
+    private Image[] fondo;
 
-	private float posicionFondoX;
+    private float posicionFondoX;
 
-	protected Stage nivelMenu;
+    protected Stage nivelMenu;
 
-	private boolean renderizar;
+    private boolean renderizar;
 
-	protected Publicidad publicidad;
+    protected Publicidad publicidad;
 
-	protected World mundoVirtual;
+    protected World mundoVirtual;
 
-	protected static final float STEP_TIME = 1f / 60f;
+    protected static final float STEP_TIME = 1f / 60f;
 
-	protected static final int VELOCITY_ITERATIONS = 6;
+    protected static final int VELOCITY_ITERATIONS = 6;
 
-	protected static final int POSITION_ITERATIONS = 2;
+    protected static final int POSITION_ITERATIONS = 2;
 
-	private float accumulator = 0;
+    private float accumulator = 0;
 
-	public Juego(Publicidad publicidad) {
-		super();
+    public Juego(Publicidad publicidad) {
+        super();
 
-		this.publicidad = publicidad;
+        this.publicidad = publicidad;
+    }
 
-	}
+    @Override
+    public void create() {
 
-	@Override
-	public void create() {
+        Box2D.init();
 
-		Box2D.init();
+        mundoVirtual = new World(new Vector2(0, Juego.GRAVEDAD), true);
 
-		mundoVirtual = new World(new Vector2(0, Juego.GRAVEDAD), true);
+        recurso = new AssetManager();
 
-		recurso = new AssetManager();
+        fondo = new Image[2];
 
-		fondo = new Image[2];
+        informacionNiveles = new InformacionNiveles();
 
-		informacionNiveles = new InformacionNiveles();
+        datosNiveles = informacionNiveles.leerDatos(InformacionNiveles.LOCAL);
 
-		datosNiveles = informacionNiveles.leerDatos(InformacionNiveles.LOCAL);
+        if (datosNiveles.isLeerDatosAsset()) {
 
-		if (datosNiveles.isLeerDatosAsset()) {
+            InformacionNiveles informacionNivelesInterna = new InformacionNiveles();
 
-			InformacionNiveles informacionNivelesInterna = new InformacionNiveles();
+            datosNiveles = informacionNivelesInterna.leerDatos(InformacionNiveles.INTERNO);
 
-			datosNiveles = informacionNivelesInterna.leerDatos(InformacionNiveles.INTERNO);
+            datosNiveles.setLeerDatosAsset(false);
 
-			datosNiveles.setLeerDatosAsset(false);
+            informacionNivelesInterna.escribirDatos(datosNiveles);
+        }
 
-			informacionNivelesInterna.escribirDatos(datosNiveles);
+        configuracion = new Configuraciones();
 
-		}
+        dato = configuracion.leerDatos(Configuraciones.LOCAL);
 
-		configuracion = new Configuraciones();
+        if (dato.isLeerDatosAsset()) {
 
-		dato = configuracion.leerDatos(Configuraciones.LOCAL);
+            Configuraciones configuracionInterna = new Configuraciones();
 
-		if (dato.isLeerDatosAsset()) {
+            dato = configuracionInterna.leerDatos(Configuraciones.INTERNO);
 
-			Configuraciones configuracionInterna = new Configuraciones();
+            dato.setLeerDatosAsset(false);
 
-			dato = configuracionInterna.leerDatos(Configuraciones.INTERNO);
+            configuracionInterna.escribirDatos(dato);
+        }
 
-			dato.setLeerDatosAsset(false);
+        posicionFondoX = 0;
 
-			configuracionInterna.escribirDatos(dato);
+        renderizar = false;
 
-		}
+        nivelMenu = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA));
 
-		posicionFondoX = 0;
+        ((OrthographicCamera) nivelMenu.getCamera())
+                .setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
-		renderizar = false;
+        for (int i = 0; i < fondo.length; i++) {
 
-		nivelMenu = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA));
+            fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
 
-		((OrthographicCamera) nivelMenu.getCamera()).setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+            fondo[i].setSize(Juego.ANCHO_PANTALLA + 213, Juego.ALTO_PANTALLA);
 
-		for (int i = 0; i < fondo.length; i++) {
+            fondo[i].setPosition(0, 0);
 
-			fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/badlogic.jpg")));
+            nivelMenu.addActor(fondo[i]);
+        }
 
-			fondo[i].setSize(Juego.ANCHO_PANTALLA + 213, Juego.ALTO_PANTALLA);
+        Gdx.input.setInputProcessor(nivelMenu);
+    }
 
-			fondo[i].setPosition(0, 0);
+    @Override
+    public void render() {
 
-			nivelMenu.addActor(fondo[i]);
-		}
+        float delta = Gdx.graphics.getDeltaTime();
 
-		Gdx.input.setInputProcessor(nivelMenu);
+        accumulator += Math.min(delta, 0.25f);
 
-	}
+        if (accumulator >= STEP_TIME) {
 
-	@Override
-	public void render() {
+            accumulator -= STEP_TIME;
 
-		float delta = Gdx.graphics.getDeltaTime();
+            mundoVirtual.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        }
 
-		accumulator += Math.min(delta, 0.25f);
+        // mundoVirtual.step(delta, 8, 6);
 
-		if (accumulator >= STEP_TIME) {
+        ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0f, true);
 
-			accumulator -= STEP_TIME;
+        super.render();
 
-			mundoVirtual.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        if (renderizar) {
 
-		}
+            posicionFondoX -= 0.5f / Juego.DELTA_A_PIXEL * Gdx.graphics.getDeltaTime();
 
-		// mundoVirtual.step(delta, 8, 6);
+            if (posicionFondoX <= -Juego.ANCHO_PANTALLA) {
 
-		ScreenUtils.clear(0.0F, 0.0F, 1.0F, 1.0f, true);
+                posicionFondoX = 0;
+            }
 
-		super.render();
+            fondo[0].setPosition(posicionFondoX, 0);
 
-		if (renderizar) {
+            fondo[1].setPosition(posicionFondoX + Juego.ANCHO_PANTALLA, 0);
 
-			posicionFondoX -= 0.5f / Juego.DELTA_A_PIXEL * Gdx.graphics.getDeltaTime();
+            nivelMenu.draw();
 
-			if (posicionFondoX <= -Juego.ANCHO_PANTALLA) {
+            nivelMenu.act();
+        }
+    }
 
-				posicionFondoX = 0;
-			}
+    @Override
+    public void resize(int ancho, int alto) {
 
-        	fondo[0].setPosition(posicionFondoX, 0);
+        super.resize(ancho, alto);
 
-			fondo[1].setPosition(posicionFondoX + Juego.ANCHO_PANTALLA, 0);
+        nivelMenu.getViewport().update(ancho, alto);
+    }
 
-			nivelMenu.draw();
+    @Override
+    public void setScreen(Screen screen) {
 
-			nivelMenu.act();
+        if (screen instanceof PantallaCarga
+                || screen instanceof PantallaJuego
+                || screen instanceof PantallaPrecentacion) {
 
-		}
+            nivelMenu.clear();
 
-	}
+            renderizar = false;
 
-	@Override
-	public void resize(int ancho, int alto) {
+            super.setScreen(screen);
 
-		super.resize(ancho, alto);
+        } else {
+            nivelMenu.clear();
 
-		nivelMenu.getViewport().update(ancho, alto);
+            for (int i = 0; i < fondo.length; i++) {
 
-	}
+                fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
 
-	@Override
-	public void setScreen(Screen screen) {
+                fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
-		if (screen instanceof PantallaCarga || screen instanceof PantallaJuego
-				|| screen instanceof PantallaPrecentacion) {
+                fondo[i].setPosition(0, 0);
 
-			nivelMenu.clear();
+                nivelMenu.addActor(fondo[i]);
+            }
 
-			renderizar = false;
+            super.setScreen(screen);
 
-			super.setScreen(screen);
+            Gdx.input.setInputProcessor(null);
 
-		} else
+            Gdx.input.setInputProcessor(nivelMenu);
 
-		{
-			nivelMenu.clear();
+            renderizar = true;
+        }
+    }
 
-			for (int i = 0; i < fondo.length; i++) {
+    @Override
+    public void resume() {
 
-				fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
+        super.resume();
 
-				fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+        if (screen instanceof PantallaCarga
+                || screen instanceof PantallaJuego
+                || screen instanceof PantallaPrecentacion) {
 
-				fondo[i].setPosition(0, 0);
+        } else {
 
-				nivelMenu.addActor(fondo[i]);
-			}
+            Gdx.input.setInputProcessor(null);
 
-			super.setScreen(screen);
+            Gdx.input.setInputProcessor(nivelMenu);
+        }
+    }
 
-			Gdx.input.setInputProcessor(null);
+    @Override
+    public void dispose() {
 
-			Gdx.input.setInputProcessor(nivelMenu);
+        recurso.dispose();
 
-			renderizar = true;
+        Gdx.input.setInputProcessor(null);
 
-		}
+        nivelMenu.dispose();
 
-	}
-
-	@Override
-	public void resume() {
-
-		super.resume();
-
-		if (screen instanceof PantallaCarga || screen instanceof PantallaJuego
-				|| screen instanceof PantallaPrecentacion) {
-
-		} else {
-
-			Gdx.input.setInputProcessor(null);
-
-			Gdx.input.setInputProcessor(nivelMenu);
-
-		}
-
-	}
-
-	@Override
-	public void dispose() {
-
-		recurso.dispose();
-
-		Gdx.input.setInputProcessor(null);
-
-		nivelMenu.dispose();
-
-		mundoVirtual.dispose();
-
-	}
-
+        mundoVirtual.dispose();
+    }
 }

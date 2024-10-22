@@ -19,1279 +19,1344 @@ import com.diamon.nucleo.Pantalla;
 
 public class PantallaOpciones extends Pantalla {
 
-	private TextButton atras;
+    private TextButton atras;
 
-	private Label titulo;
+    private Label titulo;
 
-	private TextButton partida;
+    private TextButton partida;
 
-	private TextButton controles;
+    private TextButton controles;
 
-	private TextButton graficos;
+    private TextButton graficos;
 
-	private TextButton sonido;
+    private TextButton sonido;
 
-	private Label tituloPantallaCompleta;
+    private Label tituloPantallaCompleta;
 
-	private Label tituloSincronizacionVertical;
+    private Label tituloSincronizacionVertical;
 
-	private Label tituloFiltradoBilineal;
+    private Label tituloFiltradoBilineal;
 
-	private Label tituloMostrarFPS;
+    private Label tituloMostrarFPS;
 
-	private Label tituloPrueba;
+    private Label tituloPrueba;
 
-	private CheckBox pantallaCompleta;
+    private CheckBox pantallaCompleta;
 
-	private CheckBox sincronizacionVertical;
+    private CheckBox sincronizacionVertical;
 
-	private CheckBox filtradoBilineal;
+    private CheckBox filtradoBilineal;
 
-	private CheckBox mostrarFPS;
+    private CheckBox mostrarFPS;
 
-	private CheckBox prueba;
+    private CheckBox prueba;
 
-	private TextButton aceptarGraficos;
+    private TextButton aceptarGraficos;
 
-	private TextButton cancelarGraficos;
+    private TextButton cancelarGraficos;
 
-	private Label tituloOpcionesGraficos;
+    private Label tituloOpcionesGraficos;
 
-	private Label tituloOpcionesPartida;
+    private Label tituloOpcionesPartida;
 
-	private TextButton aceptarPartida;
+    private TextButton aceptarPartida;
 
-	private TextButton cancelarPartida;
+    private TextButton cancelarPartida;
 
-	private Label tituloAutoDisparo;
+    private Label tituloAutoDisparo;
 
-	private CheckBox autoDisparo;
+    private CheckBox autoDisparo;
 
-	private Label tituloOpcionesControles;
+    private Label tituloOpcionesControles;
 
-	private TextButton atrasControles;
+    private TextButton atrasControles;
 
-	private Label tituloMusica;
+    private Label tituloMusica;
 
-	private Label tituloSonido;
+    private Label tituloSonido;
 
-	private Slider volumenMusica;
+    private Slider volumenMusica;
 
-	private Slider volumenSonido;
+    private Slider volumenSonido;
 
-	private CheckBox activarSonido;
+    private CheckBox activarSonido;
 
-	private Label tituloactivarSonido;
+    private Label tituloactivarSonido;
 
-	private TextButton aceptarSonido;
+    private TextButton aceptarSonido;
 
-	private TextButton cancelarSonido;
+    private TextButton cancelarSonido;
 
-	private Label tituloOpcionesSonido;
+    private Label tituloOpcionesSonido;
 
-	private Label textoArriba;
+    private Label textoArriba;
 
-	private Label textoAbajo;
+    private Label textoAbajo;
 
-	private Label textoIzquierda;
+    private Label textoIzquierda;
 
-	private Label textoDerecha;
+    private Label textoDerecha;
 
-	private Label textoDisparo;
+    private Label textoDisparo;
 
-	private Label textoDisparoMisil;
+    private Label textoDisparoMisil;
 
-	private Label textoDisparoBomba;
+    private Label textoDisparoBomba;
 
-	private Label textoPausaJuego;
+    private Label textoPausaJuego;
 
-	private Image arriba;
+    private Image arriba;
 
-	private Image abajo;
+    private Image abajo;
 
-	private Image izquierda;
+    private Image izquierda;
 
-	private Image derecha;
+    private Image derecha;
 
-	private Image disparo;
+    private Image disparo;
 
-	private Image disparoMisil;
+    private Image disparoMisil;
 
-	private Image disparoBomba;
+    private Image disparoBomba;
 
-	private Image pausaJuego;
+    private Image pausaJuego;
 
-	private Image clicIzquierdo;
+    private Image clicIzquierdo;
 
-	private Image clicDerecho;
+    private Image clicDerecho;
 
-	public PantallaOpciones(Juego juego) {
-		super(juego);
-		// TODO Auto-generated constructor stub
-	}
+    public PantallaOpciones(Juego juego) {
+        super(juego);
+        // TODO Auto-generated constructor stub
+    }
 
-	@SuppressWarnings("static-access")
-	@Override
-	public void mostrar() {
+    @SuppressWarnings("static-access")
+    @Override
+    public void mostrar() {
 
-		atras = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
+        atras = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		atras.setSize(Juego.ANCHO_PANTALLA / 8, 32);
+        atras.setSize(Juego.ANCHO_PANTALLA / 8, 32);
 
-		atras.setPosition(32, 32);
+        atras.setPosition(32, 32);
 
-		titulo = new Label("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
+        titulo = new Label("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		titulo.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        titulo.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-		titulo.setPosition((Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
+        titulo.setPosition((Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
 
-		partida = new TextButton("Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+        partida = new TextButton("Partida", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		partida.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        partida.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-		partida.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
+        partida.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
 
-		controles = new TextButton("Controles", recurso.get("uis/general/uiskin.json", Skin.class));
+        controles = new TextButton("Controles", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		controles.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        controles.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-		graficos = new TextButton("Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
+        graficos = new TextButton("Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		graficos.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        graficos.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-		sonido = new TextButton("Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
+        sonido = new TextButton("Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		sonido.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        sonido.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			controles.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
+            controles.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
 
-			graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
+            graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
 
-			sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 96);
+            sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 96);
+        }
 
-		}
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+            controles.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
 
-			controles.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
+            graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
 
-			graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
+            sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
+        }
 
-			sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
+        textoPausaJuego = new Label("Pausa", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		}
+        textoPausaJuego.setPosition(Juego.ANCHO_PANTALLA / 4, 320);
 
-		textoPausaJuego = new Label("Pausa", recurso.get("uis/general/uiskin.json", Skin.class));
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		textoPausaJuego.setPosition(Juego.ANCHO_PANTALLA / 4, 320);
+            pausaJuego =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlEscape"));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            pausaJuego.setSize(128, 24);
+        }
 
-			pausaJuego = new Image(
-					recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlEscape"));
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-			pausaJuego.setSize(128, 24);
+            pausaJuego = new Image(recurso.get("texturas/pausa.png", Texture.class));
 
-		}
+            pausaJuego.setSize(32, 32);
+        }
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        pausaJuego.setPosition(Juego.ANCHO_PANTALLA / 2, 320);
 
-			pausaJuego = new Image(recurso.get("texturas/pausa.png", Texture.class));
+        textoArriba = new Label("Arriba", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			pausaJuego.setSize(32, 32);
+        textoArriba.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
 
-		}
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		pausaJuego.setPosition(Juego.ANCHO_PANTALLA / 2, 320);
+            arriba =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlArriba"));
 
-		textoArriba = new Label("Arriba", recurso.get("uis/general/uiskin.json", Skin.class));
+            arriba.setSize(128, 24);
+        }
 
-		textoArriba.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            arriba =
+                    new Image(
+                            recurso.get("texturas/dedos.atlas", TextureAtlas.class)
+                                    .findRegion("arriba"));
 
-			arriba = new Image(recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlArriba"));
+            arriba.setSize(32, 32);
+        }
 
-			arriba.setSize(128, 24);
+        arriba.setPosition(Juego.ANCHO_PANTALLA / 2, 288);
 
-		}
+        textoAbajo = new Label("Abajo", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        textoAbajo.setPosition(Juego.ANCHO_PANTALLA / 4, 256);
 
-			arriba = new Image(recurso.get("texturas/dedos.atlas", TextureAtlas.class).findRegion("arriba"));
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			arriba.setSize(32, 32);
+            abajo =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlAbajo"));
 
-		}
+            abajo.setSize(128, 24);
+        }
 
-		arriba.setPosition(Juego.ANCHO_PANTALLA / 2, 288);
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		textoAbajo = new Label("Abajo", recurso.get("uis/general/uiskin.json", Skin.class));
+            abajo =
+                    new Image(
+                            recurso.get("texturas/dedos.atlas", TextureAtlas.class)
+                                    .findRegion("abajo"));
 
-		textoAbajo.setPosition(Juego.ANCHO_PANTALLA / 4, 256);
+            abajo.setSize(32, 32);
+        }
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        abajo.setPosition(Juego.ANCHO_PANTALLA / 2, 256);
 
-			abajo = new Image(recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlAbajo"));
+        textoIzquierda = new Label("Izquierda", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			abajo.setSize(128, 24);
+        textoIzquierda.setPosition(Juego.ANCHO_PANTALLA / 4, 224);
 
-		}
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+            izquierda =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlIzquierdo"));
 
-			abajo = new Image(recurso.get("texturas/dedos.atlas", TextureAtlas.class).findRegion("abajo"));
+            izquierda.setSize(128, 24);
+        }
 
-			abajo.setSize(32, 32);
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		}
+            izquierda =
+                    new Image(
+                            recurso.get("texturas/dedos.atlas", TextureAtlas.class)
+                                    .findRegion("izquierda"));
 
-		abajo.setPosition(Juego.ANCHO_PANTALLA / 2, 256);
+            izquierda.setSize(32, 32);
+        }
 
-		textoIzquierda = new Label("Izquierda", recurso.get("uis/general/uiskin.json", Skin.class));
+        izquierda.setPosition(Juego.ANCHO_PANTALLA / 2, 224);
 
-		textoIzquierda.setPosition(Juego.ANCHO_PANTALLA / 4, 224);
+        textoDerecha = new Label("Derecha", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        textoDerecha.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
 
-			izquierda = new Image(
-					recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlIzquierdo"));
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			izquierda.setSize(128, 24);
+            derecha =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlDerecho"));
 
-		}
+            derecha.setSize(128, 24);
+        }
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-			izquierda = new Image(recurso.get("texturas/dedos.atlas", TextureAtlas.class).findRegion("izquierda"));
+            derecha =
+                    new Image(
+                            recurso.get("texturas/dedos.atlas", TextureAtlas.class)
+                                    .findRegion("derecha"));
 
-			izquierda.setSize(32, 32);
+            derecha.setSize(32, 32);
+        }
 
-		}
+        derecha.setPosition(Juego.ANCHO_PANTALLA / 2, 192);
 
-		izquierda.setPosition(Juego.ANCHO_PANTALLA / 2, 224);
+        textoDisparo = new Label("Disparar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		textoDerecha = new Label("Derecha", recurso.get("uis/general/uiskin.json", Skin.class));
+        textoDisparo.setPosition(Juego.ANCHO_PANTALLA / 4, 160);
 
-		textoDerecha.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            disparo =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlZ"));
 
-			derecha = new Image(
-					recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlDerecho"));
+            disparo.setSize(128, 24);
+        }
 
-			derecha.setSize(128, 24);
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		}
+            disparo =
+                    new Image(
+                            recurso.get("texturas/dedos.atlas", TextureAtlas.class)
+                                    .findRegion("precionado"));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+            disparo.setSize(32, 32);
+        }
 
-			derecha = new Image(recurso.get("texturas/dedos.atlas", TextureAtlas.class).findRegion("derecha"));
+        disparo.setPosition(Juego.ANCHO_PANTALLA / 2, 160);
 
-			derecha.setSize(32, 32);
+        textoDisparoMisil =
+                new Label("Disparar Misil", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		}
+        textoDisparoMisil.setPosition(Juego.ANCHO_PANTALLA / 4, 128);
 
-		derecha.setPosition(Juego.ANCHO_PANTALLA / 2, 192);
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		textoDisparo = new Label("Disparar", recurso.get("uis/general/uiskin.json", Skin.class));
+            disparoMisil =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlX"));
 
-		textoDisparo.setPosition(Juego.ANCHO_PANTALLA / 4, 160);
+            disparoMisil.setSize(128, 24);
+        }
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-			disparo = new Image(recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlZ"));
+            disparoMisil =
+                    new Image(
+                            recurso.get("texturas/iconos.atlas", TextureAtlas.class)
+                                    .findRegion("iconoexplosion"));
 
-			disparo.setSize(128, 24);
+            disparoMisil.setSize(32, 32);
+        }
 
-		}
+        disparoMisil.setPosition(Juego.ANCHO_PANTALLA / 2, 128);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        textoDisparoBomba =
+                new Label("Disparar Bomba", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			disparo = new Image(recurso.get("texturas/dedos.atlas", TextureAtlas.class).findRegion("precionado"));
+        textoDisparoBomba.setPosition(Juego.ANCHO_PANTALLA / 4, 96);
 
-			disparo.setSize(32, 32);
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		}
+            disparoBomba =
+                    new Image(
+                            recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                    .findRegion("controlEspacio"));
 
-		disparo.setPosition(Juego.ANCHO_PANTALLA / 2, 160);
+            disparoBomba.setSize(128, 24);
+        }
 
-		textoDisparoMisil = new Label("Disparar Misil", recurso.get("uis/general/uiskin.json", Skin.class));
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		textoDisparoMisil.setPosition(Juego.ANCHO_PANTALLA / 4, 128);
+            disparoBomba =
+                    new Image(
+                            recurso.get("texturas/iconos.atlas", TextureAtlas.class)
+                                    .findRegion("iconobomba"));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            disparoBomba.setSize(32, 32);
+        }
 
-			disparoMisil = new Image(
-					recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlX"));
+        disparoBomba.setPosition(Juego.ANCHO_PANTALLA / 2, 96);
 
-			disparoMisil.setSize(128, 24);
+        clicIzquierdo =
+                new Image(
+                        recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                .findRegion("clicIzquierdo"));
 
-		}
+        clicIzquierdo.setSize(128, 24);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        clicIzquierdo.setPosition(Juego.ANCHO_PANTALLA / 2 + 160, 160);
 
-			disparoMisil = new Image(
-					recurso.get("texturas/iconos.atlas", TextureAtlas.class).findRegion("iconoexplosion"));
+        clicDerecho =
+                new Image(
+                        recurso.get("texturas/controles.atlas", TextureAtlas.class)
+                                .findRegion("clicDerecho"));
 
-			disparoMisil.setSize(32, 32);
+        clicDerecho.setSize(128, 24);
 
-		}
+        clicDerecho.setPosition(Juego.ANCHO_PANTALLA / 2 + 160, 128);
 
-		disparoMisil.setPosition(Juego.ANCHO_PANTALLA / 2, 128);
+        tituloOpcionesControles =
+                new Label("Controles", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		textoDisparoBomba = new Label("Disparar Bomba", recurso.get("uis/general/uiskin.json", Skin.class));
+        tituloOpcionesControles.setPosition(
+                (Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
 
-		textoDisparoBomba.setPosition(Juego.ANCHO_PANTALLA / 4, 96);
+        atrasControles =
+                new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        atrasControles.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-			disparoBomba = new Image(
-					recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("controlEspacio"));
+        atrasControles.setPosition(32, 32);
 
-			disparoBomba.setSize(128, 24);
+        tituloOpcionesPartida =
+                new Label("Partida", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		}
+        tituloOpcionesPartida.setPosition(
+                (Juego.ANCHO_PANTALLA / 3) + 54, Juego.ALTO_PANTALLA - 64);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        tituloAutoDisparo =
+                new Label("Auto Disparo", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			disparoBomba = new Image(recurso.get("texturas/iconos.atlas", TextureAtlas.class).findRegion("iconobomba"));
+        tituloAutoDisparo.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
 
-			disparoBomba.setSize(32, 32);
+        autoDisparo = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		}
+        autoDisparo.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
 
-		disparoBomba.setPosition(Juego.ANCHO_PANTALLA / 2, 96);
+        cancelarPartida =
+                new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		clicIzquierdo = new Image(
-				recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("clicIzquierdo"));
+        cancelarPartida.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-		clicIzquierdo.setSize(128, 24);
+        cancelarPartida.setPosition(32, 32);
 
-		clicIzquierdo.setPosition(Juego.ANCHO_PANTALLA / 2 + 160, 160);
+        aceptarPartida =
+                new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		clicDerecho = new Image(recurso.get("texturas/controles.atlas", TextureAtlas.class).findRegion("clicDerecho"));
+        aceptarPartida.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-		clicDerecho.setSize(128, 24);
+        aceptarPartida.setPosition(608 - aceptarPartida.getWidth(), 32);
 
-		clicDerecho.setPosition(Juego.ANCHO_PANTALLA / 2 + 160, 128);
+        autoDisparo.setChecked(dato.isDiparoAutomatico());
 
-		tituloOpcionesControles = new Label("Controles", recurso.get("uis/general/uiskin.json", Skin.class));
+        tituloPantallaCompleta =
+                new Label("Pantalla Completa", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloOpcionesControles.setPosition((Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
+        pantallaCompleta = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		atrasControles = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
+        tituloSincronizacionVertical =
+                new Label("V-Sync", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		atrasControles.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+        sincronizacionVertical =
+                new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		atrasControles.setPosition(32, 32);
+        tituloFiltradoBilineal =
+                new Label("Filtrado Bilineal", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloOpcionesPartida = new Label("Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+        filtradoBilineal = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloOpcionesPartida.setPosition((Juego.ANCHO_PANTALLA / 3) + 54, Juego.ALTO_PANTALLA - 64);
+        tituloMostrarFPS =
+                new Label("Mostrar FPS", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloAutoDisparo = new Label("Auto Disparo", recurso.get("uis/general/uiskin.json", Skin.class));
+        mostrarFPS = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloAutoDisparo.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		autoDisparo = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloPantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
 
-		autoDisparo.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
+            pantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
 
-		cancelarPartida = new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloSincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 4, 240);
 
-		cancelarPartida.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+            sincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 240);
 
-		cancelarPartida.setPosition(32, 32);
+            tituloFiltradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
 
-		aceptarPartida = new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
+            filtradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 192);
 
-		aceptarPartida.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+            tituloMostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 4, 144);
 
-		aceptarPartida.setPosition(608 - aceptarPartida.getWidth(), 32);
+            mostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 144);
+        }
 
-		autoDisparo.setChecked(dato.isDiparoAutomatico());
+        if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-		tituloPantallaCompleta = new Label("Pantalla Completa", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloPantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 4, 336);
 
-		pantallaCompleta = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            pantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 336);
 
-		tituloSincronizacionVertical = new Label("V-Sync", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloSincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
 
-		sincronizacionVertical = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            sincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
 
-		tituloFiltradoBilineal = new Label("Filtrado Bilineal", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloFiltradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 4, 240);
 
-		filtradoBilineal = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            filtradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 240);
 
-		tituloMostrarFPS = new Label("Mostrar FPS", recurso.get("uis/general/uiskin.json", Skin.class));
+            tituloMostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
 
-		mostrarFPS = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            mostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 192);
+        }
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        tituloPrueba = new Label("Prueba", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			tituloPantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
+        tituloPrueba.setPosition(Juego.ANCHO_PANTALLA / 4, 96);
 
-			pantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
+        prueba = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			tituloSincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 4, 240);
+        prueba.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 96);
 
-			sincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 240);
+        cancelarGraficos =
+                new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			tituloFiltradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
+        cancelarGraficos.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-			filtradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 192);
+        cancelarGraficos.setPosition(32, 32);
 
-			tituloMostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 4, 144);
+        aceptarGraficos =
+                new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			mostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 144);
+        aceptarGraficos.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-		}
+        aceptarGraficos.setPosition(608 - aceptarGraficos.getWidth(), 32);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+        tituloOpcionesGraficos =
+                new Label("Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			tituloPantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 4, 336);
+        tituloOpcionesGraficos.setPosition(
+                (Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
 
-			pantallaCompleta.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 336);
+        pantallaCompleta.setChecked(dato.isPantallaCompleta());
 
-			tituloSincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 4, 288);
+        sincronizacionVertical.setChecked(dato.isSincronizacionVertical());
 
-			sincronizacionVertical.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 288);
+        filtradoBilineal.setChecked(dato.isFiltradoBilineal());
 
-			tituloFiltradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 4, 240);
+        mostrarFPS.setChecked(dato.isMostrarFPS());
 
-			filtradoBilineal.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 240);
+        prueba.setChecked(dato.isPrueba());
 
-			tituloMostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 4, 192);
+        tituloMusica =
+                new Label(
+                        "Volumen de la Musica", recurso.get("uis/general/uiskin.json", Skin.class));
 
-			mostrarFPS.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 192);
+        tituloMusica.setPosition(Juego.ANCHO_PANTALLA / 8, 240);
 
-		}
+        volumenMusica =
+                new Slider(
+                        0.0f,
+                        1.0f,
+                        0.1f,
+                        false,
+                        new Skin(
+                                Gdx.files.internal("uis/general/uiskin.json"),
+                                new TextureAtlas("uis/general/uiskin.atlas")));
 
-		tituloPrueba = new Label("Prueba", recurso.get("uis/general/uiskin.json", Skin.class));
+        volumenMusica.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 240);
 
-		tituloPrueba.setPosition(Juego.ANCHO_PANTALLA / 4, 96);
+        tituloSonido =
+                new Label("Volumen del Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		prueba = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+        tituloSonido.setPosition(Juego.ANCHO_PANTALLA / 8, 192);
 
-		prueba.setPosition(Juego.ANCHO_PANTALLA / 2 + 128, 96);
+        volumenSonido =
+                new Slider(
+                        0.0f,
+                        1.0f,
+                        0.1f,
+                        false,
+                        new Skin(
+                                Gdx.files.internal("uis/general/uiskin.json"),
+                                new TextureAtlas("uis/general/uiskin.atlas")));
 
-		cancelarGraficos = new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
+        volumenSonido.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 192);
 
-		cancelarGraficos.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+        tituloactivarSonido =
+                new Label("Musica del Juego", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		cancelarGraficos.setPosition(32, 32);
+        tituloactivarSonido.setPosition(Juego.ANCHO_PANTALLA / 8, 144);
 
-		aceptarGraficos = new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
+        activarSonido = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		aceptarGraficos.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+        activarSonido.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 144);
 
-		aceptarGraficos.setPosition(608 - aceptarGraficos.getWidth(), 32);
+        cancelarSonido =
+                new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		tituloOpcionesGraficos = new Label("Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
+        cancelarSonido.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-		tituloOpcionesGraficos.setPosition((Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
+        cancelarSonido.setPosition(32, 32);
 
-		pantallaCompleta.setChecked(dato.isPantallaCompleta());
+        aceptarSonido =
+                new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		sincronizacionVertical.setChecked(dato.isSincronizacionVertical());
+        aceptarSonido.setSize(Juego.ANCHO_PANTALLA / 7, 32);
 
-		filtradoBilineal.setChecked(dato.isFiltradoBilineal());
+        aceptarSonido.setPosition(608 - cancelarSonido.getWidth(), 32);
 
-		mostrarFPS.setChecked(dato.isMostrarFPS());
+        tituloOpcionesSonido =
+                new Label("Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
 
-		prueba.setChecked(dato.isPrueba());
+        tituloOpcionesSonido.setPosition((Juego.ANCHO_PANTALLA / 3) + 56, Juego.ALTO_PANTALLA - 64);
 
-		tituloMusica = new Label("Volumen de la Musica", recurso.get("uis/general/uiskin.json", Skin.class));
+        activarSonido.setChecked(dato.isSonido());
 
-		tituloMusica.setPosition(Juego.ANCHO_PANTALLA / 8, 240);
+        volumenMusica.setValue(dato.getVolumenMusica());
 
-		volumenMusica = new Slider(0.0f, 1.0f, 0.1f, false,
-				new Skin(Gdx.files.internal("uis/general/uiskin.json"), new TextureAtlas("uis/general/uiskin.atlas")));
+        volumenSonido.setValue(dato.getVolumenSonido());
 
-		volumenMusica.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 240);
+        anadirBotonesOpciones(true);
+    }
 
-		tituloSonido = new Label("Volumen del Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
+    @SuppressWarnings("static-access")
+    private void anadirBotonesOpciones(boolean anadir) {
 
-		tituloSonido.setPosition(Juego.ANCHO_PANTALLA / 8, 192);
+        if (anadir) {
 
-		volumenSonido = new Slider(0.0f, 1.0f, 0.1f, false,
-				new Skin(Gdx.files.internal("uis/general/uiskin.json"), new TextureAtlas("uis/general/uiskin.atlas")));
+            nivelMenu.addActor(titulo);
 
-		volumenSonido.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 192);
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		tituloactivarSonido = new Label("Musica del Juego", recurso.get("uis/general/uiskin.json", Skin.class));
+                nivelMenu.addActor(partida);
+            }
 
-		tituloactivarSonido.setPosition(Juego.ANCHO_PANTALLA / 8, 144);
+            nivelMenu.addActor(controles);
 
-		activarSonido = new CheckBox("", recurso.get("uis/general/uiskin.json", Skin.class));
+            nivelMenu.addActor(graficos);
 
-		activarSonido.setPosition(Juego.ANCHO_PANTALLA / 2 - 64, 144);
+            nivelMenu.addActor(sonido);
 
-		cancelarSonido = new TextButton("Cancelar", recurso.get("uis/general/uiskin.json", Skin.class));
+            nivelMenu.addActor(atras);
 
-		cancelarSonido.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+        } else {
+            titulo.remove();
 
-		cancelarSonido.setPosition(32, 32);
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		aceptarSonido = new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
+                partida.remove();
+            }
 
-		aceptarSonido.setSize(Juego.ANCHO_PANTALLA / 7, 32);
+            controles.remove();
 
-		aceptarSonido.setPosition(608 - cancelarSonido.getWidth(), 32);
+            graficos.remove();
 
-		tituloOpcionesSonido = new Label("Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
+            sonido.remove();
 
-		tituloOpcionesSonido.setPosition((Juego.ANCHO_PANTALLA / 3) + 56, Juego.ALTO_PANTALLA - 64);
+            atras.remove();
+        }
+    }
 
-		activarSonido.setChecked(dato.isSonido());
+    private void anadirBotonesSonido(boolean anadir) {
 
-		volumenMusica.setValue(dato.getVolumenMusica());
+        if (anadir) {
+            nivelMenu.addActor(tituloMusica);
 
-		volumenSonido.setValue(dato.getVolumenSonido());
+            nivelMenu.addActor(volumenMusica);
 
-		anadirBotonesOpciones(true);
+            nivelMenu.addActor(tituloSonido);
 
-	}
+            nivelMenu.addActor(volumenSonido);
 
-	@SuppressWarnings("static-access")
-	private void anadirBotonesOpciones(boolean anadir) {
+            nivelMenu.addActor(tituloactivarSonido);
 
-		if (anadir) {
+            nivelMenu.addActor(activarSonido);
 
-			nivelMenu.addActor(titulo);
+            nivelMenu.addActor(aceptarSonido);
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            nivelMenu.addActor(cancelarSonido);
 
-				nivelMenu.addActor(partida);
-			}
+            nivelMenu.addActor(tituloOpcionesSonido);
 
-			nivelMenu.addActor(controles);
+        } else {
 
-			nivelMenu.addActor(graficos);
+            tituloMusica.remove();
 
-			nivelMenu.addActor(sonido);
+            volumenMusica.remove();
 
-			nivelMenu.addActor(atras);
+            tituloSonido.remove();
 
-		} else {
-			titulo.remove();
+            volumenSonido.remove();
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            tituloactivarSonido.remove();
 
-				partida.remove();
+            activarSonido.remove();
 
-			}
+            aceptarSonido.remove();
 
-			controles.remove();
+            cancelarSonido.remove();
 
-			graficos.remove();
+            tituloOpcionesSonido.remove();
+        }
+    }
 
-			sonido.remove();
+    @SuppressWarnings("static-access")
+    private void anadirBotonesGraficos(boolean anadir) {
 
-			atras.remove();
+        if (anadir) {
 
-		}
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-	}
+                nivelMenu.addActor(tituloPantallaCompleta);
 
-	private void anadirBotonesSonido(boolean anadir) {
+                nivelMenu.addActor(pantallaCompleta);
+            }
 
-		if (anadir) {
-			nivelMenu.addActor(tituloMusica);
+            nivelMenu.addActor(tituloSincronizacionVertical);
 
-			nivelMenu.addActor(volumenMusica);
+            nivelMenu.addActor(sincronizacionVertical);
 
-			nivelMenu.addActor(tituloSonido);
+            nivelMenu.addActor(tituloFiltradoBilineal);
 
-			nivelMenu.addActor(volumenSonido);
+            nivelMenu.addActor(filtradoBilineal);
 
-			nivelMenu.addActor(tituloactivarSonido);
+            nivelMenu.addActor(tituloMostrarFPS);
 
-			nivelMenu.addActor(activarSonido);
+            nivelMenu.addActor(mostrarFPS);
 
-			nivelMenu.addActor(aceptarSonido);
+            nivelMenu.addActor(tituloPrueba);
 
-			nivelMenu.addActor(cancelarSonido);
+            nivelMenu.addActor(prueba);
 
-			nivelMenu.addActor(tituloOpcionesSonido);
+            nivelMenu.addActor(aceptarGraficos);
 
-		} else {
+            nivelMenu.addActor(cancelarGraficos);
 
-			tituloMusica.remove();
+            nivelMenu.addActor(tituloOpcionesGraficos);
 
-			volumenMusica.remove();
+        } else {
 
-			tituloSonido.remove();
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			volumenSonido.remove();
+                tituloPantallaCompleta.remove();
 
-			tituloactivarSonido.remove();
+                pantallaCompleta.remove();
+            }
 
-			activarSonido.remove();
+            tituloSincronizacionVertical.remove();
 
-			aceptarSonido.remove();
+            sincronizacionVertical.remove();
 
-			cancelarSonido.remove();
+            tituloFiltradoBilineal.remove();
 
-			tituloOpcionesSonido.remove();
+            filtradoBilineal.remove();
 
-		}
+            tituloMostrarFPS.remove();
 
-	}
+            mostrarFPS.remove();
 
-	@SuppressWarnings("static-access")
-	private void anadirBotonesGraficos(boolean anadir) {
+            tituloPrueba.remove();
 
-		if (anadir) {
+            prueba.remove();
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            aceptarGraficos.remove();
 
-				nivelMenu.addActor(tituloPantallaCompleta);
+            cancelarGraficos.remove();
 
-				nivelMenu.addActor(pantallaCompleta);
+            tituloOpcionesGraficos.remove();
+        }
+    }
 
-			}
+    private void anadirBotonesPartida(boolean anadir) {
 
-			nivelMenu.addActor(tituloSincronizacionVertical);
+        if (anadir) {
 
-			nivelMenu.addActor(sincronizacionVertical);
+            nivelMenu.addActor(tituloOpcionesPartida);
 
-			nivelMenu.addActor(tituloFiltradoBilineal);
+            nivelMenu.addActor(tituloAutoDisparo);
 
-			nivelMenu.addActor(filtradoBilineal);
+            nivelMenu.addActor(autoDisparo);
 
-			nivelMenu.addActor(tituloMostrarFPS);
+            nivelMenu.addActor(aceptarPartida);
 
-			nivelMenu.addActor(mostrarFPS);
+            nivelMenu.addActor(cancelarPartida);
 
-			nivelMenu.addActor(tituloPrueba);
+        } else {
 
-			nivelMenu.addActor(prueba);
+            tituloOpcionesPartida.remove();
 
-			nivelMenu.addActor(aceptarGraficos);
+            tituloAutoDisparo.remove();
 
-			nivelMenu.addActor(cancelarGraficos);
+            autoDisparo.remove();
 
-			nivelMenu.addActor(tituloOpcionesGraficos);
+            aceptarPartida.remove();
 
-		} else {
+            cancelarPartida.remove();
+        }
+    }
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+    @SuppressWarnings("static-access")
+    private void anadirBotonesControles(boolean anadir) {
 
-				tituloPantallaCompleta.remove();
+        if (anadir) {
 
-				pantallaCompleta.remove();
+            nivelMenu.addActor(tituloOpcionesControles);
 
-			}
+            nivelMenu.addActor(atrasControles);
 
-			tituloSincronizacionVertical.remove();
+            nivelMenu.addActor(textoArriba);
 
-			sincronizacionVertical.remove();
+            nivelMenu.addActor(arriba);
 
-			tituloFiltradoBilineal.remove();
+            nivelMenu.addActor(textoAbajo);
 
-			filtradoBilineal.remove();
+            nivelMenu.addActor(abajo);
 
-			tituloMostrarFPS.remove();
+            nivelMenu.addActor(textoIzquierda);
 
-			mostrarFPS.remove();
+            nivelMenu.addActor(izquierda);
 
-			tituloPrueba.remove();
+            nivelMenu.addActor(textoDerecha);
 
-			prueba.remove();
+            nivelMenu.addActor(derecha);
 
-			aceptarGraficos.remove();
+            nivelMenu.addActor(textoDisparo);
 
-			cancelarGraficos.remove();
+            nivelMenu.addActor(disparo);
 
-			tituloOpcionesGraficos.remove();
+            nivelMenu.addActor(textoDisparoMisil);
 
-		}
+            nivelMenu.addActor(disparoMisil);
 
-	}
+            nivelMenu.addActor(textoDisparoBomba);
 
-	private void anadirBotonesPartida(boolean anadir) {
+            nivelMenu.addActor(disparoBomba);
 
-		if (anadir) {
+            nivelMenu.addActor(textoPausaJuego);
 
-			nivelMenu.addActor(tituloOpcionesPartida);
+            nivelMenu.addActor(pausaJuego);
 
-			nivelMenu.addActor(tituloAutoDisparo);
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			nivelMenu.addActor(autoDisparo);
+                nivelMenu.addActor(clicIzquierdo);
 
-			nivelMenu.addActor(aceptarPartida);
+                nivelMenu.addActor(clicDerecho);
+            }
 
-			nivelMenu.addActor(cancelarPartida);
+        } else {
 
-		} else {
+            tituloOpcionesControles.remove();
 
-			tituloOpcionesPartida.remove();
+            atrasControles.remove();
 
-			tituloAutoDisparo.remove();
+            textoArriba.remove();
 
-			autoDisparo.remove();
+            arriba.remove();
 
-			aceptarPartida.remove();
+            textoAbajo.remove();
 
-			cancelarPartida.remove();
+            abajo.remove();
 
-		}
+            textoIzquierda.remove();
 
-	}
+            izquierda.remove();
 
-	@SuppressWarnings("static-access")
-	private void anadirBotonesControles(boolean anadir) {
+            textoDerecha.remove();
 
-		if (anadir) {
+            derecha.remove();
 
-			nivelMenu.addActor(tituloOpcionesControles);
+            textoDisparo.remove();
 
-			nivelMenu.addActor(atrasControles);
+            disparo.remove();
 
-			nivelMenu.addActor(textoArriba);
+            textoDisparoMisil.remove();
 
-			nivelMenu.addActor(arriba);
+            disparoMisil.remove();
 
-			nivelMenu.addActor(textoAbajo);
+            textoDisparoBomba.remove();
 
-			nivelMenu.addActor(abajo);
+            disparoBomba.remove();
 
-			nivelMenu.addActor(textoIzquierda);
+            textoPausaJuego.remove();
 
-			nivelMenu.addActor(izquierda);
+            pausaJuego.remove();
 
-			nivelMenu.addActor(textoDerecha);
+            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			nivelMenu.addActor(derecha);
+                clicDerecho.remove();
 
-			nivelMenu.addActor(textoDisparo);
+                clicIzquierdo.remove();
+            }
+        }
+    }
 
-			nivelMenu.addActor(disparo);
+    @Override
+    public void eventos() {
 
-			nivelMenu.addActor(textoDisparoMisil);
+        atras.addListener(
+                new ClickListener() {
 
-			nivelMenu.addActor(disparoMisil);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			nivelMenu.addActor(textoDisparoBomba);
+                        juego.setScreen(new PantallaMenu(juego));
 
-			nivelMenu.addActor(disparoBomba);
+                        super.clicked(event, x, y);
+                    }
+                });
 
-			nivelMenu.addActor(textoPausaJuego);
+        partida.addListener(
+                new ClickListener() {
 
-			nivelMenu.addActor(pausaJuego);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+                        anadirBotonesOpciones(false);
 
-				nivelMenu.addActor(clicIzquierdo);
+                        anadirBotonesPartida(true);
 
-				nivelMenu.addActor(clicDerecho);
+                        super.clicked(event, x, y);
+                    }
+                });
 
-			}
+        controles.addListener(
+                new ClickListener() {
 
-		} else {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			tituloOpcionesControles.remove();
+                        anadirBotonesOpciones(false);
 
-			atrasControles.remove();
+                        anadirBotonesControles(true);
 
-			textoArriba.remove();
+                        super.clicked(event, x, y);
+                    }
+                });
 
-			arriba.remove();
+        aceptarSonido.addListener(
+                new ClickListener() {
 
-			textoAbajo.remove();
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			abajo.remove();
+                        anadirBotonesOpciones(true);
 
-			textoIzquierda.remove();
+                        dato.setVolumenMusica(volumenMusica.getValue());
 
-			izquierda.remove();
+                        dato.setVolumenSonido(volumenSonido.getValue());
 
-			textoDerecha.remove();
+                        dato.setSonido(activarSonido.isChecked());
 
-			derecha.remove();
+                        anadirBotonesSonido(false);
 
-			textoDisparo.remove();
+                        sonido();
 
-			disparo.remove();
+                        configuracion.escribirDatos(dato);
 
-			textoDisparoMisil.remove();
+                        super.clicked(event, x, y);
+                    }
+                });
 
-			disparoMisil.remove();
+        cancelarSonido.addListener(
+                new ClickListener() {
 
-			textoDisparoBomba.remove();
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			disparoBomba.remove();
+                        anadirBotonesOpciones(true);
 
-			textoPausaJuego.remove();
+                        activarSonido.setChecked(dato.isSonido());
 
-			pausaJuego.remove();
+                        volumenMusica.setValue(dato.getVolumenMusica());
 
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+                        volumenSonido.setValue(dato.getVolumenSonido());
 
-				clicDerecho.remove();
+                        anadirBotonesSonido(false);
+                    }
+                });
 
-				clicIzquierdo.remove();
+        aceptarGraficos.addListener(
+                new ClickListener() {
 
-			}
+                    @SuppressWarnings("static-access")
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		}
+                        anadirBotonesOpciones(true);
 
-	}
+                        dato.setPantallaCompleta(pantallaCompleta.isChecked());
 
-	@Override
-	public void eventos() {
+                        dato.setSincronizacionVertical(sincronizacionVertical.isChecked());
 
-		atras.addListener(new ClickListener() {
+                        dato.setFiltradoBilineal(filtradoBilineal.isChecked());
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        dato.setMostrarFPS(mostrarFPS.isChecked());
 
-				juego.setScreen(new PantallaMenu(juego));
+                        dato.setPrueba(prueba.isChecked());
 
-				super.clicked(event, x, y);
-			}
+                        anadirBotonesGraficos(false);
 
-		});
+                        filtradoBilineal();
 
-		partida.addListener(new ClickListener() {
+                        if (dato.isPantallaCompleta()) {
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-				anadirBotonesOpciones(false);
+                                Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                            }
+                        }
 
-				anadirBotonesPartida(true);
+                        if (!dato.isPantallaCompleta()) {
 
-				super.clicked(event, x, y);
-			}
+                            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-		});
+                                Gdx.graphics.setWindowedMode(
+                                        (int) Juego.ANCHO_PANTALLA, (int) Juego.ALTO_PANTALLA);
+                            }
+                        }
 
-		controles.addListener(new ClickListener() {
+                        configuracion.escribirDatos(dato);
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				anadirBotonesOpciones(false);
+        cancelarGraficos.addListener(
+                new ClickListener() {
 
-				anadirBotonesControles(true);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-				super.clicked(event, x, y);
-			}
+                        anadirBotonesOpciones(true);
 
-		});
+                        pantallaCompleta.setChecked(dato.isPantallaCompleta());
 
-		aceptarSonido.addListener(new ClickListener() {
+                        sincronizacionVertical.setChecked(dato.isSincronizacionVertical());
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        filtradoBilineal.setChecked(dato.isFiltradoBilineal());
 
-				anadirBotonesOpciones(true);
+                        mostrarFPS.setChecked(dato.isMostrarFPS());
 
-				dato.setVolumenMusica(volumenMusica.getValue());
+                        prueba.setChecked(dato.isPrueba());
 
-				dato.setVolumenSonido(volumenSonido.getValue());
+                        anadirBotonesGraficos(false);
 
-				dato.setSonido(activarSonido.isChecked());
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				anadirBotonesSonido(false);
+        aceptarPartida.addListener(
+                new ClickListener() {
 
-				sonido();
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-				configuracion.escribirDatos(dato);
+                        anadirBotonesOpciones(true);
 
-				super.clicked(event, x, y);
-			}
+                        dato.setDiparoAutomatico(autoDisparo.isChecked());
 
-		});
+                        anadirBotonesPartida(false);
 
-		cancelarSonido.addListener(new ClickListener() {
+                        configuracion.escribirDatos(dato);
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				anadirBotonesOpciones(true);
+        cancelarPartida.addListener(
+                new ClickListener() {
 
-				activarSonido.setChecked(dato.isSonido());
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-				volumenMusica.setValue(dato.getVolumenMusica());
+                        anadirBotonesOpciones(true);
 
-				volumenSonido.setValue(dato.getVolumenSonido());
+                        autoDisparo.setChecked(dato.isDiparoAutomatico());
 
-				anadirBotonesSonido(false);
+                        anadirBotonesPartida(false);
 
-			}
+                        super.clicked(event, x, y);
+                    }
+                });
 
-		});
+        atrasControles.addListener(
+                new ClickListener() {
 
-		aceptarGraficos.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-			@SuppressWarnings("static-access")
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        anadirBotonesOpciones(true);
 
-				anadirBotonesOpciones(true);
+                        anadirBotonesControles(false);
 
-				dato.setPantallaCompleta(pantallaCompleta.isChecked());
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				dato.setSincronizacionVertical(sincronizacionVertical.isChecked());
+        graficos.addListener(
+                new ClickListener() {
 
-				dato.setFiltradoBilineal(filtradoBilineal.isChecked());
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-				dato.setMostrarFPS(mostrarFPS.isChecked());
+                        anadirBotonesOpciones(false);
 
-				dato.setPrueba(prueba.isChecked());
+                        anadirBotonesGraficos(true);
 
-				anadirBotonesGraficos(false);
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				filtradoBilineal();
+        sonido.addListener(
+                new ClickListener() {
 
-				if (dato.isPantallaCompleta()) {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-					if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+                        anadirBotonesOpciones(false);
 
-						Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                        anadirBotonesSonido(true);
 
-					}
+                        super.clicked(event, x, y);
+                    }
+                });
+    }
 
-				}
+    @Override
+    public void colisiones() {
+        // TODO Auto-generated method stub
 
-				if (!dato.isPantallaCompleta()) {
+    }
 
-					if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+    @Override
+    public void actualizar(float delta) {
+        // TODO Auto-generated method stub
 
-						Gdx.graphics.setWindowedMode((int) Juego.ANCHO_PANTALLA, (int) Juego.ALTO_PANTALLA);
-					}
+    }
 
-				}
+    @Override
+    public void dibujar(Batch pincel, float delta) {
+        // TODO Auto-generated method stub
 
-				configuracion.escribirDatos(dato);
+    }
 
-				super.clicked(event, x, y);
-			}
+    @Override
+    public void guardarDatos() {
 
-		});
+        configuracion.escribirDatos(dato);
+    }
 
-		cancelarGraficos.addListener(new ClickListener() {
+    @Override
+    public void liberarRecursos() {
+        // TODO Auto-generated method stub
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+    }
 
-				anadirBotonesOpciones(true);
+    private void filtradoBilineal() {
 
-				pantallaCompleta.setChecked(dato.isPantallaCompleta());
+        if (dato.isFiltradoBilineal()) {
 
-				sincronizacionVertical.setChecked(dato.isSincronizacionVertical());
+            recurso.get("texturas/invisible.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-				filtradoBilineal.setChecked(dato.isFiltradoBilineal());
+            recurso.get("texturas/bomba.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-				mostrarFPS.setChecked(dato.isMostrarFPS());
+            recurso.get("texturas/algas.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-				prueba.setChecked(dato.isPrueba());
+            recurso.get("texturas/fondo1.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-				anadirBotonesGraficos(false);
+            recurso.get("texturas/fondo2.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-				super.clicked(event, x, y);
-			}
+            recurso.get("texturas/fondo3.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		});
+            recurso.get("texturas/fondo4.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		aceptarPartida.addListener(new ClickListener() {
+            recurso.get("texturas/pausa.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/cursor.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/menu.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/badlogic.jpg", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/titulo.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/inicio.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            recurso.get("texturas/icono.png", Texture.class)
+                    .setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            //	recurso.get("texturas/diamondBlack.png",
+            // Texture.class).setFilter(TextureFilter.Linear,
+            //			TextureFilter.Linear);
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+            for (Texture tetura :
+                    recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {
 
-				anadirBotonesOpciones(true);
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-				dato.setDiparoAutomatico(autoDisparo.isChecked());
+            for (Texture tetura :
+                    recurso.get("texturas/iconos.atlas", TextureAtlas.class).getTextures()) {
 
-				anadirBotonesPartida(false);
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-				configuracion.escribirDatos(dato);
+            for (Texture tetura :
+                    recurso.get("texturas/controles.atlas", TextureAtlas.class).getTextures()) {
 
-				super.clicked(event, x, y);
-			}
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-		});
+            for (Texture tetura :
+                    recurso.get("texturas/dedos.atlas", TextureAtlas.class).getTextures()) {
 
-		cancelarPartida.addListener(new ClickListener() {
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+            for (Texture tetura :
+                    recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
 
-				anadirBotonesOpciones(true);
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-				autoDisparo.setChecked(dato.isDiparoAutomatico());
+            for (Texture tetura :
+                    recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
 
-				anadirBotonesPartida(false);
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-				super.clicked(event, x, y);
-			}
+            for (Texture tetura :
+                    recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
 
-		});
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
 
-		atrasControles.addListener(new ClickListener() {
+            for (Texture tetura :
+                    recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            }
+        }
 
-				anadirBotonesOpciones(true);
+        if (!dato.isFiltradoBilineal()) {
 
-				anadirBotonesControles(false);
+            recurso.get("texturas/invisible.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-				super.clicked(event, x, y);
-			}
+            recurso.get("texturas/bomba.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-		});
+            recurso.get("texturas/algas.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-		graficos.addListener(new ClickListener() {
+            recurso.get("texturas/fondo1.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+            recurso.get("texturas/fondo2.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-				anadirBotonesOpciones(false);
+            recurso.get("texturas/fondo3.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-				anadirBotonesGraficos(true);
+            recurso.get("texturas/fondo4.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-				super.clicked(event, x, y);
-			}
+            recurso.get("texturas/pausa.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            recurso.get("texturas/cursor.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            recurso.get("texturas/menu.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 
-		});
+            recurso.get("texturas/badlogic.jpg", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            recurso.get("texturas/titulo.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            recurso.get("texturas/inicio.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            recurso.get("texturas/icono.png", Texture.class)
+                    .setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            //	recurso.get("texturas/diamondBlack.png",
+            // Texture.class).setFilter(TextureFilter.Nearest,
+            //			TextureFilter.Nearest);
 
-		sonido.addListener(new ClickListener() {
+            for (Texture tetura :
+                    recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-				anadirBotonesOpciones(false);
+            for (Texture tetura :
+                    recurso.get("texturas/iconos.atlas", TextureAtlas.class).getTextures()) {
 
-				anadirBotonesSonido(true);
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-				super.clicked(event, x, y);
-			}
+            for (Texture tetura :
+                    recurso.get("texturas/controles.atlas", TextureAtlas.class).getTextures()) {
 
-		});
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-	}
+            for (Texture tetura :
+                    recurso.get("texturas/dedos.atlas", TextureAtlas.class).getTextures()) {
 
-	@Override
-	public void colisiones() {
-		// TODO Auto-generated method stub
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-	}
+            for (Texture tetura :
+                    recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
 
-	@Override
-	public void actualizar(float delta) {
-		// TODO Auto-generated method stub
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-	}
+            for (Texture tetura :
+                    recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
 
-	@Override
-	public void dibujar(Batch pincel, float delta) {
-		// TODO Auto-generated method stub
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-	}
+            for (Texture tetura :
+                    recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
 
-	@Override
-	public void guardarDatos() {
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
 
-		configuracion.escribirDatos(dato);
+            for (Texture tetura :
+                    recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
 
-	}
+                tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
+            }
+        }
+    }
 
-	@Override
-	public void liberarRecursos() {
-		// TODO Auto-generated method stub
+    private void sonido() {
 
-	}
+        recurso.get("audios/musica.ogg", Music.class).setVolume(dato.getVolumenMusica());
 
-	private void filtradoBilineal() {
+        recurso.get("audios/moustro.ogg", Music.class).setVolume(dato.getVolumenMusica());
 
-		if (dato.isFiltradoBilineal()) {
+        recurso.get("audios/creditos.ogg", Music.class).setVolume(dato.getVolumenMusica());
 
-			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        if (dato.isSonido()) {
 
-			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+            if (!recurso.get("audios/creditos.ogg", Music.class).isPlaying()) {
 
-			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+                recurso.get("audios/creditos.ogg", Music.class).setLooping(true);
 
-			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+                recurso.get("audios/creditos.ogg", Music.class).play();
+            }
 
-			recurso.get("texturas/fondo2.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        } else {
 
-			recurso.get("texturas/fondo3.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			recurso.get("texturas/fondo4.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			recurso.get("texturas/pausa.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/cursor.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/menu.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/badlogic.jpg", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/titulo.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/inicio.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			recurso.get("texturas/icono.png", Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			//recurso.get("texturas/diamondBlack.png", Texture.class).setFilter(TextureFilter.Linear,
-				//	TextureFilter.Linear);
-
-			for (Texture tetura : recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/iconos.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/controles.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/dedos.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-			}
-
-		}
-
-		if (!dato.isFiltradoBilineal()) {
-
-			recurso.get("texturas/invisible.png", Texture.class).setFilter(TextureFilter.Nearest,
-					TextureFilter.Nearest);
-
-			recurso.get("texturas/bomba.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/algas.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/fondo1.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/fondo2.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/fondo3.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/fondo4.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/pausa.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/cursor.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/menu.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			recurso.get("texturas/badlogic.jpg", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/titulo.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/inicio.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			recurso.get("texturas/icono.png", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-			//recurso.get("texturas/diamondBlack.png", Texture.class).setFilter(TextureFilter.Nearest,
-			//		TextureFilter.Nearest);
-
-			for (Texture tetura : recurso.get("texturas/pez.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/iconos.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/controles.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/dedos.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pez1.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pezG.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-			for (Texture tetura : recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getTextures()) {
-
-				tetura.setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-
-			}
-
-		}
-
-	}
-
-	private void sonido() {
-
-		recurso.get("audios/musica.ogg", Music.class).setVolume(dato.getVolumenMusica());
-
-		recurso.get("audios/moustro.ogg", Music.class).setVolume(dato.getVolumenMusica());
-
-		recurso.get("audios/creditos.ogg", Music.class).setVolume(dato.getVolumenMusica());
-
-		if (dato.isSonido()) {
-
-			if (!recurso.get("audios/creditos.ogg", Music.class).isPlaying()) {
-
-				recurso.get("audios/creditos.ogg", Music.class).setLooping(true);
-
-				recurso.get("audios/creditos.ogg", Music.class).play();
-
-			}
-
-		} else {
-
-			recurso.get("audios/creditos.ogg", Music.class).stop();
-
-		}
-
-	}
-
+            recurso.get("audios/creditos.ogg", Music.class).stop();
+        }
+    }
 }
