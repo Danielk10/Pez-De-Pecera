@@ -15,189 +15,189 @@ import com.diamon.nucleo.Pantalla;
 
 public class PantallaMenu extends Pantalla {
 
-	private TextButton jugar;
+    private TextButton jugar;
 
-	private TextButton opciones;
+    private TextButton opciones;
 
-	private TextButton puntuaciones;
+    private TextButton puntuaciones;
 
-	private TextButton creditos;
+    private TextButton creditos;
 
-	private TextButton salir;
+    private TextButton salir;
 
-	private Image titulo;
+    private Image titulo;
 
-	private Music musica;
+    private Music musica;
 
-	public PantallaMenu(Juego juego) {
-		super(juego);
+    public PantallaMenu(Juego juego) {
+        super(juego);
+    }
 
-	}
+    @SuppressWarnings("static-access")
+    @Override
+    public void mostrar() {
+        
+        // Obtén el ancho y alto actual del Viewport
+    float viewportAncho = Juego.ANCHO_PANTALLA;
+    float viewportAlto = Juego.ALTO_PANTALLA;
 
-	@SuppressWarnings("static-access")
-	@Override
-	public void mostrar() {
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 
-			Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("texturas/cursor.png")), 0, 0));
+            Gdx.graphics.setCursor(
+                    Gdx.graphics.newCursor(
+                            new Pixmap(Gdx.files.internal("texturas/cursor.png")), 0, 0));
+        }
 
-		}
+        musica = recurso.get("audios/creditos.ogg", Music.class);
 
-		musica = recurso.get("audios/creditos.ogg", Music.class);
+        if (dato.isSonido()) {
 
-		if (dato.isSonido())
+            if (!musica.isPlaying()) {
 
-		{
+                musica.setLooping(true);
 
-			if (!musica.isPlaying()) {
+                musica.play();
+            }
+        }
 
-				musica.setLooping(true);
+        // Crear botones con Skin y posiciones relativas al ancho y alto
+        Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
-				musica.play();
+        // Proporción base a la cual se van a escalar los elementos
+    float anchoBase = 1280f;
+    float altoBase = 720f;
 
-			}
+    float escalaX = viewportAncho / anchoBase;
+    float escalaY = viewportAlto / altoBase;
 
-		}
+    // Crear los botones ajustando el tamaño y posición proporcionalmente
+    jugar = new TextButton("Jugar", recurso.get("uis/general/uiskin.json", Skin.class));
+    jugar.setSize(213 * escalaX, 32 * escalaY);
+    jugar.setPosition(212 * escalaX, 240 * escalaY);
 
-		jugar = new TextButton("Jugar", recurso.get("uis/general/uiskin.json", Skin.class));
+    opciones = new TextButton("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
+    opciones.setSize(213 * escalaX, 32 * escalaY);
+    opciones.setPosition(212 * escalaX, 192 * escalaY);
 
-		jugar.setSize(213, 32);
+    puntuaciones = new TextButton("Puntuaciones", recurso.get("uis/general/uiskin.json", Skin.class));
+    puntuaciones.setSize(213 * escalaX, 32 * escalaY);
+    puntuaciones.setPosition(212 * escalaX, 144 * escalaY);
 
-		jugar.setPosition(212, 240);
+    creditos = new TextButton("Creditos", recurso.get("uis/general/uiskin.json", Skin.class));
+    creditos.setSize(213 * escalaX, 32 * escalaY);
+    creditos.setPosition(212 * escalaX, 96 * escalaY);
 
-		opciones = new TextButton("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
+    salir = new TextButton("Salir", recurso.get("uis/general/uiskin.json", Skin.class));
+    salir.setSize(213 * escalaX, 32 * escalaY);
+    salir.setPosition(32 * escalaX, 32 * escalaY);
 
-		opciones.setSize(213.0F, 32);
+    // Ajustar el título proporcionalmente
+    titulo = new Image(recurso.get("texturas/titulo.png", Texture.class));
+    titulo.setSize(320 * escalaX, 320 * escalaY);
+    titulo.setPosition(164 * escalaX, 230 * escalaY);
 
-		opciones.setPosition(212, 192);
+        nivelMenu.addActor(titulo);
 
-		puntuaciones = new TextButton("Puntuaciones", recurso.get("uis/general/uiskin.json", Skin.class));
+        nivelMenu.addActor(jugar);
 
-		puntuaciones.setSize(213.0f, 32);
+        nivelMenu.addActor(opciones);
 
-		puntuaciones.setPosition(212, 144);
+        nivelMenu.addActor(puntuaciones);
 
-		creditos = new TextButton("Creditos", recurso.get("uis/general/uiskin.json", Skin.class));
+        nivelMenu.addActor(creditos);
 
-		creditos.setSize(213, 32);
+        nivelMenu.addActor(salir);
+    }
 
-		creditos.setPosition(212.0f, 96.0f);
+    @Override
+    public void eventos() {
 
-		salir = new TextButton("Salir", recurso.get("uis/general/uiskin.json", Skin.class));
+        jugar.addListener(
+                new ClickListener() {
 
-		salir.setSize(Juego.ANCHO_PANTALLA / 8, 32);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		salir.setPosition(32, 32);
+                        juego.setScreen(new PantallaSeleccion(juego));
 
-		titulo = new Image(recurso.get("texturas/titulo.png", Texture.class));
+                        super.clicked(event, x, y);
+                    }
+                });
 
-		titulo.setSize(320, 320);
+        opciones.addListener(
+                new ClickListener() {
 
-		titulo.setPosition(164.0f, 230.0f);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		nivelMenu.addActor(titulo);
+                        juego.setScreen(new PantallaOpciones(juego));
 
-		nivelMenu.addActor(jugar);
+                        super.clicked(event, x, y);
+                    }
+                });
 
-		nivelMenu.addActor(opciones);
+        puntuaciones.addListener(
+                new ClickListener() {
 
-		nivelMenu.addActor(puntuaciones);
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		nivelMenu.addActor(creditos);
+                        juego.setScreen(new PantallaPuntuaciones(juego));
 
-		nivelMenu.addActor(salir);
+                        super.clicked(event, x, y);
+                    }
+                });
 
-	}
+        creditos.addListener(
+                new ClickListener() {
 
-	@Override
-	public void eventos() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		jugar.addListener(new ClickListener() {
+                        juego.setScreen(new PantallaCreditos(juego));
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                    }
+                });
 
-				juego.setScreen(new PantallaSeleccion(juego));
+        salir.addListener(
+                new ClickListener() {
 
-				super.clicked(event, x, y);
-			}
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
 
-		});
+                        Gdx.app.exit();
 
-		opciones.addListener(new ClickListener() {
+                        super.clicked(event, x, y);
+                    }
+                });
+    }
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+    @Override
+    public void colisiones() {
+        // TODO Auto-generated method stub
 
-				juego.setScreen(new PantallaOpciones(juego));
+    }
 
-				super.clicked(event, x, y);
-			}
-		});
+    @Override
+    public void actualizar(float delta) {}
 
-		puntuaciones.addListener(new ClickListener() {
+    @Override
+    public void dibujar(Batch pincel, float delta) {
+        // TODO Auto-generated method stub
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
+    }
 
-				juego.setScreen(new PantallaPuntuaciones(juego));
+    @Override
+    public void guardarDatos() {
+        // TODO Auto-generated method stub
 
-				super.clicked(event, x, y);
-			}
-		});
+    }
 
-		creditos.addListener(new ClickListener() {
+    @Override
+    public void liberarRecursos() {
+        // TODO Auto-generated method stub
 
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-
-				juego.setScreen(new PantallaCreditos(juego));
-
-				super.clicked(event, x, y);
-			}
-		});
-
-		salir.addListener(new ClickListener() {
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-
-				Gdx.app.exit();
-
-				super.clicked(event, x, y);
-			}
-		});
-
-	}
-
-	@Override
-	public void colisiones() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void actualizar(float delta) {
-
-	}
-
-	@Override
-	public void dibujar(Batch pincel, float delta) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void guardarDatos() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void liberarRecursos() {
-		// TODO Auto-generated method stub
-
-	}
-
+    }
 }
