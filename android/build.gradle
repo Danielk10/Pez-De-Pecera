@@ -1,15 +1,22 @@
+
+buildscript {
+  repositories {
+    mavenCentral()
+    google()
+  }
+}
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+
 
 android {
   namespace "com.diamon.pez"
-  compileSdk 34
+  compileSdk 35
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
-      java.setSrcDirs(['src/main/java', 'src/main/kotlin'])
-      aidl.setSrcDirs(['src/main/java', 'src/main/kotlin'])
-      renderscript.setSrcDirs(['src/main/java', 'src/main/kotlin'])
+      java.setSrcDirs(['src/main/java'])
+      aidl.setSrcDirs(['src/main/java'])
+      renderscript.setSrcDirs(['src/main/java'])
       res.setSrcDirs(['res'])
       assets.setSrcDirs(['../assets'])
       jniLibs.setSrcDirs(['libs'])
@@ -26,21 +33,14 @@ android {
   defaultConfig {
     applicationId 'com.diamon.pez'
     minSdkVersion 21
-    targetSdkVersion 34
+    targetSdkVersion 35
     versionCode 1
-    versionName "1.0"
+    versionName "1.0.0"
     multiDexEnabled true
-    //Los tres niveles ../../.../ son de libGDX
-    //No de AppCenter
-    //Cambiando ruta de salida vieja .aab y .apk
-    //buildDir ="${buildDir}../../../build/" 
-    //Cambiando ruta de salida nueva .aab y .apk
-    buildDir ="${buildDir}../../../android/build/" 
-
   }
   compileOptions {
-    sourceCompatibility "11"
-    targetCompatibility "11"
+    sourceCompatibility "17"
+    targetCompatibility "17"
     coreLibraryDesugaringEnabled true
   }
   buildTypes {
@@ -49,9 +49,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-
-  kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
-  
 }
 
 repositories {
@@ -62,7 +59,7 @@ repositories {
 configurations { natives }
 
 dependencies {
-  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
   implementation "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
   implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
   implementation project(':core')

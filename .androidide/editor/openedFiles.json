@@ -1,35 +1,20 @@
 {
   "allFiles": [
     {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/nucleo/Juego.java",
+      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pez/PezDePecera.java",
       "selection": {
         "end": {
           "column": 0,
-          "index": 1161,
-          "line": 33
+          "index": 0,
+          "line": 0
         },
         "start": {
           "column": 0,
-          "index": 1161,
-          "line": 33
-        }
-      }
-    },
-    {
-      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pantallas/PantallaMenu.java",
-      "selection": {
-        "end": {
-          "column": 45,
-          "index": 1126,
-          "line": 41
-        },
-        "start": {
-          "column": 45,
-          "index": 1126,
-          "line": 41
+          "index": 0,
+          "line": 0
         }
       }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pantallas/PantallaMenu.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pez/PezDePecera.java"
 }
