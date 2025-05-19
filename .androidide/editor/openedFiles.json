@@ -14,7 +14,37 @@
           "line": 0
         }
       }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/android/build.gradle",
+      "selection": {
+        "end": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        },
+        "start": {
+          "column": 0,
+          "index": 0,
+          "line": 0
+        }
+      }
+    },
+    {
+      "file": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/build.gradle",
+      "selection": {
+        "end": {
+          "column": 51,
+          "index": 384,
+          "line": 11
+        },
+        "start": {
+          "column": 51,
+          "index": 384,
+          "line": 11
+        }
+      }
     }
   ],
-  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/core/src/main/java/com/diamon/pez/PezDePecera.java"
+  "selectedFile": "/storage/emulated/0/AndroidIDEProjects/Pez-De-Pecera/build.gradle"
 }
