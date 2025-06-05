@@ -32,7 +32,7 @@ android {
   }
   defaultConfig {
     applicationId 'com.diamon.pez'
-    minSdkVersion 21
+    minSdkVersion 23
     targetSdkVersion 35
     versionCode 1
     versionName "1.0.0"
@@ -81,10 +81,10 @@ dependencies {
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
   
-  def appCenterSdkVersion = '5.0.4'
+  def appCenterSdkVersion = '5.0.6'
   implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
   implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
-  //implementation 'com.google.android.gms:play-services-ads:23.3.0'
+  //implementation "com.google.android.gms:play-services-ads:24.3.0"
 
 }
 
