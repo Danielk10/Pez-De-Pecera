@@ -18,18 +18,36 @@ public class JefeCuatro extends Personaje {
 			float ancho, float alto, int tipoDeCuerpo) {
 		super(texturaRegion, tiempoAnimacion, modo, pantalla, ancho, alto, tipoDeCuerpo);
 
+		// El jefe es un cuerpo dinámico pero no debe ser afectado por la gravedad del mundo,
+		// ya que tendrá su propio patrón de movimiento (ej. volar).
+		if (this.cuerpo != null) {
+			this.cuerpo.setGravityScale(0.0f);
+		}
+
 		obtenerJugador();
 	}
 
 	public JefeCuatro(Texture textura, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
 		super(textura, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
+
+		// El jefe es un cuerpo dinámico pero no debe ser afectado por la gravedad del mundo,
+		// ya que tendrá su propio patrón de movimiento (ej. volar).
+		if (this.cuerpo != null) {
+			this.cuerpo.setGravityScale(0.0f);
+		}
 		obtenerJugador();
 	}
 
 	public JefeCuatro(TextureRegion texturaRegion, Pantalla pantalla, float ancho, float alto, int tipoDeCuerpo) {
 		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 		// TODO Auto-generated constructor stub
+
+		// El jefe es un cuerpo dinámico pero no debe ser afectado por la gravedad del mundo,
+		// ya que tendrá su propio patrón de movimiento (ej. volar).
+		if (this.cuerpo != null) {
+			this.cuerpo.setGravityScale(0.0f);
+		}
 
 		obtenerJugador();
 	}

@@ -841,6 +841,7 @@ public class Jugador extends Personaje {
 
 			}
 
+			// TODO: (Editor de Niveles) La colisión con Terreno se maneja manualmente aquí. Esto debería ser reemplazado por colisiones Box2D estándar, haciendo que Terreno sea un cuerpo estático de Box2D y manejando la respuesta en ContactListener o en el método colision() del Jugador.
 			for (int i = 0; i < personajes.size; i++) {
 
 				if (personajes.get(i) instanceof Terreno) {

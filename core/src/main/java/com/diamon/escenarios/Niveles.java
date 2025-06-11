@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.diamon.datos.DatosNiveles;
 import com.diamon.nucleo.Juego;
@@ -155,7 +154,7 @@ public class Niveles extends Nivel {
 
 		// Añade un personaje TiburonAzul (decorativo o enemigo, según su implementación).
 		TiburonAzul tiburon = new TiburonAzul(recurso.get("texturas/tiburon.atlas", TextureAtlas.class).getRegions(),
-				0.3f, Animation.PlayMode.LOOP, pantalla, 192, 192, TiburonAzul.ESTATICO);
+				0.3f, Animation.PlayMode.LOOP, pantalla, 192, 192, TiburonAzul.CINESTECICO);
 		tiburon.setPosition(50, 200);
 		personajes.add(tiburon);
 
@@ -213,7 +212,7 @@ public class Niveles extends Nivel {
 		// Carga Pulpos.
 		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PULPO, numeroNivel)) {
 			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
-					Animation.PlayMode.LOOP, pantalla, 32, 64, Pulpo.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 32, 64, Pulpo.CINESTECICO);
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 			personajes.add(actor);
 		}
@@ -222,7 +221,7 @@ public class Niveles extends Nivel {
 		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GLOBO_AMARILLO, numeroNivel)) {
 			PezGloboAmarillo actor = new PezGloboAmarillo(
 					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions(), 0.1f, Animation.PlayMode.LOOP,
-					pantalla, 64, 32, PezGloboAmarillo.ESTATICO);
+					pantalla, 64, 32, PezGloboAmarillo.CINESTECICO);
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 			personajes.add(actor);
 		}
@@ -231,7 +230,7 @@ public class Niveles extends Nivel {
 		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GOBO_NARANJA, numeroNivel)) {
 			PezGloboNaranja actor = new PezGloboNaranja(
 					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 96, 64, PezGloboNaranja.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 96, 64, PezGloboNaranja.CINESTECICO);
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 			personajes.add(actor);
 		}
@@ -239,7 +238,7 @@ public class Niveles extends Nivel {
 		// Carga PezAngel.
 		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_ANGEL, numeroNivel)) {
 			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 64, 32, PezAngel.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 64, 32, PezAngel.CINESTECICO);
 			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
 			personajes.add(actor);
 		}
@@ -287,22 +286,7 @@ public class Niveles extends Nivel {
 		// SE RECOMIENDA REVISAR ESTE BLOQUE DETENIDAMENTE. SI SU FUNCIONALIDAD
 		// NO ES ESENCIAL O CLARA, CONSIDERAR SU ELIMINACIÓN.
 		// ---------------------------------------------------------------------------------
-		mundoVirtual.getBodies(cuerpos); // Obtiene todos los cuerpos nuevamente.
-		if (cuerpos.size > 0) {
-			RevoluteJointDef jointDef = new RevoluteJointDef(); // Definición de la articulación de revolución.
-			// Itera sobre los cuerpos para crear articulaciones entre pares consecutivos.
-			for (int i = 0; i < cuerpos.size; i++) {
-				jointDef.localAnchorA.set(0.8f, 0.8f); // Punto de anclaje en el cuerpo A.
-				jointDef.localAnchorB.set(0.8f, 0.8f); // Punto de anclaje en el cuerpo B.
-
-				// Asegura que haya al menos dos cuerpos para formar una articulación.
-				if (i >= 0 && i <= cuerpos.size - 2) {
-					jointDef.bodyB = cuerpos.get(i);     // Cuerpo B de la articulación.
-					jointDef.bodyA = cuerpos.get(i + 1); // Cuerpo A de la articulación.
-					mundoVirtual.createJoint(jointDef);  // Crea la articulación en el mundo físico.
-				}
-			}
-		}
+		// Bloque de RevoluteJointDef eliminado según la tarea.
 	}
 
 	/**
@@ -361,7 +345,7 @@ public class Niveles extends Nivel {
 		// Jefe para el nivel 10.
 		if (numero == 10) {
 			gefeUno = new JefeUno(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeUno.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeUno.DIANAMICO);
 			gefeUno.setPosition(13440 - gefeUno.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240); // Posición al final del nivel.
 			gefeUno.setDureza(300); // Vida del jefe.
 			personajes.add(gefeUno); // Añade el jefe a la lista de personajes.
@@ -371,7 +355,7 @@ public class Niveles extends Nivel {
 		// Jefe para el nivel 20.
 		if (numero == 20) {
 			gefeDos = new JefeDos(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeDos.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeDos.DIANAMICO);
 			gefeDos.setPosition(13440 - gefeDos.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 			gefeDos.setDureza(500);
 			personajes.add(gefeDos);
@@ -381,7 +365,7 @@ public class Niveles extends Nivel {
 		// Jefe para el nivel 30.
 		if (numero == 30) {
 			gefeTres = new JefeTres(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeTres.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeTres.DIANAMICO);
 			gefeTres.setPosition(13440 - gefeTres.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 			gefeTres.setDureza(700);
 			personajes.add(gefeTres);
@@ -391,7 +375,7 @@ public class Niveles extends Nivel {
 		// Jefe para el nivel 40 (jefe final).
 		if (numero == 40) {
 			gefeCuatro = new JefeCuatro(recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeCuatro.ESTATICO);
+					Animation.PlayMode.LOOP, pantalla, 128, 128, JefeCuatro.DIANAMICO);
 			gefeCuatro.setPosition(13440 - gefeCuatro.getWidth() * Juego.UNIDAD_DEL_MUNDO, 240);
 			gefeCuatro.setDureza(900);
 			personajes.add(gefeCuatro);

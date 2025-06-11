@@ -12,12 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 
 public class PantallaOpciones extends Pantalla {
+
+    private Table tablaPrincipal;
+    private Table tablaCategorias;
+    private Table tablaContenidoOpciones;
 
     private TextButton atras;
 
@@ -134,55 +140,81 @@ public class PantallaOpciones extends Pantalla {
     @Override
     public void mostrar() {
 
-        atras = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
+        // Crear tabla principal que ocupará toda la pantalla
+        tablaPrincipal = new Table();
+        tablaPrincipal.setFillParent(true);
+        // tablaPrincipal.setDebug(true); // Descomentar para depuración visual
 
-        atras.setSize(Juego.ANCHO_PANTALLA / 8, 32);
+        // Añadir la tabla principal al escenario del menú
+        nivelMenu.addActor(tablaPrincipal);
 
-        atras.setPosition(32, 32);
+        // Inicializar las otras tablas que serán parte de tablaPrincipal
+        tablaCategorias = new Table();
+        tablaContenidoOpciones = new Table();
 
-        titulo = new Label("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
+        // Inicializar los elementos de la UI
+        Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
+        titulo = new Label("Opciones", skin);
+        partida = new TextButton("Partida", skin);
+        controles = new TextButton("Controles", skin);
+        graficos = new TextButton("Graficos", skin);
+        sonido = new TextButton("Sonido", skin);
+        atras = new TextButton("Atras", skin);
 
-        titulo.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        // Inicializar elementos de la sección de gráficos (se usarán en anadirBotonesGraficos)
+        tituloOpcionesGraficos = new Label("Graficos", skin);
+        tituloPantallaCompleta = new Label("Pantalla Completa", skin);
+        pantallaCompleta = new CheckBox("", skin);
+        tituloSincronizacionVertical = new Label("V-Sync", skin);
+        sincronizacionVertical = new CheckBox("", skin);
+        tituloFiltradoBilineal = new Label("Filtrado Bilineal", skin);
+        filtradoBilineal = new CheckBox("", skin);
+        tituloMostrarFPS = new Label("Mostrar FPS", skin);
+        mostrarFPS = new CheckBox("", skin);
+        tituloPrueba = new Label("Prueba", skin);
+        prueba = new CheckBox("", skin);
+        aceptarGraficos = new TextButton("Aceptar", skin);
+        cancelarGraficos = new TextButton("Cancelar", skin);
 
-        titulo.setPosition((Juego.ANCHO_PANTALLA / 3) + 50, Juego.ALTO_PANTALLA - 64);
+        // Añadir el título principal a la tabla principal
+        tablaPrincipal.add(titulo).center().padTop(Value.percentHeight(0.05f, tablaPrincipal)).padBottom(Value.percentHeight(0.05f, tablaPrincipal)).row();
 
-        partida = new TextButton("Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+        // Configurar y añadir tablaCategorias
+        // tablaCategorias.setDebug(true); // Para depuración de esta tabla anidada
+        if (Gdx.app.getType() == Gdx.app.Application.ApplicationType.Desktop) {
+            tablaCategorias.add(partida).width(Value.percentWidth(0.4f, tablaPrincipal)).pad(Value.percentHeight(0.01f, tablaPrincipal)).row();
+        }
+        tablaCategorias.add(controles).width(Value.percentWidth(0.4f, tablaPrincipal)).pad(Value.percentHeight(0.01f, tablaPrincipal)).row();
+        tablaCategorias.add(graficos).width(Value.percentWidth(0.4f, tablaPrincipal)).pad(Value.percentHeight(0.01f, tablaPrincipal)).row();
+        tablaCategorias.add(sonido).width(Value.percentWidth(0.4f, tablaPrincipal)).pad(Value.percentHeight(0.01f, tablaPrincipal)).row();
 
-        partida.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        tablaPrincipal.add(tablaCategorias).top().padRight(Value.percentWidth(0.02f, tablaPrincipal)); // Añade la tabla de categorías a la izquierda
 
-        partida.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
+        // Añadir tablaContenidoOpciones, se expandirá para llenar el espacio restante
+        tablaPrincipal.add(tablaContenidoOpciones).expand().fill().row();
 
-        controles = new TextButton("Controles", recurso.get("uis/general/uiskin.json", Skin.class));
+        // Añadir botón 'Atrás' en la parte inferior, ocupando el ancho de la tabla principal
+        tablaPrincipal.add(atras).colspan(2).padTop(Value.percentHeight(0.05f, tablaPrincipal)).width(Value.percentWidth(0.2f, tablaPrincipal)).center().row();
 
-        controles.setSize(Juego.ANCHO_PANTALLA / 3, 32);
 
-        graficos = new TextButton("Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
-
-        graficos.setSize(Juego.ANCHO_PANTALLA / 3, 32);
-
-        sonido = new TextButton("Sonido", recurso.get("uis/general/uiskin.json", Skin.class));
-
-        sonido.setSize(Juego.ANCHO_PANTALLA / 3, 32);
+        // La lógica de música y cursor se mantiene
+        Music musica = recurso.get("audios/creditos.ogg", Music.class);
+        if (dato.isSonido()) {
+            if (!musica.isPlaying()) {
+                musica.setLooping(true);
+                musica.play();
+            }
+        }
 
         if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-            controles.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
-
-            graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
-
-            sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 96);
+            Gdx.graphics.setCursor(
+                    Gdx.graphics.newCursor(
+                            new Pixmap(Gdx.files.internal("texturas/cursor.png")), 0, 0));
         }
 
-        if (Gdx.app.getType() == Gdx.app.getType().Android) {
-
-            controles.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
-
-            graficos.setPosition(Juego.ANCHO_PANTALLA / 3, 144);
-
-            sonido.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
-        }
-
-        textoPausaJuego = new Label("Pausa", recurso.get("uis/general/uiskin.json", Skin.class));
+        // Inicializar los demás elementos de UI que no se han movido a tablas aún
+        // (Se refactorizarán en los métodos anadirBotones<Categoria> correspondientes)
+        textoPausaJuego = new Label("Pausa", skin);
 
         textoPausaJuego.setPosition(Juego.ANCHO_PANTALLA / 4, 320);
 
@@ -617,154 +649,135 @@ public class PantallaOpciones extends Pantalla {
 
         volumenSonido.setValue(dato.getVolumenSonido());
 
+        // Mostrar la vista de categorías de opciones por defecto
         anadirBotonesOpciones(true);
+        // Asegurarse de que las otras vistas de contenido no estén visibles inicialmente
+        anadirBotonesGraficos(false);
+        anadirBotonesSonido(false);
+        anadirBotonesPartida(false);
+        anadirBotonesControles(false);
     }
 
     @SuppressWarnings("static-access")
     private void anadirBotonesOpciones(boolean anadir) {
-
+        // Este método ahora controla la visibilidad de los elementos principales de la pantalla de opciones.
+        // Cuando 'anadir' es true, se muestran las categorías de opciones y se limpia el contenido específico de una opción.
+        // Cuando 'anadir' es false, se ocultan las categorías para dar paso al contenido de una opción específica.
         if (anadir) {
+            // Asegurar que la tabla principal y sus componentes principales sean visibles
+            // (titulo y atras son parte de tablaPrincipal y su visibilidad se maneja ahí directamente o no necesitan cambiar)
+            // Lo principal es mostrar la tabla de categorías y limpiar el contenido de opciones.
+            if (tablaCategorias != null) tablaCategorias.setVisible(true);
 
-            nivelMenu.addActor(titulo);
+            if (tablaContenidoOpciones != null) tablaContenidoOpciones.clear();
 
-            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-                nivelMenu.addActor(partida);
-            }
-
-            nivelMenu.addActor(controles);
-
-            nivelMenu.addActor(graficos);
-
-            nivelMenu.addActor(sonido);
-
-            nivelMenu.addActor(atras);
+            // Aseguramos que los elementos que son hijos directos de tablaPrincipal y deben estar siempre
+            // visibles con las categorías, lo estén. 'titulo' y 'atras' ya están en tablaPrincipal.
+            // Si otros elementos fueran directamente hijos de nivelMenu y necesitaran gestionarse aquí, se haría.
 
         } else {
-            titulo.remove();
-
-            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-                partida.remove();
-            }
-
-            controles.remove();
-
-            graficos.remove();
-
-            sonido.remove();
-
-            atras.remove();
+            // Ocultar los elementos de categorías cuando se muestra una sub-sección de opciones
+            if (tablaCategorias != null) tablaCategorias.setVisible(false);
+            // El título principal y el botón 'atras' generalmente permanecen visibles.
+            // tablaContenidoOpciones se llenará por el método específico (ej. anadirBotonesGraficos)
         }
     }
 
     private void anadirBotonesSonido(boolean anadir) {
-
+        // Este método ahora puebla tablaContenidoOpciones con los controles de sonido.
         if (anadir) {
-            nivelMenu.addActor(tituloMusica);
+            tablaContenidoOpciones.clear(); // Limpiar contenido anterior
+            // tablaContenidoOpciones.setDebug(true); // Para depuración
 
-            nivelMenu.addActor(volumenMusica);
+            // Crear una sub-tabla para los elementos de la sección de sonido
+            Table subTablaSonido = new Table();
+            // subTablaSonido.setDebug(true); // Para depuración
+            Skin skin = recurso.get("uis/general/uiskin.json", Skin.class); // Obtener skin para consistencia
 
-            nivelMenu.addActor(tituloSonido);
+            // Título de la sección de sonido
+            tituloOpcionesSonido.setVisible(true); // Asegurarse de que el título específico sea visible
+            subTablaSonido.add(tituloOpcionesSonido).colspan(2).padBottom(Value.percentHeight(0.03f, tablaContenidoOpciones)).row();
 
-            nivelMenu.addActor(volumenSonido);
+            // Opciones de sonido
+            float labelWidth = Value.percentWidth(0.4f, subTablaSonido); // Ancho para etiquetas
+            float controlWidth = Value.percentWidth(0.4f, subTablaSonido); // Ancho para sliders/checkboxes
+            float padLeftPercent = 0.05f; // Padding izquierdo para etiquetas
 
-            nivelMenu.addActor(tituloactivarSonido);
+            subTablaSonido.add(tituloMusica).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaSonido));
+            subTablaSonido.add(volumenMusica).width(controlWidth).fillX().row();
 
-            nivelMenu.addActor(activarSonido);
+            subTablaSonido.add(tituloSonido).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaSonido));
+            subTablaSonido.add(volumenSonido).width(controlWidth).fillX().row();
 
-            nivelMenu.addActor(aceptarSonido);
+            subTablaSonido.add(tituloactivarSonido).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaSonido));
+            subTablaSonido.add(activarSonido).row();
 
-            nivelMenu.addActor(cancelarSonido);
+            // Botones Aceptar y Cancelar para sonido
+            Table botonesAccionSonido = new Table();
+            botonesAccionSonido.add(aceptarSonido).width(Value.percentWidth(0.25f, subTablaSonido)).pad(Value.percentHeight(0.02f, subTablaSonido));
+            botonesAccionSonido.add(cancelarSonido).width(Value.percentWidth(0.25f, subTablaSonido)).pad(Value.percentHeight(0.02f, subTablaSonido));
+            subTablaSonido.add(botonesAccionSonido).colspan(2).padTop(Value.percentHeight(0.05f, subTablaSonido)).row();
 
-            nivelMenu.addActor(tituloOpcionesSonido);
+            tablaContenidoOpciones.add(subTablaSonido).expand().fill();
 
         } else {
-
-            tituloMusica.remove();
-
-            volumenMusica.remove();
-
-            tituloSonido.remove();
-
-            volumenSonido.remove();
-
-            tituloactivarSonido.remove();
-
-            activarSonido.remove();
-
-            aceptarSonido.remove();
-
-            cancelarSonido.remove();
-
-            tituloOpcionesSonido.remove();
+            tablaContenidoOpciones.clear(); // Limpiar la tabla de contenido si anadir es false
+            if (tituloOpcionesSonido != null) tituloOpcionesSonido.setVisible(false);
         }
     }
 
     @SuppressWarnings("static-access")
     private void anadirBotonesGraficos(boolean anadir) {
-
+        // Este método ahora puebla tablaContenidoOpciones con los controles de gráficos.
         if (anadir) {
+            tablaContenidoOpciones.clear(); // Limpiar contenido anterior
+            // tablaContenidoOpciones.setDebug(true); // Para depuración de esta tabla
 
-            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+            // Crear una sub-tabla para los elementos de la sección de gráficos
+            Table subTablaGraficos = new Table();
+            // subTablaGraficos.setDebug(true); // Para depuración de la sub-tabla
+            // subTablaGraficos.defaults().pad(Value.percentHeight(0.01f, tablaContenidoOpciones)); // Pad general
 
-                nivelMenu.addActor(tituloPantallaCompleta);
+            // Título de la sección de gráficos
+            // Asegurarse de que el título específico de la sección sea visible y se añada a la subTabla
+            tituloOpcionesGraficos.setVisible(true);
+            subTablaGraficos.add(tituloOpcionesGraficos).colspan(2).padBottom(Value.percentHeight(0.03f, tablaContenidoOpciones)).row();
 
-                nivelMenu.addActor(pantallaCompleta);
+
+            // Opciones de gráficos
+            float labelWidth = Value.percentWidth(0.4f, subTablaGraficos); // Ancho para etiquetas
+            float checkWidth = Value.percentWidth(0.1f, subTablaGraficos); // Ancho para checkboxes
+            float padLeftPercent = 0.1f; // Padding izquierdo para etiquetas
+
+            if (Gdx.app.getType() == Gdx.app.Application.ApplicationType.Desktop) {
+                subTablaGraficos.add(tituloPantallaCompleta).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaGraficos));
+                subTablaGraficos.add(pantallaCompleta).width(checkWidth).row();
             }
 
-            nivelMenu.addActor(tituloSincronizacionVertical);
+            subTablaGraficos.add(tituloSincronizacionVertical).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaGraficos));
+            subTablaGraficos.add(sincronizacionVertical).width(checkWidth).row();
 
-            nivelMenu.addActor(sincronizacionVertical);
+            subTablaGraficos.add(tituloFiltradoBilineal).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaGraficos));
+            subTablaGraficos.add(filtradoBilineal).width(checkWidth).row();
 
-            nivelMenu.addActor(tituloFiltradoBilineal);
+            subTablaGraficos.add(tituloMostrarFPS).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaGraficos));
+            subTablaGraficos.add(mostrarFPS).width(checkWidth).row();
 
-            nivelMenu.addActor(filtradoBilineal);
+            subTablaGraficos.add(tituloPrueba).width(labelWidth).left().padLeft(Value.percentWidth(padLeftPercent, subTablaGraficos));
+            subTablaGraficos.add(prueba).width(checkWidth).row();
 
-            nivelMenu.addActor(tituloMostrarFPS);
+            // Botones Aceptar y Cancelar para gráficos
+            Table botonesAccionGraficos = new Table();
+            botonesAccionGraficos.add(aceptarGraficos).width(Value.percentWidth(0.25f, subTablaGraficos)).pad(Value.percentHeight(0.02f, subTablaGraficos));
+            botonesAccionGraficos.add(cancelarGraficos).width(Value.percentWidth(0.25f, subTablaGraficos)).pad(Value.percentHeight(0.02f, subTablaGraficos));
+            subTablaGraficos.add(botonesAccionGraficos).colspan(2).padTop(Value.percentHeight(0.05f, subTablaGraficos)).row();
 
-            nivelMenu.addActor(mostrarFPS);
-
-            nivelMenu.addActor(tituloPrueba);
-
-            nivelMenu.addActor(prueba);
-
-            nivelMenu.addActor(aceptarGraficos);
-
-            nivelMenu.addActor(cancelarGraficos);
-
-            nivelMenu.addActor(tituloOpcionesGraficos);
+            tablaContenidoOpciones.add(subTablaGraficos).expand().fill();
 
         } else {
-
-            if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-                tituloPantallaCompleta.remove();
-
-                pantallaCompleta.remove();
-            }
-
-            tituloSincronizacionVertical.remove();
-
-            sincronizacionVertical.remove();
-
-            tituloFiltradoBilineal.remove();
-
-            filtradoBilineal.remove();
-
-            tituloMostrarFPS.remove();
-
-            mostrarFPS.remove();
-
-            tituloPrueba.remove();
-
-            prueba.remove();
-
-            aceptarGraficos.remove();
-
-            cancelarGraficos.remove();
-
-            tituloOpcionesGraficos.remove();
+            tablaContenidoOpciones.clear(); // Limpiar la tabla de contenido si anadir es false
+            // Ocultar el título específico de la sección si es necesario, aunque limpiar la tabla ya lo hace.
+            if (tituloOpcionesGraficos != null) tituloOpcionesGraficos.setVisible(false);
         }
     }
 
@@ -896,12 +909,21 @@ public class PantallaOpciones extends Pantalla {
 
         atras.addListener(
                 new ClickListener() {
-
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-
-                        juego.setScreen(new PantallaMenu(juego));
-
+                        // Si la tabla de categorías está visible, significa que estamos en la vista principal de opciones.
+                        // En este caso, el botón "Atrás" debería llevar al menú principal del juego.
+                        if (tablaCategorias.isVisible()) {
+                            juego.setScreen(new PantallaMenu(juego));
+                        } else {
+                            // Si la tabla de categorías no está visible, significa que estamos en una sub-pantalla de opciones (ej. Gráficos, Sonido).
+                            // En este caso, "Atrás" debería volver a la vista de categorías.
+                            anadirBotonesGraficos(false); // Ocultar la sección de gráficos si estaba visible
+                            anadirBotonesSonido(false); // Ocultar la sección de sonido si estaba visible
+                            anadirBotonesPartida(false); // Ocultar la sección de partida si estaba visible
+                            anadirBotonesControles(false); // Ocultar la sección de controles si estaba visible
+                            anadirBotonesOpciones(true); // Mostrar la lista de categorías de opciones
+                        }
                         super.clicked(event, x, y);
                     }
                 });
@@ -939,8 +961,9 @@ public class PantallaOpciones extends Pantalla {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-
-                        anadirBotonesOpciones(true);
+                        // Al aceptar, se guardan los cambios y se vuelve a la vista de categorías.
+                        anadirBotonesSonido(false); // Limpiar la tabla de contenido de sonido
+                        anadirBotonesOpciones(true); // Mostrar las categorías principales
 
                         dato.setVolumenMusica(volumenMusica.getValue());
 
@@ -963,9 +986,11 @@ public class PantallaOpciones extends Pantalla {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        // Al cancelar, se vuelve a la vista de categorías sin guardar cambios.
+                        anadirBotonesSonido(false); // Limpia la tabla de contenido de sonido
+                        anadirBotonesOpciones(true); // Muestra las categorías principales
 
-                        anadirBotonesOpciones(true);
-
+                        // Restablecer los controles a los valores guardados
                         activarSonido.setChecked(dato.isSonido());
 
                         volumenMusica.setValue(dato.getVolumenMusica());
@@ -982,8 +1007,9 @@ public class PantallaOpciones extends Pantalla {
                     @SuppressWarnings("static-access")
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-
-                        anadirBotonesOpciones(true);
+                        // Cuando se aceptan los cambios gráficos, se vuelve a la vista de categorías.
+                        anadirBotonesGraficos(false); // Limpia la tabla de contenido de gráficos
+                        anadirBotonesOpciones(true); // Muestra las categorías principales
 
                         dato.setPantallaCompleta(pantallaCompleta.isChecked());
 
@@ -1027,9 +1053,11 @@ public class PantallaOpciones extends Pantalla {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        // Al cancelar, se vuelve a la vista de categorías sin guardar cambios.
+                        anadirBotonesGraficos(false); // Limpia la tabla de contenido de gráficos
+                        anadirBotonesOpciones(true); // Muestra las categorías principales
 
-                        anadirBotonesOpciones(true);
-
+                        // Restablecer los checkboxes a los valores guardados
                         pantallaCompleta.setChecked(dato.isPantallaCompleta());
 
                         sincronizacionVertical.setChecked(dato.isSincronizacionVertical());
@@ -1099,9 +1127,9 @@ public class PantallaOpciones extends Pantalla {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-
+                        // Ocultar los botones de categoría principales
                         anadirBotonesOpciones(false);
-
+                        // Mostrar los botones/opciones de gráficos
                         anadirBotonesGraficos(true);
 
                         super.clicked(event, x, y);
@@ -1113,9 +1141,9 @@ public class PantallaOpciones extends Pantalla {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-
+                        // Ocultar los botones de categoría principales
                         anadirBotonesOpciones(false);
-
+                        // Mostrar los botones/opciones de sonido
                         anadirBotonesSonido(true);
 
                         super.clicked(event, x, y);

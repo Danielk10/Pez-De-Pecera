@@ -448,8 +448,11 @@ public abstract class Personaje extends Sprite {
 	}
 
 	/**
-	 * Actualiza el estado del personaje. Esto incluye actualizar el tiempo de animación
-	 * y sincronizar la posición y rotación del sprite con el cuerpo físico de Box2D.
+	 * Actualiza el estado del personaje.
+	 * Para cuerpos {@code CINESTECICO} y {@code DIANAMICO}, sincroniza la posición y rotación
+	 * del sprite con el cuerpo físico de Box2D. También actualiza el tiempo de animación si aplica.
+	 * Para cuerpos {@code ESTATICO}, no se realiza sincronización aquí ya que sus cuerpos
+	 * de Box2D son inmóviles por definición (su posición inicial se establece en la creación).
 	 *
 	 * @param delta Tiempo transcurrido desde la última actualización, en segundos.
 	 */
@@ -482,24 +485,6 @@ public abstract class Personaje extends Sprite {
 				// Establece la rotación del sprite basada en el ángulo del cuerpo Box2D.
 				// El ángulo del cuerpo está en radianes, se convierte a grados.
 				setRotation(cuerpo.getAngle() * MathUtils.radiansToDegrees);
-			}
-		}
-
-		// Para cuerpos estáticos, la posición del sprite dicta la posición del cuerpo.
-		// Esto es útil si un cuerpo estático necesita ser reposicionado programáticamente.
-		if (tipoDeCuerpo == Personaje.ESTATICO) {
-			// Asegura que la posición del sprite sea la almacenada en 'x' e 'y' (en unidades del mundo).
-			setX(x);
-			setY(y);
-			if (cuerpo != null) {
-				// Solo actualiza la transformación del cuerpo si este Personaje es el UserData del cuerpo.
-				// Esto evita que otros sistemas modifiquen incorrectamente este cuerpo.
-				if (this.equals(cuerpo.getUserData())) {
-					// Establece la posición del cuerpo Box2D al centro del sprite.
-					// this.x y this.y ya son las coordenadas de la esquina inferior izquierda en unidades del mundo.
-					// this.getWidth()/getHeight() también están en unidades del mundo.
-					cuerpo.setTransform(this.x + this.getWidth() / 2, this.y + this.getHeight() / 2, 0);
-				}
 			}
 		}
 	}

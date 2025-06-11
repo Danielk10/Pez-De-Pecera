@@ -359,7 +359,7 @@ public class PantallaJuego extends Pantalla {
 
 		// Instancia el jugador.
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
+				Animation.PlayMode.LOOP, this, 64, 64, Jugador.CINESTECICO);
 
 		// Instancia el manejador de niveles (mundo).
 		mundo = new Niveles(this, jugador);
@@ -795,7 +795,10 @@ public class PantallaJuego extends Pantalla {
 	 */
 	@Override
 	public void colisiones() {
-		// Itera sobre todos los personajes para la detección de colisiones.
+		// La detección de colisiones ahora es manejada por ColicionBox2DListener,
+		// que se encarga de llamar a los métodos colision() de los Personajes involucrados
+		// cuando Box2D detecta un contacto. Este método ahora solo se encarga de
+		// actualizar puntos y procesar la eliminación de personajes.
 		for (int i = 0; i < personajes.size; i++) {
 			// Si el personaje es el jugador, actualiza los puntos.
 			if (personajes.get(i) instanceof Jugador) {
@@ -803,29 +806,8 @@ public class PantallaJuego extends Pantalla {
 				((Jugador) personajes.get(i)).setPuntos(0); // Resetea los puntos temporales del jugador.
 			}
 
-			Personaje personaje1 = personajes.get(i);
-			Rectangle rectangulo1 = personaje1.getBoundingRectangle(); // Obtiene el rectángulo de colisión del personaje 1.
-
-			// Compara con los personajes restantes en la lista para evitar comparaciones duplicadas y auto-colisiones.
-			for (int j = i + 1; j < personajes.size; j++) {
-				Personaje personaje2 = personajes.get(j);
-				Rectangle rectangulo2 = personaje2.getBoundingRectangle(); // Obtiene el rectángulo de colisión del personaje 2.
-
-				// Comprueba si los rectángulos se superponen (colisión AABB).
-				if (rectangulo1.overlaps(rectangulo2)) {
-					// Si no está en modo prueba y el jugador no ha terminado el nivel.
-					if (!dato.isPrueba()) {
-						if (!jugador.isFinNivel()) {
-							// Llama a los métodos de colisión de ambos personajes.
-							personaje1.colision(personaje2);
-							personaje2.colision(personaje1);
-						}
-					}
-				}
-			}
-
 			// Procesa la eliminación de personajes marcados como 'remover'.
-			Personaje personaje = personajes.get(i);
+			Personaje personaje = personajes.get(i); // Obtiene la referencia al personaje actual.
 			if (personaje.isRemover()) {
 				// Elimina las luces asociadas al cuerpo del personaje.
 				for (Light puntoLuz : luces) {
