@@ -1,6 +1,5 @@
 ## Gradle:
 .gradle/
-.androidide/
 gradle-app.setting
 /build/
 /android/build/
