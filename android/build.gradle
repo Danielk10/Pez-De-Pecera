@@ -32,8 +32,8 @@ android {
   }
   defaultConfig {
     applicationId 'com.diamon.pez'
-    minSdkVersion 21
-    targetSdkVersion 35
+    minSdkVersion 23
+    targetSdkVersion 36
     versionCode 1
     versionName "1.0"
   }
@@ -45,7 +45,7 @@ android {
   buildTypes {
     release {
       minifyEnabled true
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
 }
@@ -79,7 +79,7 @@ dependencies {
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-  
+
   def appCenterSdkVersion = '5.0.6'
   implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
   implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
