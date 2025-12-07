@@ -13,8 +13,6 @@ gradle-app.setting
 /headless/build/
 /server/build/
 /shared/build/
-.androidide/
-.acside/
 
 ## Java:
 *.class

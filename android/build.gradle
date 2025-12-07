@@ -9,8 +9,8 @@ apply plugin: 'com.android.application'
 
 
 android {
-  namespace "com.diamon.pez"
-  compileSdk 36
+  namespace = "com.diamon.pez"
+  compileSdk = 36
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -32,21 +32,20 @@ android {
   }
   defaultConfig {
     applicationId 'com.diamon.pez'
-    minSdkVersion 23
-    targetSdkVersion 36
+    minSdkVersion 21
+    targetSdkVersion 35
     versionCode 1
     versionName "1.0"
-    multiDexEnabled true
   }
   compileOptions {
     sourceCompatibility "17"
     targetCompatibility "17"
-    coreLibraryDesugaringEnabled true
+    coreLibraryDesugaringEnabled = true
   }
   buildTypes {
     release {
       minifyEnabled true
-    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
 }
@@ -80,7 +79,7 @@ dependencies {
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-
+  
   def appCenterSdkVersion = '5.0.6'
   implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
   implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"

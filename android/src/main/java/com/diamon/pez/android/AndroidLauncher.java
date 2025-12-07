@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.diamon.pez.PezDePecera;
+
 import com.diamon.pez.publicidad.Publicidad;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
@@ -15,17 +16,16 @@ public class AndroidLauncher extends AndroidApplication {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        AppCenter.start(
+		 AppCenter.start(
                 getApplication(),
                 "4942c9c2-c670-4a16-89ab-23bfc270ca4d",
                 Analytics.class,
                 Crashes.class);
-
         AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
         configuration.useImmersiveMode = true; // Recommended, but not required.
-
-        initialize(
+		
+		
+       initialize(
                 new PezDePecera(
                         new Publicidad() {
 
