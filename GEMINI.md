@@ -6,7 +6,7 @@ A libGDX game project targeting Android and Desktop.
 
 - **Purpose**: Interactive game developed with libGDX.
 - **Target Platform**: Android (API 23 to 37) and Desktop (LWJGL3).
-- **Current Version**: 1.0.0 (Code 1).
+- **Current Version**: 1.1.0 (Code 2).
 - **Language**: Java 17.
 - **Architecture**: libGDX Multi-module project.
 
@@ -58,15 +58,20 @@ gh release create v0.1.0-beta android/build/outputs/apk/debug/android-debug.apk 
 - `lwjgl3/`: Desktop launcher.
 - `setup-sdk.sh`: Script to automate Android development environment setup.
 
-## 🔧 Development Conventions
+## 🔧 Development Conventions & AGENT Instructions
 
-- **Coding Style**: Standard Java coding conventions.
-- **UI**: libGDX Scene2D/UI components.
-- **Testing**: Tests located in respective module test folders.
+Este proyecto utiliza guías estrictas para agentes de IA definidas en `AGENT_INSTRUCTIONS.md`.
+
+### Flujo Obligatorio
+1.  **Contexto**: Siempre leer `GEMINI.md`, `AGENT_INSTRUCTIONS.md` y `ACTIVITY_LOG.md` al inicio de la sesión.
+2.  **Registro**: Cada acción realizada debe ser anotada detalladamente en `ACTIVITY_LOG.md`.
+3.  **Validation**: Siempre verificar cambios con `./gradlew android:assembleDebug`.
+4.  **Git Protocol**: Usar autor `Danielk10 <danielpdiamon@gmail.com>` y prefijos en los commits.
 
 ## 📝 Key Documentation Files
 
 - `README.md`: Public documentation.
+- `ACTIVITY_LOG.md`: Mandatory log of all agent activities.
 - `guia_uso_sdk.md`: Reference guide for Android SDK tools.
 - `LICENSE`: Apache License 2.0 details.
 - `AGENT_INSTRUCTIONS.md`: Mandatory workflow guidelines for AI agents.

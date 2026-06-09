@@ -13,8 +13,9 @@ Esta guía establece el estándar operativo obligatorio para cualquier agente de
 ## 3. Consistencia de la Documentación (Crucial)
 Cada cambio en el código o configuración **DEBE** verse reflejado inmediatamente en los siguientes archivos:
 1.  **`GEMINI.md`**: El índice de conocimiento del agente.
-2.  **`README.md`**: La cara pública del proyecto (actualizar badges y secciones técnicas).
-3.  **`guia_uso_sdk.md`**: Guía técnica de comandos (actualizar versiones de API/Build-Tools).
+2.  **`ACTIVITY_LOG.md`**: Registro obligatorio de todas las tareas realizadas (detallado y puntual).
+3.  **`README.md`**: La cara pública del proyecto (actualizar badges y secciones técnicas).
+4.  **`guia_uso_sdk.md`**: Guía técnica de comandos (actualizar versiones de API/Build-Tools).
 
 ## 4. Verificación Obligatoria
 - **Nunca** realizar un commit sin haber validado el cambio.
