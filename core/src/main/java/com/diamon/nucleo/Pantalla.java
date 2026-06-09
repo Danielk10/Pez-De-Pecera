@@ -76,7 +76,7 @@ public abstract class Pantalla implements Screen {
 
 		nivelMenu = juego.nivelMenu;
 
-		nivel = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA));
+		nivel = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA), juego.pincel);
 
 		((OrthographicCamera) nivel.getCamera()).setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -87,7 +87,7 @@ public abstract class Pantalla implements Screen {
 
 		camara.update();
 
-		pincel = new SpriteBatch();
+		pincel = juego.pincel;
 
 		pincelPrueba = new ShapeRenderer();
 
@@ -200,8 +200,6 @@ public abstract class Pantalla implements Screen {
 
 		liberarRecursos();
 
-		pincel.dispose();
-
 		pincelPrueba.dispose();
 
 		Gdx.input.setInputProcessor(null);
@@ -236,8 +234,6 @@ public abstract class Pantalla implements Screen {
 		personajes.clear();
 
 		liberarRecursos();
-
-		pincel.dispose();
 
 		pincelPrueba.dispose();
 

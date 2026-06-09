@@ -32,4 +32,30 @@ Este archivo contiene el historial detallado de las tareas realizadas por los ag
     *   Creación del prelanzamiento `v0.2.0-beta` en GitHub.
 
 ---
+
+## [2026-06-09] - Segunda Sesión: Refactorización de UI y Arquitectura
+**Agente**: Gemini CLI (Operado por Danielk10)
+
+### Tareas Realizadas:
+1.  **Corrección de Distorsión de UI**:
+    *   **Problema**: La interfaz de usuario se distorsionaba al cambiar de resolución/aspecto debido al uso de `StretchViewport`.
+    *   **Solución**: Se cambió `StretchViewport` por `FitViewport` en las clases base `Juego.java` y `Pantalla.java`. Esto garantiza que se mantenga la relación de aspecto (16:9) con barras negras si es necesario.
+    *   **Refactorización de Menú**: Se rediseñó `PantallaMenu.java` utilizando `Table` de Scene2D en lugar de posicionamiento absoluto y factores de escala manuales, logrando una interfaz responsiva.
+
+2.  **Optimización de Recursos y Memoria**:
+    *   **SpriteBatch Compartido**: Se modificó `Juego.java` para que mantenga una única instancia de `SpriteBatch`, la cual es heredada por todas las pantallas, reduciendo significativamente el consumo de memoria.
+    *   **Gestión de Texturas**: Se eliminó la creación repetitiva de texturas en `Juego.java` y pantallas. Ahora se utiliza una referencia compartida (`texturaFondo`) y se promueve el uso de `AssetManager`.
+    *   **Limpieza de Código**: Se eliminaron llamadas redundantes a `pincel.dispose()` en las pantallas individuales para evitar excepciones al usar el `SpriteBatch` compartido.
+
+3.  **Restauración de StretchViewport**:
+    *   A petición explícita del usuario, se restauró el uso de `StretchViewport` en lugar de `FitViewport`. Aunque esto permite que el juego llene toda la pantalla, se mantiene la refactorización con `Table` para asegurar que el posicionamiento de los elementos sea consistente dentro del sistema de coordenadas de 1280x720.
+
+4.  **Análisis Técnico y Recomendaciones**:
+    *   **Editor de Niveles**: Se recomienda conservarlo como herramienta de desarrollo pero refactorizarlo para usar `Table` y desacoplarlo de las clases de personajes.
+    *   **Mejoras Futuras**: Se identificó la necesidad de mover la lógica de configuración (sonido, filtrado) a una clase dedicada para evitar duplicidad de código en `PantallaCarga` y `PantallaOpciones`.
+
+4.  **Verificación**:
+    *   Compilación exitosa del proyecto mediante `./gradlew android:assembleDebug`.
+
+---
 *Nota: Todos los agentes deben añadir una nueva sección con la fecha y el resumen detallado de sus acciones al finalizar sus tareas.*

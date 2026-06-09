@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
@@ -25,6 +26,8 @@ import com.diamon.pez.publicidad.Publicidad;
 public abstract class Juego extends Game {
 
     protected AssetManager recurso;
+    
+    public SpriteBatch pincel;
 
     public static final float ANCHO_PANTALLA = 1280f;
 
@@ -51,6 +54,8 @@ public abstract class Juego extends Game {
     protected Configuraciones configuracion;
 
     private Image[] fondo;
+
+    private Texture texturaFondo;
 
     private float posicionFondoX;
 
@@ -121,14 +126,18 @@ public abstract class Juego extends Game {
 
         renderizar = false;
 
-        nivelMenu = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA));
+        pincel = new SpriteBatch();
+
+        nivelMenu = new Stage(new StretchViewport(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA), pincel);
 
         ((OrthographicCamera) nivelMenu.getCamera())
                 .setToOrtho(false, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
+        texturaFondo = new Texture(Gdx.files.internal("texturas/fondo4.png"));
+
         for (int i = 0; i < fondo.length; i++) {
 
-            fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
+            fondo[i] = new Image(texturaFondo);
 
             fondo[i].setSize(Juego.ANCHO_PANTALLA + 213, Juego.ALTO_PANTALLA);
 
@@ -205,7 +214,7 @@ public abstract class Juego extends Game {
 
             for (int i = 0; i < fondo.length; i++) {
 
-                fondo[i] = new Image(new Texture(Gdx.files.internal("texturas/fondo4.png")));
+                fondo[i] = new Image(texturaFondo);
 
                 fondo[i].setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
 
@@ -251,5 +260,9 @@ public abstract class Juego extends Game {
         nivelMenu.dispose();
 
         mundoVirtual.dispose();
+        
+        texturaFondo.dispose();
+        
+        pincel.dispose();
     }
 }

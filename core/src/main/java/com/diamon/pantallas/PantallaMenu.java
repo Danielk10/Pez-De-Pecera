@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.nucleo.Juego;
@@ -36,14 +37,7 @@ public class PantallaMenu extends Pantalla {
     @SuppressWarnings("static-access")
     @Override
     public void mostrar() {
-        
-        // Obtén el ancho y alto actual del Viewport
-    float viewportAncho = Juego.ANCHO_PANTALLA;
-    float viewportAlto = Juego.ALTO_PANTALLA;
-
-
         if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
             Gdx.graphics.setCursor(
                     Gdx.graphics.newCursor(
                             new Pixmap(Gdx.files.internal("texturas/cursor.png")), 0, 0));
@@ -52,62 +46,41 @@ public class PantallaMenu extends Pantalla {
         musica = recurso.get("audios/creditos.ogg", Music.class);
 
         if (dato.isSonido()) {
-
             if (!musica.isPlaying()) {
-
                 musica.setLooping(true);
-
                 musica.play();
             }
         }
 
-        // Crear botones con Skin y posiciones relativas al ancho y alto
         Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
-        // Proporción base a la cual se van a escalar los elementos
-    float anchoBase = 1280f;
-    float altoBase = 720f;
+        Table tabla = new Table();
+        tabla.setFillParent(true);
+        // tabla.setDebug(true); // Útil para depurar el diseño
 
-    float escalaX = viewportAncho / anchoBase;
-    float escalaY = viewportAlto / altoBase;
+        titulo = new Image(recurso.get("texturas/titulo.png", Texture.class));
+        
+        jugar = new TextButton("Jugar", skin);
+        opciones = new TextButton("Opciones", skin);
+        puntuaciones = new TextButton("Puntuaciones", skin);
+        creditos = new TextButton("Creditos", skin);
+        salir = new TextButton("Salir", skin);
 
-    // Crear los botones ajustando el tamaño y posición proporcionalmente
-    jugar = new TextButton("Jugar", recurso.get("uis/general/uiskin.json", Skin.class));
-    jugar.setSize(213 * escalaX, 32 * escalaY);
-    jugar.setPosition(212 * escalaX, 240 * escalaY);
+        // Diseño de la UI con Table
+        tabla.add(titulo).size(320, 320).padBottom(20);
+        tabla.row();
+        
+        Table menuBotones = new Table();
+        menuBotones.add(jugar).size(213, 32).padBottom(10).row();
+        menuBotones.add(opciones).size(213, 32).padBottom(10).row();
+        menuBotones.add(puntuaciones).size(213, 32).padBottom(10).row();
+        menuBotones.add(creditos).size(213, 32).padBottom(10).row();
+        
+        tabla.add(menuBotones).expandX();
+        tabla.row();
+        tabla.add(salir).size(213, 32).left().bottom().expand().pad(32);
 
-    opciones = new TextButton("Opciones", recurso.get("uis/general/uiskin.json", Skin.class));
-    opciones.setSize(213 * escalaX, 32 * escalaY);
-    opciones.setPosition(212 * escalaX, 192 * escalaY);
-
-    puntuaciones = new TextButton("Puntuaciones", recurso.get("uis/general/uiskin.json", Skin.class));
-    puntuaciones.setSize(213 * escalaX, 32 * escalaY);
-    puntuaciones.setPosition(212 * escalaX, 144 * escalaY);
-
-    creditos = new TextButton("Creditos", recurso.get("uis/general/uiskin.json", Skin.class));
-    creditos.setSize(213 * escalaX, 32 * escalaY);
-    creditos.setPosition(212 * escalaX, 96 * escalaY);
-
-    salir = new TextButton("Salir", recurso.get("uis/general/uiskin.json", Skin.class));
-    salir.setSize(213 * escalaX, 32 * escalaY);
-    salir.setPosition(32 * escalaX, 32 * escalaY);
-
-    // Ajustar el título proporcionalmente
-    titulo = new Image(recurso.get("texturas/titulo.png", Texture.class));
-    titulo.setSize(320 * escalaX, 320 * escalaY);
-    titulo.setPosition(164 * escalaX, 230 * escalaY);
-
-        nivelMenu.addActor(titulo);
-
-        nivelMenu.addActor(jugar);
-
-        nivelMenu.addActor(opciones);
-
-        nivelMenu.addActor(puntuaciones);
-
-        nivelMenu.addActor(creditos);
-
-        nivelMenu.addActor(salir);
+        nivelMenu.addActor(tabla);
     }
 
     @Override
