@@ -4,6 +4,9 @@ Esta guía establece el estándar operativo obligatorio para cualquier agente de
 
 ## 1. Fase de Investigación (Contexto)
 - **Siempre** leer `GEMINI.md` al inicio de la sesión.
+- **Configuración del SDK**: Antes de cualquier comando de compilación (`./gradlew`), es MANDATORIO ejecutar `./setup-sdk.sh`.
+  - Este script configura el entorno en `/tmp/android-sdk` (o lo que dicte `ANDROID_SDK_ROOT`) y genera el archivo `local.properties`.
+  - No intentes instalar componentes manualmente con `sdkmanager` sin haber inicializado el entorno con el script primero.
 - Verificar el estado actual del proyecto (versiones en `build.gradle`, estado de git, y configuración del SDK).
 
 ## 2. Actualización de Código y Configuración

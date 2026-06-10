@@ -103,3 +103,20 @@ Este archivo contiene el historial detallado de las tareas realizadas por los ag
 *   Documentación: **Actualizada**.
 *   Código: **Estable y Compilando**.
 *   Lanzamiento: **v1.2.0-beta publicado**.
+
+---
+
+## [2026-06-10] - Sesión: Clarificación de Configuración del SDK
+**Agente**: Gemini CLI (Operado por Danielk10)
+
+### Tareas Realizadas:
+1.  **Mejora de Documentación de Setup**:
+    *   **AGENT_INSTRUCTIONS.md**: Se añadió la obligatoriedad de ejecutar `./setup-sdk.sh` antes de cualquier comando de compilación para evitar confusiones en agentes de IA.
+    *   **GEMINI.md**: Se expandió la sección de "Setup" explicando las 4 funciones críticas del script de configuración.
+    *   **guia_uso_sdk.md**: Se incluyó la "Sección 0: Inicialización Obligatoria" para establecer el flujo de trabajo correcto desde el inicio.
+2.  **Verificación**:
+    *   Revisión manual de los archivos modificados para asegurar coherencia.
+    *   Sincronización de los cambios con el repositorio remoto.
+
+### Estado Final:
+*   Documentación de setup: **Clarificada y reforzada para agentes**.

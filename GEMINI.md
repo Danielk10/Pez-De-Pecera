@@ -28,10 +28,15 @@ A libGDX game project targeting Android and Desktop.
 - Android SDK (can be configured using `setup-sdk.sh`).
 
 ### Setup
-Run the included script to configure the Android SDK environment:
+Para configurar el entorno de desarrollo y las herramientas de compilación de Android, ejecuta:
 ```bash
 ./setup-sdk.sh
 ```
+**Nota Crucial para Agentes**: Este script es obligatorio antes de compilar. 
+1.  Descarga las `cmdline-tools` si no existen.
+2.  Instala automáticamente las `build-tools` y `platforms` requeridas (API 37).
+3.  Crea o sobreescribe `local.properties` con la ruta correcta (`/tmp/android-sdk` por defecto).
+4.  **No omitir**: Sin este paso, `./gradlew` fallará al no encontrar el SDK de Android.
 
 ### Build Commands
 - **Assemble Android Debug APK**:

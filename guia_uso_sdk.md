@@ -1,6 +1,19 @@
 # Guía de Uso del SDK de Android (Terminal)
 
-Esta guía explica cómo gestionar y usar las herramientas del SDK desde la línea de comandos.
+Esta guía explica cómo gestionar y usar las herramientas del SDK desde la línea de comandos en este proyecto específico.
+
+## 0. Inicialización Obligatoria
+
+Antes de usar cualquier herramienta (`sdkmanager`, `adb`, `gradlew`), el entorno debe ser inicializado. Esto garantiza que las variables de entorno y las herramientas requeridas estén presentes.
+
+```bash
+./setup-sdk.sh
+```
+
+Este script:
+- Define `ANDROID_SDK_ROOT` en `/tmp/android-sdk` (si no está definida).
+- Instala las versiones exactas de `build-tools` (37.0.0) y `platforms` (android-37).
+- Genera el archivo `local.properties` que Gradle necesita para ubicar el SDK.
 
 ## 1. Gestión de Paquetes con `sdkmanager`
 
