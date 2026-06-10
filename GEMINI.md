@@ -6,7 +6,7 @@ A libGDX game project targeting Android and Desktop.
 
 - **Purpose**: Interactive game developed with libGDX.
 - **Target Platform**: Android (API 23 to 37) and Desktop (LWJGL3).
-- **Current Version**: 1.1.0 (Code 2).
+- **Current Version**: 1.2.0 (Code 3).
 - **Language**: Java 17.
 - **Architecture**: libGDX Multi-module project.
 
