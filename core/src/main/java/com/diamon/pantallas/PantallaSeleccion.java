@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.nucleo.Juego;
@@ -25,86 +26,43 @@ public class PantallaSeleccion extends Pantalla {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void mostrar() {
+    @Override
+    public void mostrar() {
+        Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
-		atrasMenu = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
+        atrasMenu = new TextButton("Atras", skin);
 
-		atrasMenu.setSize(Juego.ANCHO_PANTALLA / 8, 32);
+        titulo = new Label("Opciones de Partida", skin);
 
-		atrasMenu.setPosition(32, 32);
+        nuevaPartida = new TextButton("Nueva Partida", skin);
 
-		titulo = new Label("Opciones de Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+        continuarJuego = new TextButton("Continuar Partida", skin);
 
-		titulo.setPosition((Juego.ANCHO_PANTALLA / 3) - 27, Juego.ALTO_PANTALLA - 64);
+        Table tabla = new Table();
 
-		nuevaPartida = new TextButton("Nueva Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+        tabla.setFillParent(true);
 
-		nuevaPartida.setSize(213, 32);
+        tabla.add(titulo).colspan(1).padBottom(40).row();
 
-		nuevaPartida.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
+        if (dato.isContinuar()) {
 
-		continuarJuego = new TextButton("Continuar Partida", recurso.get("uis/general/uiskin.json", Skin.class));
+            tabla.add(continuarJuego).size(213, 32).padBottom(10).row();
 
-		continuarJuego.setSize(213, 32);
+            tabla.add(nuevaPartida).size(213, 32).padBottom(10).row();
 
-		if (!dato.isContinuar())
+        } else {
 
-		{
+            tabla.add(nuevaPartida).size(213, 32).padBottom(10).row();
+        }
 
-			nuevaPartida.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
+        tabla.add(atrasMenu).size(128, 32).expand().bottom().left().pad(32);
 
-			continuarJuego.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
+        nivelMenu.addActor(tabla);
+    }
 
-		} else {
+    private void anadirBotonesPartida(boolean anadir) {
 
-			nuevaPartida.setPosition(Juego.ANCHO_PANTALLA / 3, 192);
-
-			continuarJuego.setPosition(Juego.ANCHO_PANTALLA / 3, 240);
-
-		}
-
-		nivelMenu.addActor(titulo);
-
-		nivelMenu.addActor(atrasMenu);
-
-		anadirBotonesPartida(true);
-
-	}
-
-	private void anadirBotonesPartida(boolean anadir) {
-
-		if (anadir) {
-
-			nivelMenu.addActor(nuevaPartida);
-
-			if (dato.isContinuar())
-
-			{
-
-				nivelMenu.addActor(continuarJuego);
-
-			}
-
-			nivelMenu.addActor(atrasMenu);
-
-		} else {
-
-			nuevaPartida.remove();
-
-			if (dato.isContinuar())
-
-			{
-
-				continuarJuego.remove();
-
-			}
-
-			atrasMenu.remove();
-
-		}
-
-	}
+    }
 
 	@Override
 	public void eventos() {

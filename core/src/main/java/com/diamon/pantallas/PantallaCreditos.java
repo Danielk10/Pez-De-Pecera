@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -68,6 +69,7 @@ public class PantallaCreditos extends Pantalla {
 	@SuppressWarnings("static-access")
 	@Override
 	public void mostrar() {
+		Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
 		creditos = new Array<Label>();
 
@@ -130,7 +132,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosAutores.length; i++) {
 
-			creditosAutores[i] = new Label(autores[i], recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosAutores[i] = new Label(autores[i], skin);
 
 			creditosAutores[i].setPosition(Juego.ANCHO_PANTALLA / 2 - 50, indice);
 
@@ -153,8 +155,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosDiseno.length; i++) {
 
-			creditosDiseno[i] = new Label(titulosDesarrolladores[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosDiseno[i] = new Label(titulosDesarrolladores[i], skin);
 
 			creditosDiseno[i].setPosition(Juego.ANCHO_PANTALLA / 4 - 20, indice);
 
@@ -178,8 +179,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosDisenoNombres.length; i++) {
 
-			creditosDisenoNombres[i] = new Label(nombresDesarrolladores[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosDisenoNombres[i] = new Label(nombresDesarrolladores[i], skin);
 
 			creditosDisenoNombres[i].setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 
@@ -201,7 +201,7 @@ public class PantallaCreditos extends Pantalla {
 
 		indice = indice - 24;
 
-		creditosArtistas = new Label("Arte y Graficos", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditosArtistas = new Label("Arte y Graficos", skin);
 
 		creditosArtistas.setPosition(Juego.ANCHO_PANTALLA / 4 - 20, indice);
 
@@ -211,8 +211,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosArtistasNombres.length; i++) {
 
-			creditosArtistasNombres[i] = new Label(nombresArtistas[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosArtistasNombres[i] = new Label(nombresArtistas[i], skin);
 
 			creditosArtistasNombres[i].setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 
@@ -226,7 +225,7 @@ public class PantallaCreditos extends Pantalla {
 
 		indice = indice - 24;
 
-		creditosArtistasDeMusica = new Label("Musica", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditosArtistasDeMusica = new Label("Musica", skin);
 
 		creditosArtistasDeMusica.setPosition(Juego.ANCHO_PANTALLA / 4 - 20, indice);
 
@@ -236,8 +235,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosArtistasDeMusicaNombres.length; i++) {
 
-			creditosArtistasDeMusicaNombres[i] = new Label(nombresArtitasDeMusica[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosArtistasDeMusicaNombres[i] = new Label(nombresArtitasDeMusica[i], skin);
 
 			creditosArtistasDeMusicaNombres[i].setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 
@@ -251,7 +249,7 @@ public class PantallaCreditos extends Pantalla {
 
 		indice = indice - 24;
 
-		creditoMotor = new Label("Motor Grafico", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditoMotor = new Label("Motor Grafico", skin);
 
 		creditoMotor.setPosition(Juego.ANCHO_PANTALLA / 4 - 20, indice);
 
@@ -259,7 +257,7 @@ public class PantallaCreditos extends Pantalla {
 
 		nivelMenu.addActor(creditoMotor);
 
-		creditoMotorNombre = new Label("libGDX - www.libgdx.com", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditoMotorNombre = new Label("libGDX - www.libgdx.com", skin);
 
 		creditoMotorNombre.setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 
@@ -269,7 +267,7 @@ public class PantallaCreditos extends Pantalla {
 
 		indice = indice - 48;
 
-		creditosAgredecimientos = new Label("Agradecimientos", recurso.get("uis/general/uiskin.json", Skin.class));
+		creditosAgredecimientos = new Label("Agradecimientos", skin);
 
 		creditosAgredecimientos.setPosition(Juego.ANCHO_PANTALLA / 2 - 12, indice);
 
@@ -279,8 +277,7 @@ public class PantallaCreditos extends Pantalla {
 
 		indice = indice - 48;
 
-		creditosEspecial = new Label("Gracias a Dios por todo y a mi Familia",
-				recurso.get("uis/general/uiskin.json", Skin.class));
+		creditosEspecial = new Label("Gracias a Dios por todo y a mi Familia", skin);
 
 		creditosEspecial.setPosition(Juego.ANCHO_PANTALLA / 3, indice);
 
@@ -290,8 +287,7 @@ public class PantallaCreditos extends Pantalla {
 
 		for (int i = 0; i < creditosAgredecimientosNombre.length; i++) {
 
-			creditosAgredecimientosNombre[i] = new Label(nombres[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			creditosAgredecimientosNombre[i] = new Label(nombres[i], skin);
 
 			creditosAgredecimientosNombre[i].setPosition(Juego.ANCHO_PANTALLA / 2 - 20, indice);
 
@@ -303,43 +299,51 @@ public class PantallaCreditos extends Pantalla {
 
 		}
 
-		titulo = new Label("Creditos", recurso.get("uis/general/uiskin.json", Skin.class));
+		titulo = new Label("Creditos", skin);
 
-		titulo.setPosition((Juego.ANCHO_PANTALLA / 2) - 64, Juego.ALTO_PANTALLA - 64);
+		aceptar = new TextButton("Aceptar", skin);
 
-		aceptar = new TextButton("Aceptar", recurso.get("uis/general/uiskin.json", Skin.class));
+		politicaDePrivacidad = new TextButton("Politica de privacidad", skin);
 
-		aceptar.setSize(Juego.ANCHO_PANTALLA / 8, 32);
-
-		aceptar.setPosition(Juego.ANCHO_PANTALLA / 2 - 40, 32);
-
-		politicaDePrivacidad = new TextButton("Politica de privacidad",
-				recurso.get("uis/general/uiskin.json", Skin.class));
-
-		politicaDePrivacidad.setPosition(32, 32);
-
-		politicaDePrivacidad.setSize(170, 32);
-
-		version = new Label("Version 1.0.0", recurso.get("uis/general/uiskin.json", Skin.class));
-
-		version.setPosition(608 - version.getWidth(), 32);
+		version = new Label("Version 1.1.0", skin);
 
 		version.setColor(0, 1, 0, 1f);
 
-		nivelMenu.addActor(titulo);
+		Table tablaUI = new Table();
 
-		nivelMenu.addActor(aceptar);
+		tablaUI.setFillParent(true);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+		tablaUI.add(titulo).colspan(3).padTop(20).expandX().center().row();
 
-			nivelMenu.addActor(version);
-		}
+		tablaUI.add().expand().row();
+
+		Table tablaInferior = new Table();
 
 		if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-			nivelMenu.addActor(politicaDePrivacidad);
+			tablaInferior.add(politicaDePrivacidad).size(170, 32).left();
+
+		} else {
+
+			tablaInferior.add().size(170, 32);
 
 		}
+
+		tablaInferior.add(aceptar).size(160, 32).expandX().center();
+
+		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+
+			tablaInferior.add(version).right();
+
+		} else {
+
+			tablaInferior.add().size(version.getWidth(), 32);
+
+		}
+
+		tablaUI.add(tablaInferior).fillX().pad(32);
+
+		nivelMenu.addActor(tablaUI);
 
 		mover = new float[creditos.size];
 

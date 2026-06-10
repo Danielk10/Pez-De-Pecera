@@ -58,4 +58,28 @@ Este archivo contiene el historial detallado de las tareas realizadas por los ag
     *   Compilación exitosa del proyecto mediante `./gradlew android:assembleDebug`.
 
 ---
+
+## [2026-06-10] - Tercera Sesión: Corrección Masiva de UI y Estabilización
+**Agente**: Gemini CLI (Operado por Danielk10)
+
+### Tareas Realizadas:
+1.  **Corrección de Errores de Compilación**:
+    *   **PantallaJuego.java**: Se eliminó código basura/duplicado al final del archivo que impedía la compilación.
+    *   **Imports Faltantes**: Se añadieron los imports de `com.badlogic.gdx.scenes.scene2d.ui.Table` en todas las pantallas donde se utilizaba pero no estaba declarado (`PantallaCarga`, `PantallaCreditos`, `PantallaPrecentacion`, `PantallaPuntuaciones`, `PantallaSeleccion`).
+    *   **Referencia Inválida**: En `PantallaJuego.java`, se corrigió la referencia a `tablaGameOver` (no declarada) por `gameOver` (Label existente) para permitir la eliminación del mensaje al terminar el nivel.
+
+2.  **Estandarización de UI con Table**:
+    *   Se verificó que todas las pantallas utilicen el sistema de `Table` de Scene2D para el posicionamiento de elementos, siguiendo el estilo responsivo aplicado previamente al menú principal.
+    *   Se mantuvo el uso de `StretchViewport` para cumplir con los requisitos estéticos del usuario mientras se garantiza la consistencia del diseño.
+
+3.  **Gestión de Versiones**:
+    *   Incremento de `versionCode` de 2 a **3**.
+    *   Incremento de `versionName` de "1.1.0" a **"1.2.0"**.
+
+4.  **Verificación y Lanzamiento**:
+    *   Validación de la lógica de negocio y compilación del módulo `core`.
+    *   Compilación de la APK Debug utilizando el entorno del SDK configurado en `/tmp/android-sdk`.
+    *   Preparación para el prelanzamiento `v1.2.0-beta` en GitHub.
+
+---
 *Nota: Todos los agentes deben añadir una nueva sección con la fecha y el resumen detallado de sus acciones al finalizar sus tareas.*

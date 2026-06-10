@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.nucleo.Juego;
@@ -52,27 +53,19 @@ public class PantallaPuntuaciones extends Pantalla {
 
 		}
 
-		titulo = new Label("Puntuaciones", recurso.get("uis/general/uiskin.json", Skin.class));
+		Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
-		titulo.setPosition((Juego.ANCHO_PANTALLA / 3) + 20, Juego.ALTO_PANTALLA - 64);
+		titulo = new Label("Puntuaciones", skin);
 
-		atras = new TextButton("Atras", recurso.get("uis/general/uiskin.json", Skin.class));
+		atras = new TextButton("Atras", skin);
 
-		atras.setSize(Juego.ANCHO_PANTALLA / 8, 32);
+		ponerACero = new TextButton("Poner a Cero", skin);
 
-		atras.setPosition(32, 32);
+		Table tabla = new Table();
 
-		ponerACero = new TextButton("Poner a Cero", recurso.get("uis/general/uiskin.json", Skin.class));
+		tabla.setFillParent(true);
 
-		ponerACero.setSize(150, 32);
-
-		ponerACero.setPosition(608 - ponerACero.getWidth(), 32);
-
-		nivelMenu.addActor(titulo);
-
-		nivelMenu.addActor(atras);
-
-		nivelMenu.addActor(ponerACero);
+		tabla.add(titulo).colspan(4).padBottom(40).row();
 
 		textosPunto = new Label[datosNiveles.getPuntuaciones().length];
 
@@ -82,42 +75,37 @@ public class PantallaPuntuaciones extends Pantalla {
 
 		estado = new Label[datosNiveles.getPuntuaciones().length];
 
-		int o = 360;
-
 		for (int i = 0; i < textosPunto.length; i++)
 
 		{
 
-			textosPunto[i] = new Label("Puntos ", recurso.get("uis/general/uiskin.json", Skin.class));
+			textosPunto[i] = new Label("Puntos ", skin);
 
-			textosPunto[i].setPosition(Juego.ANCHO_PANTALLA / 5, o);
+			numeroNivel[i] = new Label("" + datosNiveles.getNumeroNivelPuntuaciones()[i], skin);
 
-			numeroNivel[i] = new Label("" + datosNiveles.getNumeroNivelPuntuaciones()[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			estado[i] = new Label("" + datosNiveles.getEstadoPuntuaciones()[i], skin);
 
-			numeroNivel[i].setPosition(Juego.ANCHO_PANTALLA / 3 + 48, o);
+			punto[i] = new Label("" + datosNiveles.getPuntuaciones()[i], skin);
 
-			estado[i] = new Label("" + datosNiveles.getEstadoPuntuaciones()[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			tabla.add(textosPunto[i]).padBottom(10).left();
 
-			estado[i].setPosition(Juego.ANCHO_PANTALLA / 2 + 64, o);
+			tabla.add(numeroNivel[i]).padBottom(10).padLeft(20);
 
-			punto[i] = new Label("" + datosNiveles.getPuntuaciones()[i],
-					recurso.get("uis/general/uiskin.json", Skin.class));
+			tabla.add(estado[i]).padBottom(10).padLeft(20);
 
-			punto[i].setPosition(Juego.ANCHO_PANTALLA / 2 + 160, o);
-
-			nivelMenu.addActor(textosPunto[i]);
-
-			nivelMenu.addActor(numeroNivel[i]);
-
-			nivelMenu.addActor(estado[i]);
-
-			nivelMenu.addActor(punto[i]);
-
-			o -= 30;
+			tabla.add(punto[i]).padBottom(10).padLeft(20).row();
 
 		}
+
+		Table tablaBotones = new Table();
+
+		tablaBotones.add(atras).size(160, 32).padRight(20);
+
+		tablaBotones.add(ponerACero).size(160, 32);
+
+		tabla.add(tablaBotones).colspan(4).expand().bottom().pad(32);
+
+		nivelMenu.addActor(tabla);
 
 	}
 

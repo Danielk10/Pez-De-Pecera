@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.escenarios.Niveles;
@@ -34,6 +35,10 @@ import com.diamon.utilidades.EditorNivel;
 import box2dLight.Light;
 
 public class PantallaJuego extends Pantalla {
+
+	private Table tablaHUD;
+
+	private Table tablaPausa;
 
 	private Nivel mundo;
 
@@ -137,119 +142,99 @@ public class PantallaJuego extends Pantalla {
 
 		numeroNivel = datosNiveles.getNumeroNivel();
 
-		fps = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		Skin skin = recurso.get("uis/general/uiskin.json", Skin.class);
 
-		fps.setPosition(580, 12);
+		tablaHUD = new Table();
 
-		nivel.addActor(fps);
+		tablaHUD.setFillParent(true);
 
-		gameOver = new Label("Fin del Juego", recurso.get("uis/general/uiskin.json", Skin.class));
+		fps = new Label("", skin);
 
-		gameOver.setPosition((Juego.ANCHO_PANTALLA / 2 - 64), Juego.ALTO_PANTALLA / 2);
+		gameOver = new Label("Fin del Juego", skin);
 
-		textoPuntos = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		textoPuntos = new Label("", skin);
 
-		textoPuntos.setPosition(8, 12);
+		textoNumeroNivel = new Label("", skin);
 
-		nivel.addActor(textoPuntos);
+		textoVida = new Label("", skin);
 
-		textoNumeroNivel = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		textoBomba = new Label("", skin);
 
-		textoNumeroNivel.setPosition(112, 12);
+		textoMisil = new Label("", skin);
 
-		nivel.addActor(textoNumeroNivel);
+		Table hudSuperior = new Table();
 
-		textoVida = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		hudSuperior.add(textoVida).padRight(20);
 
-		textoVida.setSize(32, 32);
+		hudSuperior.add(textoBomba).padRight(20);
 
-		textoVida.setPosition(66, 450);
+		hudSuperior.add(textoMisil);
 
-		nivel.addActor(textoVida);
+		tablaHUD.add(hudSuperior).expandX().left().pad(20).top().row();
 
-		textoBomba = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		Table hudInferior = new Table();
 
-		textoBomba.setSize(32, 32);
+		hudInferior.add(textoPuntos).padRight(20);
 
-		textoBomba.setPosition(115, 450);
+		hudInferior.add(textoNumeroNivel).expandX().left();
 
-		nivel.addActor(textoBomba);
+		hudInferior.add(fps);
 
-		textoMisil = new Label("", recurso.get("uis/general/uiskin.json", Skin.class));
+		tablaHUD.add().expand().row();
 
-		textoMisil.setSize(32, 32);
+		tablaHUD.add(hudInferior).fillX().pad(20).bottom();
 
-		textoMisil.setPosition(148, 450);
-
-		nivel.addActor(textoMisil);
+		nivel.addActor(tablaHUD);
 
 		pausa = new Image(recurso.get("texturas/pausa.png", Texture.class));
 
 		pausa.setSize(64, 64);
 
-		pausa.setPosition(576, 416);
+		pausa.setPosition(Juego.ANCHO_PANTALLA - 84, Juego.ALTO_PANTALLA - 84);
 
-		textoPausa = new Label("Pausado", recurso.get("uis/general/uiskin.json", Skin.class));
+		tablaPausa = new Table();
 
-		textoPausa.setPosition(264, 300);
+		tablaPausa.setFillParent(true);
 
-		editarNivel = new TextButton("Editar Niveles", recurso.get("uis/general/uiskin.json", Skin.class));
+		textoPausa = new Label("Pausado", skin);
 
-		editarNivel.setSize(213.0F, 32);
+		editarNivel = new TextButton("Editar Niveles", skin);
 
-		editarNivel.setPosition(213.0F, 260);
+		reanudar = new TextButton("Reanudar", skin);
 
-		editarNivel.setColor(1.0F, 1.0F, 1.0F, 0.0F);
-
-		reanudar = new TextButton("Reanudar", recurso.get("uis/general/uiskin.json", Skin.class));
-
-		reanudar.setSize(213.0F, 32);
-
-		menu = new TextButton("Menu", recurso.get("uis/general/uiskin.json", Skin.class));
-
-		menu.setSize(213.0F, 32);
-
-		if (dato.isEditor()) {
-
-			reanudar.setPosition(213.0F, 212);
-
-			menu.setPosition(213.0F, 164);
-
-		}
-
-		if (!dato.isEditor()) {
-
-			reanudar.setPosition(213.0F, 248);
-
-			menu.setPosition(213.0F, 200);
-
-		}
+		menu = new TextButton("Menu", skin);
 
 		menuPausa = new Image(recurso.get("texturas/menu.png", Texture.class));
 
-		menuPausa.setSize(320.0F, 240.0F);
+		Table contenidoPausa = new Table();
 
-		menuPausa.setPosition(160.0F, 120.0F);
+		contenidoPausa.setBackground(menuPausa.getDrawable());
 
-		terminarEdicion = new TextButton("Terminar", recurso.get("uis/general/uiskin.json", Skin.class));
+		contenidoPausa.add(textoPausa).padBottom(20).row();
+
+		contenidoPausa.add(reanudar).size(213, 32).padBottom(10).row();
+
+		contenidoPausa.add(menu).size(213, 32).padBottom(10).row();
+
+		if (dato.isEditor()) {
+
+			contenidoPausa.add(editarNivel).size(213, 32).row();
+
+		}
+
+		tablaPausa.add(contenidoPausa).size(320, 240);
+
+		tablaPausa.setColor(1, 1, 1, 0);
+
+		tablaPausa.setTouchable(Touchable.disabled);
+
+		terminarEdicion = new TextButton("Terminar", skin);
 
 		terminarEdicion.setSize(96, 32);
 
-		terminarEdicion.setPosition(528, 16);
+		terminarEdicion.setPosition(Juego.ANCHO_PANTALLA - 116, 16);
 
 		terminarEdicion.setColor(1.0F, 1.0F, 1.0F, 0.7F);
-
-		menuPausa.setColor(1.0F, 1.0F, 1.0F, 0.0F);
-
-		reanudar.setColor(1.0F, 1.0F, 1.0F, 0.0F);
-
-		menu.setColor(1.0F, 1.0F, 1.0F, 0.0F);
-
-		pausa.setColor(1.0F, 1.0F, 1.0F, 0.9F);
-
-		textoPausa.setColor(1.0F, 1.0F, 1.0F, 0.0F);
-
-		ventanaDePausa(false, false);
 
 		if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
@@ -257,19 +242,7 @@ public class PantallaJuego extends Pantalla {
 
 		}
 
-		nivel.addActor(menuPausa);
-
-		nivel.addActor(reanudar);
-
-		nivel.addActor(menu);
-
-		if (dato.isEditor()) {
-
-			nivel.addActor(editarNivel);
-
-		}
-
-		nivel.addActor(textoPausa);
+		nivel.addActor(tablaPausa);
 
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
 				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
@@ -358,21 +331,13 @@ public class PantallaJuego extends Pantalla {
 	@SuppressWarnings("static-access")
 	private void ventanaDePausa(boolean visible, boolean animated) {
 
-		float alphaTo = visible ? 0.8f : 0;
+		float alphaTo = visible ? 1.0f : 0;
 
-		float duration = animated ? 1 : 0;
+		float duration = animated ? 0.5f : 0;
 
 		Touchable touchEnabled = visible ? Touchable.enabled : Touchable.disabled;
 
-		menuPausa.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
-
-		menu.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
-
-		reanudar.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
-
-		editarNivel.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
-
-		textoPausa.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
+		tablaPausa.addAction(Actions.sequence(Actions.touchable(touchEnabled), Actions.alpha(alphaTo, duration)));
 
 		if (visible) {
 

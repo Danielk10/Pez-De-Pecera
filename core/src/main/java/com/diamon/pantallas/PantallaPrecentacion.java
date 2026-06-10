@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
@@ -23,32 +24,19 @@ public class PantallaPrecentacion extends Pantalla {
 
     @Override
     public void mostrar() {
+        recurso.finishLoadingAsset("texturas/badlogic.jpg");
 
-        fondo =
-                new Image(
-                        new TextureRegion(
-                                new Texture(Gdx.files.internal("texturas/badlogic.jpg"))));
+        fondo = new Image(recurso.get("texturas/badlogic.jpg", Texture.class));
 
-       // fondo1 =
-            //    new Image(
-                //        new TextureRegion(
-                        //        new Texture(Gdx.files.internal("texturas/diamondBlack.png"))));
+        Table tabla = new Table();
 
-        fondo.setSize(256, 256);
+        tabla.setFillParent(true);
 
-        fondo.setPosition(192, 112);
-
-       // fondo1.setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
-
-       // fondo1.setPosition(0, 0);
-
-       // nivel.addActor(fondo1);
+        tabla.add(fondo).size(256, 256);
 
         float alphaTo = 0;
 
         float duration = 2;
-
-        //fondo1.addAction(Actions.sequence(Actions.alpha(alphaTo, duration)));
 
         nivel.addAction(
                 Actions.sequence(
@@ -62,7 +50,7 @@ public class PantallaPrecentacion extends Pantalla {
 
                                         float duration = 2;
 
-                                        nivel.addActor(fondo);
+                                        nivel.addActor(tabla);
 
                                         fondo.addAction(
                                                 Actions.sequence(Actions.alpha(alphaTo, duration)));

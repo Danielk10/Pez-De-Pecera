@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 
@@ -27,23 +28,27 @@ public class PantallaCarga extends Pantalla {
 
 	@Override
 	public void mostrar() {
+		recurso.finishLoadingAsset("uis/carga/neon-ui.json");
 
-		barra = new ProgressBar(0.0F, 100.0F, 1.0F, false,
-				new Skin(Gdx.files.internal("uis/carga/neon-ui.json"), new TextureAtlas("uis/carga/neon-ui.atlas")));
+		Skin skinCarga = recurso.get("uis/carga/neon-ui.json", Skin.class);
 
-		barra.setSize(400, 32);
+		barra = new ProgressBar(0.0F, 100.0F, 1.0F, false, skinCarga);
 
-		barra.setPosition(128, 80);
+		recurso.finishLoadingAsset("texturas/inicio.png");
 
-		fondo = new Image(new TextureRegion(new Texture(Gdx.files.internal("texturas/inicio.png"))));
+		fondo = new Image(recurso.get("texturas/inicio.png", Texture.class));
 
-		fondo.setSize(Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
+		fondo.setFillParent(true);
 
-		fondo.setPosition(0, 0);
+		Table tabla = new Table();
+
+		tabla.setFillParent(true);
+
+		tabla.add(barra).size(400, 32).expand().bottom().padBottom(80);
 
 		nivel.addActor(fondo);
 
-		nivel.addActor(barra);
+		nivel.addActor(tabla);
 
 	}
 
