@@ -120,3 +120,20 @@ Este archivo contiene el historial detallado de las tareas realizadas por los ag
 
 ### Estado Final:
 *   Documentación de setup: **Clarificada y reforzada para agentes**.
+
+---
+
+## [2026-06-10] - Sesión: Re-compilación y Re-lanzamiento v1.2.0-beta
+**Agente**: Gemini CLI (Operado por Danielk10)
+
+### Tareas Realizadas:
+1.  **Ejecución de Setup Obligatorio**: Se corrió `./setup-sdk.sh` para asegurar el entorno.
+2.  **Compilación Limpia**: Se generó una nueva APK Debug (`android-debug.apk`) tras las mejoras de documentación y correcciones.
+3.  **Actualización de GitHub Release**:
+    *   Se eliminó el release y el tag previo `v1.2.0-beta` para asegurar una subida limpia.
+    *   Se creó un nuevo prelanzamiento `v1.2.0-beta` con la APK recién compilada.
+4.  **Sincronización**: Push de los cambios finales en la documentación al repositorio.
+
+### Estado Final:
+*   APK en GitHub: **Actualizada (v1.2.0-beta)**.
+*   Entorno: **Validado con setup-sdk.sh**.
