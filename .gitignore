@@ -162,3 +162,14 @@ Thumbs.db
 ## You could also add that configuration to the text in nativeimage.gradle .
 ## You should delete or comment out the next line if you have configuration in a different resource-config.json .
 **/resource-config.json
+
+# Keystores and sensitive credentials
+*.jks
+*.keystore
+keystore.properties
+*.json
+
+# Compilation outputs
+*.apk
+*.aab
+GUIA_PUBLICACION_PLAY_STORE.md

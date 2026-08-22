@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# Force Gradle User Home, Android User Home, and SDK to be in /tmp to save home disk space
+export GRADLE_USER_HOME="${GRADLE_USER_HOME:-/tmp/.gradle}"
+export ANDROID_USER_HOME="${ANDROID_USER_HOME:-/tmp/.android}"
+export ANDROID_PREFS_ROOT="${ANDROID_PREFS_ROOT:-/tmp}"
+export ANDROID_SDK_ROOT="${ANDROID_SDK_ROOT:-/tmp/android-sdk}"
+export ANDROID_HOME="${ANDROID_HOME:-/tmp/android-sdk}"
+
 #
 # Copyright © 2015 the original authors.
 #
@@ -211,6 +218,7 @@ DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
         -jar "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" \
+        "--project-cache-dir=/tmp/pez-de-pecera/.gradle" \
         "$@"
 
 # Stop when "xargs" is not available.

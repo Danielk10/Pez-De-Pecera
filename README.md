@@ -34,10 +34,6 @@ Useful Gradle tasks and flags:
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
 
-## 📝 Documentación y Registro
+## 📝 Documentación
 
-Este proyecto mantiene un control estricto de las actividades realizadas por humanos y agentes de IA:
-
-- **GEMINI.md**: Índice de conocimiento y arquitectura.
-- **ACTIVITY_LOG.md**: Registro detallado de todas las tareas ejecutadas.
-- **AGENT_INSTRUCTIONS.md**: Mandatos y guías operativas para agentes de IA.
+Para instrucciones detalladas sobre instalación del SDK, NDK, compilación y despliegues, consulta **[GEMINI.md](./GEMINI.md)**.

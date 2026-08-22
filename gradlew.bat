@@ -17,6 +17,10 @@
 @rem
 
 @if "%DEBUG%"=="" @echo off
+@if "%GRADLE_USER_HOME%"=="" set GRADLE_USER_HOME=C:\tmp\.gradle
+@if "%ANDROID_USER_HOME%"=="" set ANDROID_USER_HOME=C:\tmp\.android
+@if "%ANDROID_SDK_ROOT%"=="" set ANDROID_SDK_ROOT=C:\tmp\android-sdk
+@if "%ANDROID_HOME%"=="" set ANDROID_HOME=C:\tmp\android-sdk
 @rem ##########################################################################
 @rem
 @rem  Gradle startup script for Windows

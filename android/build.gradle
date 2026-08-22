@@ -8,10 +8,19 @@ buildscript {
 apply plugin: 'com.android.application'
 
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+  keystorePropertiesFile.withInputStream { instr ->
+    keystoreProperties.load(instr)
+  }
+}
+
 android {
+  project.layout.buildDirectory.set(file("/tmp/pez-de-pecera"))
   namespace = "com.diamon.pez"
   compileSdk = 37
-  buildToolsVersion "37.0.0"
+  buildToolsVersion '37.0.0'
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -23,7 +32,7 @@ android {
       jniLibs.setSrcDirs(['libs'])
     }
   }
-  packagingOptions {
+  packaging {
 		resources {
 			excludes += ['META-INF/robovm/ios/robovm.xml', 'META-INF/DEPENDENCIES.txt', 'META-INF/DEPENDENCIES',
                    'META-INF/dependencies.txt', '**/*.gwt.xml']
@@ -35,17 +44,34 @@ android {
     applicationId 'com.diamon.pez'
     minSdkVersion 23
     targetSdkVersion 37
-    versionCode 3
-    versionName "1.2.0"
+    versionCode 1
+    versionName "1.0.0"
   }
   compileOptions {
     sourceCompatibility "17"
     targetCompatibility "17"
     coreLibraryDesugaringEnabled = true
   }
+  signingConfigs {
+    release {
+      if (keystorePropertiesFile.exists()) {
+        storeFile = file(keystoreProperties['storeFile'])
+        storePassword = keystoreProperties['storePassword']
+        keyAlias = keystoreProperties['keyAlias']
+        keyPassword = keystoreProperties['keyPassword']
+      } else {
+        def envStoreFile = System.getenv("SIGNING_STORE_FILE")
+        storeFile = envStoreFile ? file(envStoreFile) : null
+        storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+        keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+        keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+      }
+    }
+  }
   buildTypes {
     release {
-      minifyEnabled true
+      signingConfig signingConfigs.release
+      minifyEnabled false
       proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), 'proguard-rules.pro'
     }
   }

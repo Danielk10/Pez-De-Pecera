@@ -16,11 +16,14 @@ allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
 
+  // Redirigir la carpeta build a /tmp para no ocupar espacio en home
+  project.layout.buildDirectory.set(file("/tmp/pez-de-pecera/${project == rootProject ? 'root' : project.name}"))
+
   // This allows you to "Build and run using IntelliJ IDEA", an option in IDEA's Settings.
   idea {
     module {
-      outputDir = file('build/classes/java/main')
-      testOutputDir = file('build/classes/java/test')
+      outputDir = file("/tmp/pez-de-pecera/${project == rootProject ? 'root' : project.name}/classes/java/main")
+      testOutputDir = file("/tmp/pez-de-pecera/${project == rootProject ? 'root' : project.name}/classes/java/test")
     }
   }
 }

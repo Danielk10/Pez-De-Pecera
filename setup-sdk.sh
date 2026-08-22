@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Configurar rutas en /tmp para evitar llenar el espacio de home
+export ANDROID_USER_HOME="/tmp/.android"
+export ANDROID_PREFS_ROOT="/tmp"
+export GRADLE_USER_HOME="/tmp/.gradle"
+
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SDK_ROOT="${ANDROID_SDK_ROOT:-/tmp/android-sdk}"
 CMDLINE_TOOLS_VERSION="13114758"
@@ -8,6 +13,8 @@ CMDLINE_TOOLS_ZIP="commandlinetools-linux-${CMDLINE_TOOLS_VERSION}_latest.zip"
 CMDLINE_TOOLS_URL="https://dl.google.com/android/repository/${CMDLINE_TOOLS_ZIP}"
 
 mkdir -p "${SDK_ROOT}/cmdline-tools"
+mkdir -p "${ANDROID_USER_HOME}"
+mkdir -p "${GRADLE_USER_HOME}"
 
 if [[ ! -x "${SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" ]]; then
   tmp_dir="$(mktemp -d)"
@@ -20,6 +27,7 @@ if [[ ! -x "${SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" ]]; then
 fi
 
 export ANDROID_SDK_ROOT="${SDK_ROOT}"
+export ANDROID_HOME="${SDK_ROOT}"
 export PATH="${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
 set +o pipefail

@@ -1,82 +1,99 @@
-# Pez-De-Pecera
+# Pez-De-Pecera 🐟
 
-A libGDX game project targeting Android and Desktop.
+Juego interactivo desarrollado con **libGDX**, compatible con Android (API 23 a 37) y Escritorio (LWJGL3).
 
-## 📋 Project Overview
+---
 
-- **Purpose**: Interactive game developed with libGDX.
-- **Target Platform**: Android (API 23 to 37) and Desktop (LWJGL3).
-- **Current Version**: 1.2.0 (Code 3).
-- **Language**: Java 17.
-- **Architecture**: libGDX Multi-module project.
+## 📋 Información General del Proyecto
 
-## 🏗️ Architecture & Technologies
+- **Versión Actual**: 1.0.0 (Code 1).
+- **Lenguaje**: Java 17.
+- **Framework**: libGDX (1.14.2).
+- **Herramientas de Compilación**: Gradle 9.6.0 / AGP (Android Gradle Plugin) 9.2.1.
+- **SDK / NDK Android**:
+  - `compileSdk` / `targetSdkVersion`: 37 (Android 15+)
+  - `minSdkVersion`: 23 (Android 6.0+)
+  - `buildToolsVersion`: 37.0.0
+  - `cmake`: 4.1.2
+  - `ndk`: 30.0.14904198 (NDK 30)
 
-- **Android SDK**: Target SDK 37, Minimum SDK 23.
-- **Languages**: Java 17.
-- **Build System**: Gradle 8.x.
-- **Framework**: libGDX.
-- **Modules**:
-    - `core`: Shared game logic.
-    - `android`: Android-specific implementation and assets.
-    - `lwjgl3`: Desktop implementation.
+---
 
-## 🚀 Building and Running
+## 🏗️ Aislamiento del Entorno de Compilación en `/tmp`
 
-### Prerequisites
-- Java 17 JDK.
-- Android SDK (can be configured using `setup-sdk.sh`).
+Para evitar el consumo de espacio persistente en `/home`, todas las dependencias, SDK, NDK, cachés y artefactos se redirigen al directorio temporal `/tmp`:
 
-### Setup
-Para configurar el entorno de desarrollo y las herramientas de compilación de Android, ejecuta:
+- **SDK & NDK Root**: `/tmp/android-sdk`
+- **Configuración de Android (`ANDROID_USER_HOME`)**: `/tmp/.android`
+- **Preferencias de Android (`ANDROID_PREFS_ROOT`)**: `/tmp`
+- **Cache Global de Gradle (`GRADLE_USER_HOME`)**: `/tmp/.gradle`
+- **Cache de Proyecto de Gradle**: `/tmp/pez-de-pecera/.gradle`
+- **Directorio de Compilación (Build Outputs)**: `/tmp/pez-de-pecera`
+
+---
+
+## 🚀 Instalación y Compilación
+
+### 1. Inicialización del SDK y NDK
+Antes de compilar, es obligatorio ejecutar el script de aprovisionamiento automatizado:
 ```bash
-./setup-sdk.sh
+bash setup-sdk.sh
 ```
-**Nota Crucial para Agentes**: Este script es obligatorio antes de compilar. 
-1.  Descarga las `cmdline-tools` si no existen.
-2.  Instala automáticamente las `build-tools` y `platforms` requeridas (API 37).
-3.  Crea o sobreescribe `local.properties` con la ruta correcta (`/tmp/android-sdk` por defecto).
-4.  **No omitir**: Sin este paso, `./gradlew` fallará al no encontrar el SDK de Android.
+*Este script descarga `cmdline-tools`, instala automáticamente las `platform-tools`, `platforms;android-23`, `platforms;android-37.0`, `build-tools;37.0.0`, `cmake;4.1.2` y `ndk;30.0.14904198` en `/tmp/android-sdk`, y genera `local.properties`.*
 
-### Build Commands
-- **Assemble Android Debug APK**:
-  ```bash
-  ./gradlew android:assembleDebug
-  ```
-- **Run Desktop Version**:
-  ```bash
-  ./gradlew lwjgl3:run
-  ```
+### 2. Comandos de Compilación
 
-### GitHub Releases (Prerelease)
-To create a new pre-release on GitHub:
 ```bash
-gh release create v0.1.0-beta android/build/outputs/apk/debug/android-debug.apk --title "Versión Alfa 0.1.0" --notes "Primera compilación de prueba del juego." --prerelease
+# Compilar APK Debug
+./gradlew :android:assembleDebug
+
+# Compilar APK Release (firmado si existe keystore.properties o variables SIGNING_*)
+./gradlew :android:assembleRelease
+
+# Compilar AAB (App Bundle) Release para Google Play Store
+./gradlew :android:bundleRelease
+
+# Ejecutar versión de escritorio
+./gradlew lwjgl3:run
 ```
-*Note: Always increment the version tag and title before running.*
 
-## 📂 Project Structure
+---
 
-- `core/src/main/java/`: Main game logic.
-- `android/`: Android-specific code and resources.
-- `android/assets/`: Shared game assets (linked from root).
-- `lwjgl3/`: Desktop launcher.
-- `setup-sdk.sh`: Script to automate Android development environment setup.
+## 📍 Ubicación de Artefactos de Salida (Outputs)
 
-## 🔧 Development Conventions & AGENT Instructions
+Los archivos compilados se generan directamente en `/tmp/pez-de-pecera/outputs/`:
 
-Este proyecto utiliza guías estrictas para agentes de IA definidas en `AGENT_INSTRUCTIONS.md`.
+- **APK Debug**: `/tmp/pez-de-pecera/outputs/apk/debug/android-debug.apk`
+- **APK Release**: `/tmp/pez-de-pecera/outputs/apk/release/android-release.apk`
+- **AAB Release (Google Play)**: `/tmp/pez-de-pecera/outputs/bundle/release/android-release.aab`
 
-### Flujo Obligatorio
-1.  **Contexto**: Siempre leer `GEMINI.md`, `AGENT_INSTRUCTIONS.md` y `ACTIVITY_LOG.md` al inicio de la sesión.
-2.  **Registro**: Cada acción realizada debe ser anotada detalladamente en `ACTIVITY_LOG.md`.
-3.  **Validation**: Siempre verificar cambios con `./gradlew android:assembleDebug`.
-4.  **Git Protocol**: Usar autor `Danielk10 <danielpdiamon@gmail.com>` y prefijos en los commits.
+### Limpieza de Artefactos Temporales
+```bash
+rm -rf /tmp/pez-de-pecera/outputs/
+```
 
-## 📝 Key Documentation Files
+---
 
-- `README.md`: Public documentation.
-- `ACTIVITY_LOG.md`: Mandatory log of all agent activities.
-- `guia_uso_sdk.md`: Reference guide for Android SDK tools.
-- `LICENSE`: Apache License 2.0 details.
-- `AGENT_INSTRUCTIONS.md`: Mandatory workflow guidelines for AI agents.
+## 📂 Estructura de Módulos
+
+- `core/`: Lógica central del juego compartida entre plataformas.
+- `android/`: Implementación nativa para Android y recursos.
+- `assets/`: Texturas, sonidos, fuentes y mapas compartidos.
+- `lwjgl3/`: Lanzador para escritorio (Desktop).
+- `setup-sdk.sh`: Script de configuración y descarga del entorno Android/NDK.
+- `upload_play_store.py`: Script para subida automatizada de AAB a Google Play Store.
+
+---
+
+## 🔧 Protocolo de Desarrollo y Git
+
+- **Validación Obligatoria**: Verificar siempre las modificaciones con `./gradlew :android:assembleDebug` antes de realizar un commit.
+- **Autoría de Commits**:
+  - Nombre: `Danielk10`
+  - Email: `danielpdiamon@gmail.com`
+- **Formato de Mensajes**: Usar prefijos estándar (`feat:`, `fix:`, `docs:`, `chore:`).
+- **Publicación en GitHub**:
+  ```bash
+  gh release create v1.0.0-beta /tmp/pez-de-pecera/outputs/apk/debug/android-debug.apk --title "Versión Alfa 1.0.0" --notes "Compilación de prueba del juego." --prerelease
+  ```
+
