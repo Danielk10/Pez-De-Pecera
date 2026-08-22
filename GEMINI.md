@@ -94,6 +94,6 @@ rm -rf /tmp/pez-de-pecera/outputs/
 - **Formato de Mensajes**: Usar prefijos estándar (`feat:`, `fix:`, `docs:`, `chore:`).
 - **Publicación en GitHub**:
   ```bash
-  gh release create v1.0.0-beta /tmp/pez-de-pecera/outputs/apk/debug/android-debug.apk --title "Versión Alfa 1.0.0" --notes "Compilación de prueba del juego." --prerelease
+  gh release create v1.0.0-alfa /tmp/pez-de-pecera/outputs/apk/debug/android-debug.apk --title "Versión Alfa 1.0.0" --notes "Compilación de prueba del juego." --prerelease
   ```
 
