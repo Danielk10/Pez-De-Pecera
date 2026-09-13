@@ -155,14 +155,19 @@ public class PantallaJuego extends Pantalla {
 		gameOver = new Label("Fin del Juego", skin);
 
 		textoPuntos = new Label("", skin);
+		textoPuntos.setColor(com.badlogic.gdx.graphics.Color.GOLD);
 
 		textoNumeroNivel = new Label("", skin);
+		textoNumeroNivel.setColor(com.badlogic.gdx.graphics.Color.WHITE);
 
 		textoVida = new Label("", skin);
+		textoVida.setColor(com.badlogic.gdx.graphics.Color.CORAL);
 
 		textoBomba = new Label("", skin);
+		textoBomba.setColor(com.badlogic.gdx.graphics.Color.ORANGE);
 
 		textoMisil = new Label("", skin);
+		textoMisil.setColor(com.badlogic.gdx.graphics.Color.CYAN);
 
 		textoPowerUp = new Label("", skin);
 
@@ -216,8 +221,6 @@ public class PantallaJuego extends Pantalla {
 
 		contenidoPausa.setBackground(menuPausa.getDrawable());
 
-		contenidoPausa.add(textoPausa).padBottom(20).row();
-
 		contenidoPausa.add(reanudar).size(213, 32).padBottom(10).row();
 
 		contenidoPausa.add(menu).size(213, 32).padBottom(10).row();
@@ -265,6 +268,91 @@ public class PantallaJuego extends Pantalla {
 		cursor = new Cursor(recurso.get("texturas/invisible.png", Texture.class), this, 16, 16, Cursor.ESTATICO);
 
 		cursor.setPosition(0, 0);
+
+		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+			TextureAtlas dedosAtlas = recurso.get("texturas/dedos.atlas", TextureAtlas.class);
+			
+			Image btnIzquierda = new Image(dedosAtlas.findRegion("izquierda"));
+			btnIzquierda.setSize(64, 64);
+			btnIzquierda.setPosition(20, 80);
+			btnIzquierda.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaPresionada(event, Keys.LEFT);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaLevantada(event, Keys.LEFT);
+				}
+			});
+			
+			Image btnDerecha = new Image(dedosAtlas.findRegion("derecha"));
+			btnDerecha.setSize(64, 64);
+			btnDerecha.setPosition(148, 80);
+			btnDerecha.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaPresionada(event, Keys.RIGHT);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaLevantada(event, Keys.RIGHT);
+				}
+			});
+			
+			Image btnArriba = new Image(dedosAtlas.findRegion("arriba"));
+			btnArriba.setSize(64, 64);
+			btnArriba.setPosition(84, 144);
+			btnArriba.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaPresionada(event, Keys.UP);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaLevantada(event, Keys.UP);
+				}
+			});
+			
+			Image btnAbajo = new Image(dedosAtlas.findRegion("abajo"));
+			btnAbajo.setSize(64, 64);
+			btnAbajo.setPosition(84, 16);
+			btnAbajo.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaPresionada(event, Keys.DOWN);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaLevantada(event, Keys.DOWN);
+				}
+			});
+			
+			Image btnDisparo = new Image(dedosAtlas.findRegion("precionado"));
+			btnDisparo.setSize(64, 64);
+			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 100, 80);
+			btnDisparo.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaPresionada(event, Keys.Z);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					jugador.teclaLevantada(event, Keys.Z);
+				}
+			});
+			
+			nivel.addActor(btnIzquierda);
+			nivel.addActor(btnDerecha);
+			nivel.addActor(btnArriba);
+			nivel.addActor(btnAbajo);
+			nivel.addActor(btnDisparo);
+		}
 
 		pausar = false;
 

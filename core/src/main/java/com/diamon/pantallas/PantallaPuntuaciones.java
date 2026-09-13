@@ -75,26 +75,15 @@ public class PantallaPuntuaciones extends Pantalla {
 
 		estado = new Label[datosNiveles.getPuntuaciones().length];
 
-		for (int i = 0; i < textosPunto.length; i++)
-
-		{
-
-			textosPunto[i] = new Label("Puntos ", skin);
-
-			numeroNivel[i] = new Label("" + datosNiveles.getNumeroNivelPuntuaciones()[i], skin);
-
-			estado[i] = new Label("" + datosNiveles.getEstadoPuntuaciones()[i], skin);
-
-			punto[i] = new Label("" + datosNiveles.getPuntuaciones()[i], skin);
-
-			tabla.add(textosPunto[i]).padBottom(10).left();
-
-			tabla.add(numeroNivel[i]).padBottom(10).padLeft(20);
-
-			tabla.add(estado[i]).padBottom(10).padLeft(20);
-
-			tabla.add(punto[i]).padBottom(10).padLeft(20).row();
-
+		for (int i = 0; i < textosPunto.length; i++) {
+		    textosPunto[i] = new Label("#" + (i + 1), skin);
+		    numeroNivel[i] = new Label("" + datosNiveles.getNumeroNivelPuntuaciones()[i], skin);
+		    estado[i] = new Label("" + datosNiveles.getEstadoPuntuaciones()[i], skin);
+		    punto[i] = new Label("" + datosNiveles.getPuntuaciones()[i], skin);
+		    tabla.add(textosPunto[i]).width(60).padBottom(6).left();
+		    tabla.add(numeroNivel[i]).width(100).padBottom(6).center();
+		    tabla.add(estado[i]).width(100).padBottom(6).center();
+		    tabla.add(punto[i]).width(100).padBottom(6).right().row();
 		}
 
 		Table tablaBotones = new Table();
@@ -139,7 +128,7 @@ public class PantallaPuntuaciones extends Pantalla {
 
 					datosNiveles.getEstadoPuntuaciones()[i] = "----";
 
-					textosPunto[i].setText("Puntos ");
+					textosPunto[i].setText("#" + (i + 1));
 
 					numeroNivel[i].setText("" + datosNiveles.getNumeroNivelPuntuaciones()[i]);
 

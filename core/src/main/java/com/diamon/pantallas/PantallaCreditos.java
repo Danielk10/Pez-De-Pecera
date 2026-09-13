@@ -301,7 +301,7 @@ public class PantallaCreditos extends Pantalla {
 
 		titulo = new Label("Creditos", skin);
 
-		aceptar = new TextButton("Aceptar", skin);
+		aceptar = new TextButton("Menu", skin);
 
 		politicaDePrivacidad = new TextButton("Politica de privacidad", skin);
 
@@ -313,7 +313,7 @@ public class PantallaCreditos extends Pantalla {
 
 		tablaUI.setFillParent(true);
 
-		tablaUI.add(titulo).colspan(3).padTop(20).expandX().center().row();
+		tablaUI.add(titulo).colspan(3).padTop(40).expandX().center().row();
 
 		tablaUI.add().expand().row();
 
@@ -414,7 +414,7 @@ public class PantallaCreditos extends Pantalla {
 
 			creditos.get(i).setY(mover[i]);
 
-			if (creditos.get(i).getY() >= Juego.ALTO_PANTALLA - 120) {
+			if (creditos.get(i).getY() >= Juego.ALTO_PANTALLA - 80) {
 
 				creditos.get(i).setColor(1, 1, 1, 0);
 
@@ -430,7 +430,7 @@ public class PantallaCreditos extends Pantalla {
 
 		creditosEspecial.setY(moverEspecial);
 
-		if (creditosEspecial.getY() >= Juego.ALTO_PANTALLA - 120) {
+		if (creditosEspecial.getY() >= Juego.ALTO_PANTALLA - 80) {
 
 			creditosEspecial.setColor(1, 1, 1, 0);
 

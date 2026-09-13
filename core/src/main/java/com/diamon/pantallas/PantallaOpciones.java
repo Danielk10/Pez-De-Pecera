@@ -80,6 +80,10 @@ public class PantallaOpciones extends Pantalla {
 
     private CheckBox autoDisparo;
 
+    private Label tituloEditor;
+
+    private CheckBox editorCheck;
+
     private Label tituloOpcionesControles;
 
     private TextButton atrasControles;
@@ -186,11 +190,11 @@ public class PantallaOpciones extends Pantalla {
 
         tablaSonido = new Table();
         tablaSonido.add(tituloOpcionesSonido).colspan(2).padBottom(40).row();
-        tablaSonido.add(tituloMusica).padBottom(10).left();
+        tablaSonido.add(tituloMusica).width(250).padBottom(10).left();
         tablaSonido.add(volumenMusica).padBottom(10).row();
-        tablaSonido.add(tituloSonido).padBottom(10).left();
+        tablaSonido.add(tituloSonido).width(250).padBottom(10).left();
         tablaSonido.add(volumenSonido).padBottom(10).row();
-        tablaSonido.add(tituloactivarSonido).padBottom(10).left();
+        tablaSonido.add(tituloactivarSonido).width(250).padBottom(10).left();
         tablaSonido.add(activarSonido).padBottom(10).left().row();
 
         Table botonesSonido = new Table();
@@ -222,17 +226,17 @@ public class PantallaOpciones extends Pantalla {
         tablaGraficos = new Table();
         tablaGraficos.add(tituloOpcionesGraficos).colspan(2).padBottom(40).row();
         if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-            tablaGraficos.add(tituloPantallaCompleta).padBottom(10).left();
-            tablaGraficos.add(pantallaCompleta).padBottom(10).left().row();
+            tablaGraficos.add(tituloPantallaCompleta).width(250).padBottom(10).left();
+            tablaGraficos.add(pantallaCompleta).width(50).padBottom(10).left().row();
         }
-        tablaGraficos.add(tituloSincronizacionVertical).padBottom(10).left();
-        tablaGraficos.add(sincronizacionVertical).padBottom(10).left().row();
-        tablaGraficos.add(tituloFiltradoBilineal).padBottom(10).left();
-        tablaGraficos.add(filtradoBilineal).padBottom(10).left().row();
-        tablaGraficos.add(tituloMostrarFPS).padBottom(10).left();
-        tablaGraficos.add(mostrarFPS).padBottom(10).left().row();
-        tablaGraficos.add(tituloPrueba).padBottom(10).left();
-        tablaGraficos.add(prueba).padBottom(10).left().row();
+        tablaGraficos.add(tituloSincronizacionVertical).width(250).padBottom(10).left();
+        tablaGraficos.add(sincronizacionVertical).width(50).padBottom(10).left().row();
+        tablaGraficos.add(tituloFiltradoBilineal).width(250).padBottom(10).left();
+        tablaGraficos.add(filtradoBilineal).width(50).padBottom(10).left().row();
+        tablaGraficos.add(tituloMostrarFPS).width(250).padBottom(10).left();
+        tablaGraficos.add(mostrarFPS).width(50).padBottom(10).left().row();
+        tablaGraficos.add(tituloPrueba).width(250).padBottom(10).left();
+        tablaGraficos.add(prueba).width(50).padBottom(10).left().row();
 
         Table botonesGraficos = new Table();
         botonesGraficos.add(cancelarGraficos).size(160, 32).padRight(20);
@@ -248,10 +252,16 @@ public class PantallaOpciones extends Pantalla {
 
         autoDisparo.setChecked(dato.isDiparoAutomatico());
 
+        tituloEditor = new Label("Editor de Niveles", skin);
+        editorCheck = new CheckBox("", skin);
+        editorCheck.setChecked(dato.isEditor());
+
         tablaPartida = new Table();
         tablaPartida.add(tituloOpcionesPartida).colspan(2).padBottom(40).row();
         tablaPartida.add(tituloAutoDisparo).padBottom(10).left();
         tablaPartida.add(autoDisparo).padBottom(10).left().row();
+        tablaPartida.add(tituloEditor).padBottom(10).left();
+        tablaPartida.add(editorCheck).padBottom(10).left().row();
 
         Table botonesPartida = new Table();
         botonesPartida.add(cancelarPartida).size(160, 32).padRight(20);
@@ -419,8 +429,6 @@ public class PantallaOpciones extends Pantalla {
 
                         dato.setSonido(activarSonido.isChecked());
 
-                        anadirBotonesSonido(false);
-
                         sonido();
 
                         configuracion.escribirDatos(dato);
@@ -442,8 +450,6 @@ public class PantallaOpciones extends Pantalla {
                         volumenMusica.setValue(dato.getVolumenMusica());
 
                         volumenSonido.setValue(dato.getVolumenSonido());
-
-                        anadirBotonesSonido(false);
                     }
                 });
 
@@ -465,8 +471,6 @@ public class PantallaOpciones extends Pantalla {
                         dato.setMostrarFPS(mostrarFPS.isChecked());
 
                         dato.setPrueba(prueba.isChecked());
-
-                        anadirBotonesGraficos(false);
 
                         filtradoBilineal();
 
@@ -511,8 +515,6 @@ public class PantallaOpciones extends Pantalla {
 
                         prueba.setChecked(dato.isPrueba());
 
-                        anadirBotonesGraficos(false);
-
                         super.clicked(event, x, y);
                     }
                 });
@@ -526,8 +528,8 @@ public class PantallaOpciones extends Pantalla {
                         anadirBotonesOpciones(true);
 
                         dato.setDiparoAutomatico(autoDisparo.isChecked());
-
-                        anadirBotonesPartida(false);
+                        
+                        dato.setEditor(editorCheck.isChecked());
 
                         configuracion.escribirDatos(dato);
 
@@ -544,8 +546,8 @@ public class PantallaOpciones extends Pantalla {
                         anadirBotonesOpciones(true);
 
                         autoDisparo.setChecked(dato.isDiparoAutomatico());
-
-                        anadirBotonesPartida(false);
+                        
+                        editorCheck.setChecked(dato.isEditor());
 
                         super.clicked(event, x, y);
                     }
@@ -558,8 +560,6 @@ public class PantallaOpciones extends Pantalla {
                     public void clicked(InputEvent event, float x, float y) {
 
                         anadirBotonesOpciones(true);
-
-                        anadirBotonesControles(false);
 
                         super.clicked(event, x, y);
                     }

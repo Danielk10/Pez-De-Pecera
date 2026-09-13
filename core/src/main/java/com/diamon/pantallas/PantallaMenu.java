@@ -67,18 +67,18 @@ public class PantallaMenu extends Pantalla {
         salir = new TextButton("Salir", skin);
 
         // Diseño de la UI con Table centrada y botones ergonómicos para móvil y desktop
-        tabla.add(titulo).size(360, 200).padTop(10).padBottom(15);
+        tabla.add(titulo).size(400, 220).padTop(40).padBottom(15);
         tabla.row();
         
         Table menuBotones = new Table();
-        menuBotones.add(jugar).size(260, 48).padBottom(10).row();
-        menuBotones.add(opciones).size(260, 48).padBottom(10).row();
-        menuBotones.add(puntuaciones).size(260, 48).padBottom(10).row();
-        menuBotones.add(creditos).size(260, 48).padBottom(10).row();
+        menuBotones.add(jugar).size(300, 52).padBottom(10).row();
+        menuBotones.add(opciones).size(300, 52).padBottom(10).row();
+        menuBotones.add(puntuaciones).size(300, 52).padBottom(10).row();
+        menuBotones.add(creditos).size(300, 52).padBottom(10).row();
         
         tabla.add(menuBotones).expandX();
         tabla.row();
-        tabla.add(salir).size(200, 44).left().bottom().expand().pad(24);
+        tabla.add(salir).size(240, 48).left().bottom().expand().pad(24);
 
         nivelMenu.addActor(tabla);
     }

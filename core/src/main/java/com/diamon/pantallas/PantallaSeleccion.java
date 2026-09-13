@@ -46,16 +46,16 @@ public class PantallaSeleccion extends Pantalla {
 
         if (dato.isContinuar()) {
 
-            tabla.add(continuarJuego).size(260, 48).padBottom(15).row();
+            tabla.add(continuarJuego).size(300, 52).padBottom(15).row();
 
-            tabla.add(nuevaPartida).size(260, 48).padBottom(15).row();
+            tabla.add(nuevaPartida).size(300, 52).padBottom(15).row();
 
         } else {
 
-            tabla.add(nuevaPartida).size(260, 48).padBottom(15).row();
+            tabla.add(nuevaPartida).size(300, 52).padBottom(15).row();
         }
 
-        tabla.add(atrasMenu).size(160, 44).expand().bottom().left().pad(24);
+        tabla.add(atrasMenu).size(200, 48).expand().bottom().left().pad(24);
 
         nivelMenu.addActor(tabla);
     }

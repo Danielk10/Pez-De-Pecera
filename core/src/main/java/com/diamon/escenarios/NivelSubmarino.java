@@ -106,7 +106,7 @@ public class NivelSubmarino extends Nivel {
 
         // 5. Configuración de iluminación orgánica (Box2DLight)
         RayHandler.setGammaCorrection(true);
-        luz.setAmbientLight(0.08f, 0.25f, 0.45f, 0.6f);
+        luz.setAmbientLight(0.2f, 0.45f, 0.65f, 0.85f);
         luz.setShadows(true);
 
         // Luz propia que emana del Pez Payaso
@@ -120,8 +120,8 @@ public class NivelSubmarino extends Nivel {
         // 6. Efecto de partículas submarinas con colisión física Box2D e iluminación
         if (recurso.isLoaded("particulas/Particle Park Flame.p", ParticleEffect.class)) {
             particulaBurbujas = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
-            particulaBurbujas.setEscala(1.5f);
-            PointLight luzBurbujas = new PointLight(luz, 120, new Color(0.3f, 0.85f, 1.0f, 0.55f), 3.0f, spawn.x, spawn.y);
+            particulaBurbujas.setEscala(0.4f);
+            PointLight luzBurbujas = new PointLight(luz, 120, new Color(0.3f, 0.85f, 1.0f, 0.55f), 1.2f, spawn.x, spawn.y);
             luzBurbujas.setSoft(true);
             luces.add(luzBurbujas);
             particulaBurbujas.setPuntoLuz(luzBurbujas);
@@ -179,7 +179,7 @@ public class NivelSubmarino extends Nivel {
 
         luz.update();
         if (particulaBurbujas != null) {
-            particulaBurbujas.setPosicion(jugador.getX(), jugador.getY());
+            particulaBurbujas.setPosicion(jugador.getX() - 0.8f, jugador.getY() - 0.3f);
             particulaBurbujas.actualizar(delta);
         }
     }
@@ -194,10 +194,10 @@ public class NivelSubmarino extends Nivel {
 
         // En superficie: azul translúcido con visibilidad alta
         // En el fondo: penumbra densa / negro casi total
-        float r = MathUtils.lerp(0.01f, 0.12f, factor);
-        float g = MathUtils.lerp(0.03f, 0.28f, factor);
-        float b = MathUtils.lerp(0.08f, 0.55f, factor);
-        float a = MathUtils.lerp(0.10f, 0.75f, factor);
+        float r = MathUtils.lerp(0.04f, 0.15f, factor);
+        float g = MathUtils.lerp(0.12f, 0.40f, factor);
+        float b = MathUtils.lerp(0.30f, 0.70f, factor);
+        float a = MathUtils.lerp(0.40f, 0.90f, factor);
 
         luz.setAmbientLight(r, g, b, a);
     }
@@ -211,10 +211,10 @@ public class NivelSubmarino extends Nivel {
             float paralajeOffsetX = camara.position.x * 0.2f;
             float paralajeOffsetY = camara.position.y * 0.1f;
             pincel.draw(texturaFondoParalaje,
-                    camara.position.x - Constantes.ANCHO_METROS / 2f - paralajeOffsetX,
-                    camara.position.y - Constantes.ALTO_METROS / 2f - paralajeOffsetY,
-                    Constantes.ANCHO_METROS * 1.5f,
-                    Constantes.ALTO_METROS * 1.5f);
+                    camara.position.x - Constantes.ANCHO_METROS - paralajeOffsetX,
+                    camara.position.y - Constantes.ALTO_METROS - paralajeOffsetY,
+                    Constantes.ANCHO_METROS * 2f,
+                    Constantes.ALTO_METROS * 2f);
         }
         pincel.end();
 

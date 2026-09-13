@@ -111,22 +111,14 @@ public class Particula {
 	}
 
 	public void actualizar(float delta) {
-
 		efectoParticula.update(delta);
-
+		// Only apply gentle sway without overriding position
 		faseSway += delta * frecuenciaSway;
-		float sway = com.badlogic.gdx.math.MathUtils.sin(faseSway) * amplitudSway * delta;
-
-		posicion.x += (1 / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO + sway;
-
-		this.efectoParticula.setPosition(posicion.x, posicion.y);
-
-		if (puntoLuz != null) {
-
-			puntoLuz.setPosition(posicion);
-
+		float sway = com.badlogic.gdx.math.MathUtils.sin(faseSway) * amplitudSway * (1.0f / Juego.UNIDAD_DEL_MUNDO);
+		efectoParticula.setPosition(posicion.x + sway, posicion.y);
+		if (puntoLuz != null) { 
+			puntoLuz.setPosition(posicion.x + sway, posicion.y); 
 		}
-
 	}
 
 	public void dibujar(Batch pincel, float delta) {
