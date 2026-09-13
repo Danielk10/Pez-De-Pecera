@@ -2,6 +2,7 @@ package com.diamon.personajes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -1128,6 +1129,11 @@ public class Jugador extends Personaje {
 			tiempoEscudo = 0;
 			inmune = true;
 			tiempoCuadroInmune = 0;
+			choque = true;
+			activarHitFlash(0.16f, new Color(0.35f, 0.85f, 1.0f, 1.0f));
+			if (pantalla != null) {
+				pantalla.sacudirCamara(0.25f);
+			}
 			return;
 		}
 		vida = Math.max(0, vida - cantidad);
@@ -1136,6 +1142,11 @@ public class Jugador extends Personaje {
 		}
 		inmune = true;
 		tiempoCuadroInmune = 0;
+		choque = true;
+		activarHitFlash(0.16f, new Color(1.0f, 0.35f, 0.35f, 1.0f));
+		if (pantalla != null) {
+			pantalla.sacudirCamara(0.45f);
+		}
 		if (vida <= 0) {
 			setVivo(false);
 		}

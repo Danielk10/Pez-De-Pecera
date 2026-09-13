@@ -24,6 +24,11 @@ public class CamaraSubmarina {
     private float zoomObjetivo = 1.0f;
     private float velocidadZoom = 2.0f;
 
+    // Sistema de Sacudida de Cámara (Screen Shake) basado en Trauma Cuadrático (Whisk3D)
+    private float trauma = 0.0f;
+    private float velocidadDecaimientoTrauma = 3.5f;
+    private float maxShakeOffset = 0.75f;
+
     public CamaraSubmarina(float anchoMetros, float altoMetros) {
         camara = new OrthographicCamera();
         camara.setToOrtho(false, anchoMetros, altoMetros);
@@ -88,7 +93,29 @@ public class CamaraSubmarina {
             camara.position.y = mapaAltoMetros / 2.0f;
         }
 
+        // Sacudida de cámara con atenuación cuadrática (Trauma^2 * maxOffset)
+        if (trauma > 0.001f) {
+            float shakeMag = (trauma * trauma) * maxShakeOffset;
+            camara.position.x += MathUtils.random(-1f, 1f) * shakeMag;
+            camara.position.y += MathUtils.random(-1f, 1f) * shakeMag;
+            trauma -= velocidadDecaimientoTrauma * delta;
+            if (trauma < 0.0f) {
+                trauma = 0.0f;
+            }
+        }
+
         camara.update();
+    }
+
+    /**
+     * Aplica un impulso de sacudida a la cámara (acumulativo y delimitado entre 0 y 1).
+     */
+    public void sacudir(float intensidad) {
+        this.trauma = MathUtils.clamp(this.trauma + intensidad, 0.0f, 1.0f);
+    }
+
+    public float getTrauma() {
+        return trauma;
     }
 
     public void setZoomObjetivo(float zoom) {

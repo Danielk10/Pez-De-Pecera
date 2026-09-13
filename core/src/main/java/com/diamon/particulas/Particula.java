@@ -25,6 +25,11 @@ public class Particula {
 
 	private Light puntoLuz;
 
+	// Bamboleo sinusoidal hidrodinámico (Sway - Whisk3D)
+	private float faseSway = 0f;
+	private float amplitudSway = 0.3f;
+	private float frecuenciaSway = 2.0f;
+
 	public Particula(ParticleEffect efectoParticula, Pantalla pantalla) {
 
 		this.pantalla = pantalla;
@@ -109,7 +114,10 @@ public class Particula {
 
 		efectoParticula.update(delta);
 
-		posicion.x += (1 / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO;
+		faseSway += delta * frecuenciaSway;
+		float sway = com.badlogic.gdx.math.MathUtils.sin(faseSway) * amplitudSway * delta;
+
+		posicion.x += (1 / Juego.DELTA_A_PIXEL * delta) / Juego.UNIDAD_DEL_MUNDO + sway;
 
 		this.efectoParticula.setPosition(posicion.x, posicion.y);
 

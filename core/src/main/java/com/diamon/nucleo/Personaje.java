@@ -1,6 +1,7 @@
 package com.diamon.nucleo;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -51,6 +52,9 @@ public abstract class Personaje extends Sprite {
 	protected OrthographicCamera camara;
 
 	protected boolean vivo;
+
+	// Retroalimentación visual de impacto (Hit Flash - Whisk3D)
+	protected float tiempoHitFlash = 0f;
 
 	protected DatosNiveles datosNiveles;
 
@@ -430,6 +434,14 @@ public abstract class Personaje extends Sprite {
 
 	public void actualizar(float delta) {
 
+		if (tiempoHitFlash > 0f) {
+			tiempoHitFlash -= delta;
+			if (tiempoHitFlash <= 0f) {
+				tiempoHitFlash = 0f;
+				setColor(Color.WHITE);
+			}
+		}
+
 		if (animar) {
 
 			if (delta == 0) {
@@ -560,6 +572,21 @@ public abstract class Personaje extends Sprite {
 			mundo.destroyBody(cuerpo);
 			cuerpo = null;
 		}
+	}
+
+	/**
+	 * Activa el destello de impacto (Hit Flash) con duración y tinte cromático personalizado.
+	 */
+	public void activarHitFlash(float duracion, Color color) {
+		this.tiempoHitFlash = duracion;
+		setColor(color);
+	}
+
+	/**
+	 * Activa el destello de impacto rojo estándar (120ms).
+	 */
+	public void activarHitFlash() {
+		activarHitFlash(0.12f, new Color(1.0f, 0.35f, 0.35f, 1.0f));
 	}
 
 	public abstract void colision(Personaje personaje);

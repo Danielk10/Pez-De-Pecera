@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -61,6 +62,11 @@ public abstract class Pantalla implements Screen {
 	protected RayHandler luz;
 
 	protected Array<Light> luces;
+
+	// Sistema global de Screen Shake (Trauma cuadrático - Whisk3D)
+	protected float traumaCamara = 0f;
+	protected float decaimientoTrauma = 3.5f;
+	protected float maxDesplazamientoShake = 0.65f;
 
 	protected Pantalla(Juego juego) {
 
@@ -146,6 +152,17 @@ public abstract class Pantalla implements Screen {
 
 		actualizar(delta);
 
+		// Efecto de Sacudida de Cámara (Screen Shake) cuadrático
+		if (traumaCamara > 0.001f) {
+			float shakeMag = (traumaCamara * traumaCamara) * maxDesplazamientoShake;
+			camara.position.x += MathUtils.random(-1f, 1f) * shakeMag;
+			camara.position.y += MathUtils.random(-1f, 1f) * shakeMag;
+			traumaCamara -= decaimientoTrauma * delta;
+			if (traumaCamara < 0f) {
+				traumaCamara = 0f;
+			}
+		}
+
 		camara.update();
 
 		dibujar(pincel, delta);
@@ -159,6 +176,10 @@ public abstract class Pantalla implements Screen {
 			debugRenderer.render(mundoVirtual, camara.combined);
 		}
 
+	}
+
+	public void sacudirCamara(float intensidad) {
+		this.traumaCamara = MathUtils.clamp(this.traumaCamara + intensidad, 0f, 1f);
 	}
 
 	@Override
