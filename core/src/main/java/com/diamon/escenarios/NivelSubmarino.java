@@ -117,10 +117,14 @@ public class NivelSubmarino extends Nivel {
         }
         luces.add(luzJugador);
 
-        // 6. Efecto de partículas submarinas
+        // 6. Efecto de partículas submarinas con colisión física Box2D e iluminación
         if (recurso.isLoaded("particulas/Particle Park Flame.p", ParticleEffect.class)) {
             particulaBurbujas = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
             particulaBurbujas.setEscala(1.5f);
+            PointLight luzBurbujas = new PointLight(luz, 120, new Color(0.3f, 0.85f, 1.0f, 0.55f), 3.0f, spawn.x, spawn.y);
+            luzBurbujas.setSoft(true);
+            luces.add(luzBurbujas);
+            particulaBurbujas.setPuntoLuz(luzBurbujas);
             particulaBurbujas.iniciar();
         }
 
