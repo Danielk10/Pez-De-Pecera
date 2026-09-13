@@ -286,6 +286,21 @@ public class PantallaJuego extends Pantalla {
 		editor = new EditorNivel(nivel, informacionNiveles, datosNiveles, configuracion, dato, camara, personajes, this,
 				recurso, cursor);
 
+		editor.setOnGuardarSalir(new Runnable() {
+			@Override
+			public void run() {
+				salirDelEditor();
+			}
+		});
+
+		editor.setOnCambioNivel(new Runnable() {
+			@Override
+			public void run() {
+				numeroNivel = datosNiveles.getNumeroNivel();
+				jugador.setTerminarNivel(true);
+			}
+		});
+
 		puntos = datosNiveles.getPuntos();
 
 	}
@@ -468,51 +483,9 @@ public class PantallaJuego extends Pantalla {
 		});
 
 		terminarEdicion.addListener(new ClickListener() {
-
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-
-				if (!dato.isDiparoAutomatico()) {
-
-					if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-						Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(1, 1, Pixmap.Format.RGBA8888), 0, 0));
-
-					}
-
-				}
-
-				if (Gdx.app.getType() == Gdx.app.getType().Android) {
-
-					nivel.addActor(pausa);
-
-				}
-
-				if (dato.isSonido())
-
-				{
-
-					musica[indice].play();
-
-				}
-
-				editor.setTerminar(true);
-
-				editar = false;
-
-				configuracion.escribirDatos(dato);
-
-				informacionNiveles.escribirDatos(datosNiveles);
-
-				terminarEdicion.remove();
-
-				editor.eliminarUI();
-
-				numeroNivel = datosNiveles.getNumeroNivel();
-
-				jugador.setTerminarNivel(true);
-
+				salirDelEditor();
 				super.clicked(event, x, y);
 			}
 		});
@@ -586,6 +559,36 @@ public class PantallaJuego extends Pantalla {
 			}
 		});
 
+	}
+
+	private void salirDelEditor() {
+		if (!dato.isDiparoAutomatico()) {
+			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
+				Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(1, 1, Pixmap.Format.RGBA8888), 0, 0));
+			}
+		}
+
+		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+			nivel.addActor(pausa);
+		}
+
+		if (dato.isSonido()) {
+			if (musica[indice] != null) {
+				musica[indice].play();
+			}
+		}
+
+		editor.setTerminar(true);
+		editar = false;
+		configuracion.escribirDatos(dato);
+		informacionNiveles.escribirDatos(datosNiveles);
+		terminarEdicion.remove();
+		editor.eliminarUI();
+		numeroNivel = datosNiveles.getNumeroNivel();
+		jugador.setTerminarNivel(true);
+	}
+
+	private void configurarInputJuego() {
 		if (!pausar) {
 
 			nivel.addListener(new InputListener() {
@@ -599,9 +602,12 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public boolean touchDown(InputEvent ev, float x, float y, int puntero, int boton) {
 
-					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
+					if (editar) {
+						editor.toquePresionado(ev, x, y, puntero, boton);
+						return true;
+					}
 
-					editor.toquePresionado(ev, x, y, puntero, boton);
+					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
 
 					if (mundo.isIntro()) {
 
@@ -618,7 +624,10 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public void touchUp(InputEvent ev, float x, float y, int puntero, int boton) {
 
-					editor.toqueLevantado(ev, x, y, puntero, boton);
+					if (editar) {
+						editor.toqueLevantado(ev, x, y, puntero, boton);
+						return;
+					}
 
 					if (!mundo.isIntro()) {
 
@@ -631,13 +640,16 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public void touchDragged(InputEvent ev, float x, float y, int puntero) {
 
+					if (editar) {
+						editor.toqueDeslizando(ev, x, y, puntero);
+						return;
+					}
+
 					if (!mundo.isIntro()) {
 
 						jugador.toqueDeslizando(ev, x, y, puntero);
 
 					}
-
-					editor.toqueDeslizando(ev, x, y, puntero);
 
 					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
 
@@ -646,6 +658,11 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public boolean mouseMoved(InputEvent ev, float x, float y) {
 
+					if (editar) {
+						editor.ratonMoviendo(ev, x, y);
+						return true;
+					}
+
 					if (!mundo.isIntro()) {
 
 						jugador.ratonMoviendo(ev, x, y);
@@ -653,8 +670,6 @@ public class PantallaJuego extends Pantalla {
 					}
 
 					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
-
-					editor.ratonMoviendo(ev, x, y);
 
 					return super.mouseMoved(ev, x, y);
 				}
@@ -675,7 +690,14 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public boolean keyDown(InputEvent ev, int codigoTecla) {
 
-					editor.teclaPresionada(ev, codigoTecla);
+					if (editar) {
+						if (Keys.ESCAPE == codigoTecla) {
+							salirDelEditor();
+						} else {
+							editor.teclaPresionada(ev, codigoTecla);
+						}
+						return true;
+					}
 
 					if (!escape)
 
@@ -796,7 +818,10 @@ public class PantallaJuego extends Pantalla {
 				@Override
 				public boolean keyUp(InputEvent ev, int codigoTecla) {
 
-					editor.teclaLevantada(ev, codigoTecla);
+					if (editar) {
+						editor.teclaLevantada(ev, codigoTecla);
+						return true;
+					}
 
 					if (mundo.isIntro()) {
 
@@ -1149,7 +1174,12 @@ public class PantallaJuego extends Pantalla {
 
 					gefe = false;
 
-					mundo = new Niveles(this, jugador);
+					if (numeroNivel == 1 && Gdx.files.internal("mapas/nivel1.tmx").exists()) {
+						com.badlogic.gdx.maps.tiled.TiledMap mapaTmx = new com.badlogic.gdx.maps.tiled.TmxMapLoader().load("mapas/nivel1.tmx");
+						mundo = new com.diamon.escenarios.NivelSubmarino(this, jugador, mapaTmx);
+					} else {
+						mundo = new Niveles(this, jugador);
+					}
 
 					inmunidadJugador = true;
 
@@ -1159,7 +1189,9 @@ public class PantallaJuego extends Pantalla {
 
 			}
 
-			numeroNivel++;
+			if (!editar) {
+				numeroNivel++;
+			}
 
 		}
 

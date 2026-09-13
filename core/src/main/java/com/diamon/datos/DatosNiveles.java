@@ -26,6 +26,10 @@ public class DatosNiveles {
 	public final static String PEZ_ANGEL = "com.diamon.personajes.PezAngel";
 	public final static String PEZ_GOBO_NARANJA = "com.diamon.personajes.PezGloboNaranja";
 	public final static String PEZ_GLOBO_AMARILLO = "com.diamon.personajes.PezGloboAmarillo";
+	public final static String TIBURON_AZUL = "com.diamon.personajes.TiburonAzul";
+	public final static String PERLA = "com.diamon.items.Perla";
+	public final static String BURBUJA = "com.diamon.items.BurbujaOxigeno";
+	public final static String POWERUP = "com.diamon.items.PowerUpSubmarino";
 
 	// helicopteros del juego
 	public final static int PEZ_PAYASO = 1;
@@ -370,7 +374,52 @@ public class DatosNiveles {
 			numeroNivel++;
 
 		}
+	}
 
+	public static class EntradaActor {
+		public String tipo;
+		public Vector2 posicion;
+
+		public EntradaActor(String tipo, Vector2 posicion) {
+			this.tipo = tipo;
+			this.posicion = posicion;
+		}
+	}
+
+	public Array<EntradaActor> getTodosLosActores(String nivel) {
+		Array<EntradaActor> lista = new Array<EntradaActor>();
+		String nombreNivel = "";
+		int nNivel = 1;
+		for (int i = 0; i < posicionActores.length; i++) {
+			nombreNivel = "Nivel " + nNivel;
+			if (nivel.equals(nombreNivel)) {
+				for (int j = 0; j < posicionActores[i].size; j++) {
+					lista.add(new EntradaActor(tipoActores[i].get(j), posicionActores[i].get(j)));
+				}
+				break;
+			}
+			nNivel++;
+		}
+		return lista;
+	}
+
+	public void eliminarActorPorPosicion(String nivel, float x, float y, float tolerancia) {
+		String nombreNivel = "";
+		int nNivel = 1;
+		for (int i = 0; i < posicionActores.length; i++) {
+			nombreNivel = "Nivel " + nNivel;
+			if (nivel.equals(nombreNivel)) {
+				for (int j = posicionActores[i].size - 1; j >= 0; j--) {
+					Vector2 pos = posicionActores[i].get(j);
+					if (Math.abs(pos.x - x) <= tolerancia && Math.abs(pos.y - y) <= tolerancia) {
+						posicionActores[i].removeIndex(j);
+						tipoActores[i].removeIndex(j);
+						return;
+					}
+				}
+			}
+			nNivel++;
+		}
 	}
 
 }

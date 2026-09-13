@@ -1,12 +1,10 @@
 package com.diamon.pantallas;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -20,6 +18,8 @@ public class PantallaCarga extends Pantalla {
 	private Image fondo;
 
 	private ProgressBar barra;
+
+	private boolean cargado = false;
 
 	public PantallaCarga(Juego juego) {
 		super(juego);
@@ -68,7 +68,9 @@ public class PantallaCarga extends Pantalla {
 
 	public void actualizar(float delta) {
 
-		if (recurso.update()) {
+		if (!cargado && recurso.update()) {
+
+			cargado = true;
 
 			nivel.addAction(Actions.sequence(Actions.delay(0.2f), Actions.run(new Runnable() {
 

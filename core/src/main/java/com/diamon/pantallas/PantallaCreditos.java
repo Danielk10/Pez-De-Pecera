@@ -321,15 +321,15 @@ public class PantallaCreditos extends Pantalla {
 
 		if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
-			tablaInferior.add(politicaDePrivacidad).size(170, 32).left();
+			tablaInferior.add(politicaDePrivacidad).size(180, 44).left();
 
 		} else {
 
-			tablaInferior.add().size(170, 32);
+			tablaInferior.add().size(180, 44);
 
 		}
 
-		tablaInferior.add(aceptar).size(160, 32).expandX().center();
+		tablaInferior.add(aceptar).size(160, 44).expandX().center();
 
 		if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
 

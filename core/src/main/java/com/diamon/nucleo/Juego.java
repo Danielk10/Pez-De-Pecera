@@ -193,7 +193,7 @@ public abstract class Juego extends Game {
 
         super.resize(ancho, alto);
 
-        nivelMenu.getViewport().update(ancho, alto);
+        nivelMenu.getViewport().update(ancho, alto, true);
     }
 
     @Override

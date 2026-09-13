@@ -176,6 +176,10 @@ public abstract class Pantalla implements Screen {
 		this.mundoVirtual = mundoVirtual;
 	}
 
+	public RayHandler getLuz() {
+		return luz;
+	}
+
 	@Override
 	public void pause() {
 

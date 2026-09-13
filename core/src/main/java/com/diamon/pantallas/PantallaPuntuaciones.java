@@ -99,9 +99,9 @@ public class PantallaPuntuaciones extends Pantalla {
 
 		Table tablaBotones = new Table();
 
-		tablaBotones.add(atras).size(160, 32).padRight(20);
+		tablaBotones.add(atras).size(160, 44).padRight(20);
 
-		tablaBotones.add(ponerACero).size(160, 32);
+		tablaBotones.add(ponerACero).size(160, 44);
 
 		tabla.add(tablaBotones).colspan(4).expand().bottom().pad(32);
 

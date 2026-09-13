@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 

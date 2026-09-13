@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.diamon.camara.CamaraSubmarina;
 import com.diamon.mapas.CargadorNivelTmx;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Constantes;
 import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
@@ -53,6 +55,16 @@ public class NivelSubmarino extends Nivel {
     }
 
     private void inicializarMundoTmx() {
+        // 0. Limpiar cuerpos residuales de ejecuciones previas (excepto el jugador)
+        mundoVirtual.getBodies(cuerpos);
+        if (cuerpos.size > 0) {
+            for (Body cuerpo : cuerpos) {
+                if (!(cuerpo.getUserData() instanceof Jugador)) {
+                    mundoVirtual.destroyBody(cuerpo);
+                }
+            }
+        }
+
         // 1. Configurar físicas Box2D y ContactListener submarino
         mundoVirtual.setContactListener(new ColisionSubmarinaListener());
 
@@ -60,6 +72,21 @@ public class NivelSubmarino extends Nivel {
         renderTiled = new OrthogonalTiledMapRenderer(mapa, 1.0f / Constantes.PPM);
         cargadorTmx = new CargadorNivelTmx(mapa, mundoVirtual, luz, recurso, pantalla);
         cargadorTmx.procesarObjetos(personajes);
+
+        // Cargar actores personalizados guardados para este nivel en DatosNiveles
+        if (datosNiveles != null) {
+            String nivelStr = "Nivel " + datosNiveles.getNumeroNivel();
+            for (com.diamon.datos.DatosNiveles.EntradaActor entrada : datosNiveles.getTodosLosActores(nivelStr)) {
+                Personaje actor = com.diamon.utilidades.FabricaActores.crearActor(
+                        entrada.tipo,
+                        entrada.posicion.x * Juego.UNIDAD_DEL_MUNDO,
+                        entrada.posicion.y * Juego.UNIDAD_DEL_MUNDO,
+                        pantalla, recurso, luz);
+                if (actor != null) {
+                    personajes.add(actor);
+                }
+            }
+        }
 
         this.anchoMapaMetros = cargadorTmx.getAnchoMetros();
         this.altoMapaMetros = cargadorTmx.getAltoMetros();

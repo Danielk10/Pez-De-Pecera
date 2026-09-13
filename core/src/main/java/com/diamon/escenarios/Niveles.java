@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -20,18 +19,12 @@ import com.diamon.nucleo.Nivel;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
 import com.diamon.particulas.Particula;
-import com.diamon.personajes.Algas;
-import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Fondo;
 import com.diamon.personajes.JefeCuatro;
 import com.diamon.personajes.JefeDos;
 import com.diamon.personajes.JefeTres;
 import com.diamon.personajes.JefeUno;
 import com.diamon.personajes.Jugador;
-import com.diamon.personajes.PezAngel;
-import com.diamon.personajes.PezGloboAmarillo;
-import com.diamon.personajes.PezGloboNaranja;
-import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.TiburonAzul;
 import com.diamon.utilidades.ColicionBox2DListener;
 import box2dLight.PointLight;
@@ -195,72 +188,15 @@ public class Niveles extends Nivel {
 
 		String numeroNivel = "Nivel " + datosNiveles.getNumeroNivel();
 
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PULPO, numeroNivel))
-
-		{
-			Pulpo actor = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(), 0.07f,
-					Animation.PlayMode.LOOP, pantalla, 32, 64, Pulpo.ESTATICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-		}
-
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GLOBO_AMARILLO, numeroNivel))
-
-		{
-			PezGloboAmarillo actor = new PezGloboAmarillo(
-					recurso.get("texturas/pezG.atlas", TextureAtlas.class).getRegions(), 0.1f, Animation.PlayMode.LOOP,
-					pantalla, 64, 32, PezGloboAmarillo.ESTATICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-		}
-
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_GOBO_NARANJA, numeroNivel))
-
-		{
-			PezGloboNaranja actor = new PezGloboNaranja(
-					recurso.get("texturas/pezGlobo.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 96, 64, PezGloboNaranja.ESTATICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-		}
-
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.PEZ_ANGEL, numeroNivel))
-
-		{
-			PezAngel actor = new PezAngel(recurso.get("texturas/pez1.atlas", TextureAtlas.class).getRegions(), 0.1f,
-					Animation.PlayMode.LOOP, pantalla, 64, 32, PezAngel.ESTATICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-		}
-
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.BOMBA, numeroNivel)) {
-
-			Bomba actor = new Bomba(recurso.get("texturas/bomba.png", Texture.class), pantalla, 64, 64,
-					Bomba.DIANAMICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-
-		}
-
-		for (Vector2 posicion : datosNiveles.getPosicionActores(DatosNiveles.ALGAS, numeroNivel)) {
-
-			Algas actor = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64,
-					Algas.CINESTECICO);
-
-			actor.setPosition(posicion.x * Juego.UNIDAD_DEL_MUNDO, posicion.y * Juego.UNIDAD_DEL_MUNDO);
-
-			personajes.add(actor);
-
+		for (DatosNiveles.EntradaActor entrada : datosNiveles.getTodosLosActores(numeroNivel)) {
+			Personaje actor = com.diamon.utilidades.FabricaActores.crearActor(
+					entrada.tipo,
+					entrada.posicion.x * Juego.UNIDAD_DEL_MUNDO,
+					entrada.posicion.y * Juego.UNIDAD_DEL_MUNDO,
+					pantalla, recurso, luz);
+			if (actor != null) {
+				personajes.add(actor);
+			}
 		}
 
 		mundoVirtual.getBodies(cuerpos);
