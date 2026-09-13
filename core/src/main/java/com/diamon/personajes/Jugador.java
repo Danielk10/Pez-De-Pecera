@@ -75,6 +75,12 @@ public class Jugador extends Personaje {
 
 	private boolean deltaToque;
 
+	private boolean toqueActivo = false;
+
+	private float toqueObjetivoX = 0f;
+
+	private float toqueObjetivoY = 0f;
+
 	private float tiempoTurbo;
 
 	private float tiempoEscudo;
@@ -339,7 +345,9 @@ public class Jugador extends Personaje {
 
 	public boolean teclaPresionada(InputEvent ev, int codigoTecla) {
 
-		switch (ev.getKeyCode()) {
+		int key = (codigoTecla != 0) ? codigoTecla : (ev != null ? ev.getKeyCode() : 0);
+
+		switch (key) {
 
 		case Keys.LEFT:
 
@@ -350,10 +358,6 @@ public class Jugador extends Personaje {
 		case Keys.RIGHT:
 
 			derecha = true;
-
-			// cuerpo.setAngularVelocity(0);
-
-			// cuerpo.setTransform(cuerpo.getPosition(), 0);
 
 			break;
 
@@ -400,7 +404,9 @@ public class Jugador extends Personaje {
 
 	public boolean teclaLevantada(InputEvent ev, int codigoTecla) {
 
-		switch (ev.getKeyCode()) {
+		int key = (codigoTecla != 0) ? codigoTecla : (ev != null ? ev.getKeyCode() : 0);
+
+		switch (key) {
 
 		case Keys.LEFT:
 
@@ -515,6 +521,10 @@ public class Jugador extends Personaje {
 
 		if (!finNivel) {
 
+			toqueActivo = true;
+			toqueObjetivoX = camara.position.x + (x - Juego.ANCHO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
+			toqueObjetivoY = camara.position.y + (y - Juego.ALTO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
+
 			if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
 				if (dedos == 0) {
@@ -617,6 +627,8 @@ public class Jugador extends Personaje {
 	@SuppressWarnings("static-access")
 	public boolean toqueLevantado(InputEvent ev, float x, float y, int puntero, int boton) {
 
+		toqueActivo = false;
+
 		if (!finNivel) {
 
 			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
@@ -641,7 +653,7 @@ public class Jugador extends Personaje {
 
 				dedos--;
 
-				if (dedos == -1) {
+				if (dedos <= 0) {
 
 					disparar = false;
 
@@ -659,6 +671,10 @@ public class Jugador extends Personaje {
 	public boolean toquePresionado(InputEvent ev, float x, float y, int puntero, int boton) {
 
 		if (!finNivel) {
+
+			toqueActivo = true;
+			toqueObjetivoX = camara.position.x + (x - Juego.ANCHO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
+			toqueObjetivoY = camara.position.y + (y - Juego.ALTO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
 
 			if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
@@ -779,6 +795,7 @@ public class Jugador extends Personaje {
 		if (tiempoLinterna > 0) tiempoLinterna = Math.max(0f, tiempoLinterna - delta);
 
 		if (cuerpo != null && cuerpo.getType() == com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody) {
+			cuerpo.setGravityScale(0f);
 			cuerpo.setLinearDamping(com.diamon.nucleo.Constantes.AMORTIGUACION_AGUA);
 
 			for (int i = 0; i < corrientesActivas.size; i++) {
@@ -786,7 +803,7 @@ public class Jugador extends Personaje {
 				cuerpo.applyForceToCenter(corriente.getFuerza(), true);
 			}
 
-			float fuerzaBase = isTurboActivo() ? 26.0f : 14.0f;
+			float fuerzaBase = isTurboActivo() ? 26.0f : 16.0f;
 			float fx = 0f;
 			float fy = 0f;
 			if (derecha) fx += fuerzaBase;
@@ -794,12 +811,24 @@ public class Jugador extends Personaje {
 			if (arriba) fy += fuerzaBase;
 			if (abajo) fy -= fuerzaBase;
 
+			if (toqueActivo) {
+				float px = cuerpo.getPosition().x;
+				float py = cuerpo.getPosition().y;
+				float dx = toqueObjetivoX - px;
+				float dy = toqueObjetivoY - py;
+				float dist = (float) Math.sqrt(dx * dx + dy * dy);
+				if (dist > 0.35f) {
+					fx += (dx / dist) * fuerzaBase;
+					fy += (dy / dist) * fuerzaBase;
+				}
+			}
+
 			if (fx != 0 || fy != 0) {
 				cuerpo.applyForceToCenter(fx, fy, true);
 			}
 
 			com.badlogic.gdx.math.Vector2 vel = cuerpo.getLinearVelocity();
-			if (vel.len2() > 0.2f) {
+			if (vel.len2() > 0.15f) {
 				float angulo = vel.angleDeg();
 				if (angulo > 90f && angulo < 270f) {
 					setFlip(true, false);
@@ -808,7 +837,7 @@ public class Jugador extends Personaje {
 					setFlip(false, false);
 				}
 				float rotActual = getRotation();
-				float rotNueva = com.badlogic.gdx.math.MathUtils.lerpAngleDeg(rotActual, angulo, 0.15f);
+				float rotNueva = com.badlogic.gdx.math.MathUtils.lerpAngleDeg(rotActual, angulo, 0.18f);
 				setRotation(rotNueva);
 			}
 		}

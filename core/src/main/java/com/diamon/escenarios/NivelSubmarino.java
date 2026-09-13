@@ -66,6 +66,7 @@ public class NivelSubmarino extends Nivel {
         }
 
         // 1. Configurar físicas Box2D y ContactListener submarino
+        mundoVirtual.setGravity(new Vector2(0, Constantes.GRAVEDAD_SUBMARINA));
         mundoVirtual.setContactListener(new ColisionSubmarinaListener());
 
         // 2. Cargador TMX y procesamiento de capas
@@ -97,6 +98,10 @@ public class NivelSubmarino extends Nivel {
         jugador.setVivo(true);
         jugador.setFinNivel(false);
         jugador.setTerminarNivel(false);
+        if (jugador.getCuerpo() != null) {
+            jugador.getCuerpo().setGravityScale(0f);
+            jugador.getCuerpo().setLinearDamping(Constantes.AMORTIGUACION_AGUA);
+        }
         personajes.add(jugador);
 
         // 4. Controlador de Cámara Submarina
@@ -128,8 +133,20 @@ public class NivelSubmarino extends Nivel {
             particulaBurbujas.iniciar();
         }
 
-        // 7. Fondo de paralaje
-        if (recurso.isLoaded("texturas/fondo1.png", Texture.class)) {
+        // 7. Fondo de paralaje dinámico según el nivel actual
+        int numNivel = (datosNiveles != null) ? datosNiveles.getNumeroNivel() : 1;
+        int indiceFondo = 1;
+        if (numNivel >= 11 && numNivel <= 20) {
+            indiceFondo = 2;
+        } else if (numNivel >= 21 && numNivel <= 30) {
+            indiceFondo = 3;
+        } else if (numNivel >= 31) {
+            indiceFondo = 4;
+        }
+        String rutaFondo = "texturas/fondo" + indiceFondo + ".png";
+        if (recurso.isLoaded(rutaFondo, Texture.class)) {
+            texturaFondoParalaje = recurso.get(rutaFondo, Texture.class);
+        } else if (recurso.isLoaded("texturas/fondo1.png", Texture.class)) {
             texturaFondoParalaje = recurso.get("texturas/fondo1.png", Texture.class);
         }
     }
@@ -208,13 +225,15 @@ public class NivelSubmarino extends Nivel {
         pincel.setProjectionMatrix(camara.combined);
         pincel.begin();
         if (texturaFondoParalaje != null) {
-            float paralajeOffsetX = camara.position.x * 0.2f;
-            float paralajeOffsetY = camara.position.y * 0.1f;
+            float bgW = Constantes.ANCHO_METROS * 2.6f;
+            float bgH = Constantes.ALTO_METROS * 2.6f;
+            float paralajeOffsetX = camara.position.x * 0.15f;
+            float paralajeOffsetY = camara.position.y * 0.08f;
             pincel.draw(texturaFondoParalaje,
-                    camara.position.x - Constantes.ANCHO_METROS - paralajeOffsetX,
-                    camara.position.y - Constantes.ALTO_METROS - paralajeOffsetY,
-                    Constantes.ANCHO_METROS * 2f,
-                    Constantes.ALTO_METROS * 2f);
+                    camara.position.x - bgW / 2f - paralajeOffsetX,
+                    camara.position.y - bgH / 2f - paralajeOffsetY,
+                    bgW,
+                    bgH);
         }
         pincel.end();
 

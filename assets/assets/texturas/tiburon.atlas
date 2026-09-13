@@ -1,0 +1,41 @@
+
+tiburon.png
+size: 512, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+tiburon1
+  rotate: false
+  xy: 2, 132
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1
+tiburon2
+  rotate: false
+  xy: 2, 262
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1
+tiburon3
+  rotate: false
+  xy: 2, 2
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1
+tiburonMordida1
+  rotate: false
+  xy: 228, 132
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1
+tiburonMordida2
+  rotate: false
+  xy: 228, 262
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1

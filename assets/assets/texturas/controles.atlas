@@ -1,0 +1,76 @@
+
+controles.png
+size: 2048, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+clicDerecho
+  rotate: false
+  xy: 392, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+clicIzquierdo
+  rotate: false
+  xy: 522, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlAbajo
+  rotate: false
+  xy: 132, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlArriba
+  rotate: false
+  xy: 782, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlDerecho
+  rotate: false
+  xy: 2, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlEscape
+  rotate: false
+  xy: 1172, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlEspacio
+  rotate: false
+  xy: 652, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlIzquierdo
+  rotate: false
+  xy: 262, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlX
+  rotate: false
+  xy: 912, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+controlZ
+  rotate: false
+  xy: 1042, 2
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1

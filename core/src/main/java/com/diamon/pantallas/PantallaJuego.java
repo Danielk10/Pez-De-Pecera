@@ -219,19 +219,24 @@ public class PantallaJuego extends Pantalla {
 
 		Table contenidoPausa = new Table();
 
-		contenidoPausa.setBackground(menuPausa.getDrawable());
+		contenidoPausa.setBackground(skin.getDrawable("marineWindow"));
+		contenidoPausa.pad(24);
 
-		contenidoPausa.add(reanudar).size(213, 32).padBottom(10).row();
+		reanudar.getLabel().setFontScale(1.1f);
+		menu.getLabel().setFontScale(1.1f);
+		editarNivel.getLabel().setFontScale(1.1f);
 
-		contenidoPausa.add(menu).size(213, 32).padBottom(10).row();
+		contenidoPausa.add(reanudar).size(250, 48).padBottom(14).row();
+
+		contenidoPausa.add(menu).size(250, 48).padBottom(14).row();
 
 		if (dato.isEditor()) {
 
-			contenidoPausa.add(editarNivel).size(213, 32).row();
+			contenidoPausa.add(editarNivel).size(250, 48).row();
 
 		}
 
-		tablaPausa.add(contenidoPausa).size(320, 240);
+		tablaPausa.add(contenidoPausa).size(340, 250);
 
 		tablaPausa.setColor(1, 1, 1, 0);
 
@@ -271,79 +276,135 @@ public class PantallaJuego extends Pantalla {
 
 		if (Gdx.app.getType() == Gdx.app.getType().Android) {
 			TextureAtlas dedosAtlas = recurso.get("texturas/dedos.atlas", TextureAtlas.class);
+			TextureAtlas iconosAtlas = recurso.get("texturas/iconos.atlas", TextureAtlas.class);
 			
-			Image btnIzquierda = new Image(dedosAtlas.findRegion("izquierda"));
-			btnIzquierda.setSize(64, 64);
-			btnIzquierda.setPosition(20, 80);
+			// D-Pad Direccional en esquina inferior izquierda
+			final Image btnIzquierda = new Image(dedosAtlas.findRegion("izquierda"));
+			btnIzquierda.setSize(72, 72);
+			btnIzquierda.setPosition(24, 100);
+			btnIzquierda.setColor(1f, 1f, 1f, 0.70f);
 			btnIzquierda.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnIzquierda.setColor(0.3f, 0.9f, 1.0f, 0.95f);
 					jugador.teclaPresionada(event, Keys.LEFT);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnIzquierda.setColor(1f, 1f, 1f, 0.70f);
 					jugador.teclaLevantada(event, Keys.LEFT);
 				}
 			});
 			
-			Image btnDerecha = new Image(dedosAtlas.findRegion("derecha"));
-			btnDerecha.setSize(64, 64);
-			btnDerecha.setPosition(148, 80);
+			final Image btnDerecha = new Image(dedosAtlas.findRegion("derecha"));
+			btnDerecha.setSize(72, 72);
+			btnDerecha.setPosition(168, 100);
+			btnDerecha.setColor(1f, 1f, 1f, 0.70f);
 			btnDerecha.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnDerecha.setColor(0.3f, 0.9f, 1.0f, 0.95f);
 					jugador.teclaPresionada(event, Keys.RIGHT);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnDerecha.setColor(1f, 1f, 1f, 0.70f);
 					jugador.teclaLevantada(event, Keys.RIGHT);
 				}
 			});
 			
-			Image btnArriba = new Image(dedosAtlas.findRegion("arriba"));
-			btnArriba.setSize(64, 64);
-			btnArriba.setPosition(84, 144);
+			final Image btnArriba = new Image(dedosAtlas.findRegion("arriba"));
+			btnArriba.setSize(72, 72);
+			btnArriba.setPosition(96, 172);
+			btnArriba.setColor(1f, 1f, 1f, 0.70f);
 			btnArriba.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnArriba.setColor(0.3f, 0.9f, 1.0f, 0.95f);
 					jugador.teclaPresionada(event, Keys.UP);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnArriba.setColor(1f, 1f, 1f, 0.70f);
 					jugador.teclaLevantada(event, Keys.UP);
 				}
 			});
 			
-			Image btnAbajo = new Image(dedosAtlas.findRegion("abajo"));
-			btnAbajo.setSize(64, 64);
-			btnAbajo.setPosition(84, 16);
+			final Image btnAbajo = new Image(dedosAtlas.findRegion("abajo"));
+			btnAbajo.setSize(72, 72);
+			btnAbajo.setPosition(96, 28);
+			btnAbajo.setColor(1f, 1f, 1f, 0.70f);
 			btnAbajo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnAbajo.setColor(0.3f, 0.9f, 1.0f, 0.95f);
 					jugador.teclaPresionada(event, Keys.DOWN);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnAbajo.setColor(1f, 1f, 1f, 0.70f);
 					jugador.teclaLevantada(event, Keys.DOWN);
 				}
 			});
 			
-			Image btnDisparo = new Image(dedosAtlas.findRegion("precionado"));
-			btnDisparo.setSize(64, 64);
-			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 100, 80);
+			// Botón de Disparo Principal (Burbujas)
+			final Image btnDisparo = new Image(dedosAtlas.findRegion("precionado"));
+			btnDisparo.setSize(76, 76);
+			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 116, 96);
+			btnDisparo.setColor(1f, 1f, 1f, 0.70f);
 			btnDisparo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnDisparo.setColor(1f, 0.6f, 0.3f, 0.95f);
 					jugador.teclaPresionada(event, Keys.Z);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnDisparo.setColor(1f, 1f, 1f, 0.70f);
 					jugador.teclaLevantada(event, Keys.Z);
+				}
+			});
+
+			// Botón de Misil
+			final Image btnMisil = new Image(iconosAtlas.findRegion("iconoexplosion"));
+			btnMisil.setSize(60, 60);
+			btnMisil.setPosition(Juego.ANCHO_PANTALLA - 196, 50);
+			btnMisil.setColor(1f, 1f, 1f, 0.70f);
+			btnMisil.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnMisil.setColor(0.3f, 1f, 0.6f, 0.95f);
+					jugador.teclaPresionada(event, Keys.X);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnMisil.setColor(1f, 1f, 1f, 0.70f);
+					jugador.teclaLevantada(event, Keys.X);
+				}
+			});
+
+			// Botón de Bomba
+			final Image btnBomba = new Image(iconosAtlas.findRegion("iconobomba"));
+			btnBomba.setSize(60, 60);
+			btnBomba.setPosition(Juego.ANCHO_PANTALLA - 116, 196);
+			btnBomba.setColor(1f, 1f, 1f, 0.70f);
+			btnBomba.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					btnBomba.setColor(1f, 0.3f, 0.3f, 0.95f);
+					jugador.teclaPresionada(event, Keys.SPACE);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					btnBomba.setColor(1f, 1f, 1f, 0.70f);
+					jugador.teclaLevantada(event, Keys.SPACE);
 				}
 			});
 			
@@ -352,6 +413,8 @@ public class PantallaJuego extends Pantalla {
 			nivel.addActor(btnArriba);
 			nivel.addActor(btnAbajo);
 			nivel.addActor(btnDisparo);
+			nivel.addActor(btnMisil);
+			nivel.addActor(btnBomba);
 		}
 
 		pausar = false;

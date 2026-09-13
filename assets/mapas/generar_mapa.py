@@ -16,17 +16,13 @@ def generate_tmx():
     height = 35
     tile_size = 64
 
-    # 1. Capa fondo_cueva (paredes rocosas de fondo)
-    fondo_grid = [[5 for _ in range(width)] for _ in range(height)]
-    # Variar algunos tiles de fondo para darle riqueza visual
-    for y in range(height):
-        for x in range(width):
-            if (x * 7 + y * 13) % 9 == 0:
-                fondo_grid[y][x] = 9 # Roca con musgo oscuro
-            elif (x * 11 + y * 5) % 11 == 0:
-                fondo_grid[y][x] = 12 # Grieta submarina
+    # 1. Capa fondo_cueva (abierto y transparente para visibilidad total del fondo marino)
+    fondo_grid = [[0 for _ in range(width)] for _ in range(height)]
+    for x in range(width):
+        fondo_grid[0][x] = 7  # Sombra rocosa en el borde superior
+        fondo_grid[34][x] = 7 # Sombra rocosa en el lecho abisal
 
-    # 2. Capa terreno_solido (arrecifes y cavernas físicas)
+    # 2. Capa terreno_solido (arrecifes de coral, arena y cavernas físicas)
     terreno_grid = [[0 for _ in range(width)] for _ in range(height)]
     
     # Techo de cueva (filas 0 y 1)
@@ -36,37 +32,50 @@ def generate_tmx():
 
     # Suelo marino arenoso (filas 33 y 34)
     for x in range(width):
-        terreno_grid[33][x] = 1 # Arena marina superior
+        terreno_grid[33][x] = 1 # Arena marina dorada
         terreno_grid[34][x] = 2 # Lecho rocoso profundo
 
-    # Estructura 1: Pilar sumergido (x: 12-14, y: 18-32)
-    for y in range(18, 33):
+    # Arrecife de coral y flora marina en el fondo (fila 32 sobre la arena)
+    corales_patron = [9, 10, 11, 12, 10, 15, 9, 11, 16, 12, 10, 9]
+    for x in range(width):
+        terreno_grid[32][x] = corales_patron[x % len(corales_patron)]
+
+    # Estructura 1: Pilar ancestral sumergido con corales (x: 12-14, y: 22-31)
+    for y in range(22, 32):
         for x in range(12, 15):
-            terreno_grid[y][x] = 11 # Pilar ancestral
+            terreno_grid[y][x] = 14 # Pilar sumergido
+    terreno_grid[21][13] = 15 # Cristal luminoso sobre el pilar
 
-    # Estructura 2: Estalactita descendente (x: 22-25, y: 2-10)
-    for y in range(2, 10):
-        for x in range(22, 26):
+    # Estructura 2: Estalactita descendente de cueva (x: 23-25, y: 2-9)
+    for y in range(2, 9):
+        for x in range(23, 26):
             terreno_grid[y][x] = 4 # Roca de cueva
+    terreno_grid[9][24] = 3 # Punta estalactita
 
-    # Estructura 3: Arrecife de coral / barrera central (x: 34-38, y: 22-32)
-    for y in range(22, 33):
-        for x in range(34, 39):
-            terreno_grid[y][x] = 10 # Coral pétreo
+    # Estructura 3: Gran Arrecife de Coral central (x: 35-38, y: 24-31)
+    for y in range(24, 32):
+        for x in range(35, 39):
+            terreno_grid[y][x] = 13 # Ruina sumergida coralina
+    terreno_grid[23][35] = 9  # Coral rosa en la cima
+    terreno_grid[23][36] = 10 # Coral azul
+    terreno_grid[23][37] = 15 # Cristal luminoso
+    terreno_grid[23][38] = 12 # Anémona dorada
 
-    # Estructura 4: Bóveda de la fosa abisal (x: 46-50, y: 10-22)
-    for y in range(10, 22):
-        for x in range(46, 51):
+    # Estructura 4: Formación rocosa colgante (x: 46-49, y: 2-10)
+    for y in range(2, 10):
+        for x in range(46, 50):
             terreno_grid[y][x] = 4
+    terreno_grid[10][47] = 11 # Alga colgante
+    terreno_grid[10][48] = 15 # Cristal
 
     # 3. Capa primer_plano (algas y corales decorativos en frente del pez)
     frente_grid = [[0 for _ in range(width)] for _ in range(height)]
-    for x in range(4, width, 6):
-        frente_grid[32][x] = 8 # Algas ondeantes en primer plano
-    for x in range(15, width, 10):
-        frente_grid[32][x] = 6 # Coral azul
-        if x + 1 < width:
-            frente_grid[32][x+1] = 7 # Coral rosa
+    for x in range(3, width, 5):
+        frente_grid[31][x] = 11 # Algas ondeantes en primer plano
+    for x in range(6, width, 8):
+        frente_grid[31][x] = 9  # Coral rosa en primer plano
+    for x in range(10, width, 8):
+        frente_grid[31][x] = 10 # Coral azul en primer plano
 
     def grid_to_csv(grid):
         lines = []
