@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.escenarios.Niveles;
 import com.diamon.nucleo.Juego;
@@ -35,6 +36,8 @@ import com.diamon.utilidades.EditorNivel;
 import box2dLight.Light;
 
 public class PantallaJuego extends Pantalla {
+
+	private Touchpad joystickVirtual;
 
 	private Table tablaHUD;
 
@@ -275,143 +278,73 @@ public class PantallaJuego extends Pantalla {
 		cursor.setPosition(0, 0);
 
 		if (Gdx.app.getType() == Gdx.app.getType().Android) {
-			TextureAtlas dedosAtlas = recurso.get("texturas/dedos.atlas", TextureAtlas.class);
 			TextureAtlas iconosAtlas = recurso.get("texturas/iconos.atlas", TextureAtlas.class);
 			
-			// D-Pad Direccional en esquina inferior izquierda
-			final Image btnIzquierda = new Image(dedosAtlas.findRegion("izquierda"));
-			btnIzquierda.setSize(72, 72);
-			btnIzquierda.setPosition(24, 100);
-			btnIzquierda.setColor(1f, 1f, 1f, 0.70f);
-			btnIzquierda.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnIzquierda.setColor(0.3f, 0.9f, 1.0f, 0.95f);
-					jugador.teclaPresionada(event, Keys.LEFT);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnIzquierda.setColor(1f, 1f, 1f, 0.70f);
-					jugador.teclaLevantada(event, Keys.LEFT);
-				}
-			});
-			
-			final Image btnDerecha = new Image(dedosAtlas.findRegion("derecha"));
-			btnDerecha.setSize(72, 72);
-			btnDerecha.setPosition(168, 100);
-			btnDerecha.setColor(1f, 1f, 1f, 0.70f);
-			btnDerecha.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnDerecha.setColor(0.3f, 0.9f, 1.0f, 0.95f);
-					jugador.teclaPresionada(event, Keys.RIGHT);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnDerecha.setColor(1f, 1f, 1f, 0.70f);
-					jugador.teclaLevantada(event, Keys.RIGHT);
-				}
-			});
-			
-			final Image btnArriba = new Image(dedosAtlas.findRegion("arriba"));
-			btnArriba.setSize(72, 72);
-			btnArriba.setPosition(96, 172);
-			btnArriba.setColor(1f, 1f, 1f, 0.70f);
-			btnArriba.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnArriba.setColor(0.3f, 0.9f, 1.0f, 0.95f);
-					jugador.teclaPresionada(event, Keys.UP);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnArriba.setColor(1f, 1f, 1f, 0.70f);
-					jugador.teclaLevantada(event, Keys.UP);
-				}
-			});
-			
-			final Image btnAbajo = new Image(dedosAtlas.findRegion("abajo"));
-			btnAbajo.setSize(72, 72);
-			btnAbajo.setPosition(96, 28);
-			btnAbajo.setColor(1f, 1f, 1f, 0.70f);
-			btnAbajo.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnAbajo.setColor(0.3f, 0.9f, 1.0f, 0.95f);
-					jugador.teclaPresionada(event, Keys.DOWN);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnAbajo.setColor(1f, 1f, 1f, 0.70f);
-					jugador.teclaLevantada(event, Keys.DOWN);
-				}
-			});
-			
-			// Botón de Disparo Principal (Burbujas)
-			final Image btnDisparo = new Image(dedosAtlas.findRegion("precionado"));
-			btnDisparo.setSize(76, 76);
-			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 116, 96);
-			btnDisparo.setColor(1f, 1f, 1f, 0.70f);
+			// Joystick Virtual Analógico 360° (idéntico al sistema de Whisk3D Android)
+			Touchpad.TouchpadStyle touchpadStyle = skin.get(Touchpad.TouchpadStyle.class);
+			joystickVirtual = new Touchpad(10f, touchpadStyle);
+			joystickVirtual.setSize(180, 180);
+			joystickVirtual.setPosition(35, 35);
+			joystickVirtual.setColor(1f, 1f, 1f, 0.85f);
+			nivel.addActor(joystickVirtual);
+
+			// Botón de Disparo Principal (Burbujas / Torpedos)
+			final Image btnDisparo = new Image(iconosAtlas.findRegion("iconofaro"));
+			btnDisparo.setSize(80, 80);
+			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 115, 85);
+			btnDisparo.setColor(0.3f, 0.9f, 1.0f, 0.75f);
 			btnDisparo.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnDisparo.setColor(1f, 0.6f, 0.3f, 0.95f);
+					btnDisparo.setColor(1f, 0.6f, 0.2f, 0.98f);
 					jugador.teclaPresionada(event, Keys.Z);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnDisparo.setColor(1f, 1f, 1f, 0.70f);
+					btnDisparo.setColor(0.3f, 0.9f, 1.0f, 0.75f);
 					jugador.teclaLevantada(event, Keys.Z);
 				}
 			});
 
 			// Botón de Misil
 			final Image btnMisil = new Image(iconosAtlas.findRegion("iconoexplosion"));
-			btnMisil.setSize(60, 60);
-			btnMisil.setPosition(Juego.ANCHO_PANTALLA - 196, 50);
-			btnMisil.setColor(1f, 1f, 1f, 0.70f);
+			btnMisil.setSize(64, 64);
+			btnMisil.setPosition(Juego.ANCHO_PANTALLA - 205, 45);
+			btnMisil.setColor(0.2f, 1f, 0.6f, 0.75f);
 			btnMisil.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnMisil.setColor(0.3f, 1f, 0.6f, 0.95f);
+					btnMisil.setColor(0.3f, 1f, 0.3f, 0.98f);
 					jugador.teclaPresionada(event, Keys.X);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnMisil.setColor(1f, 1f, 1f, 0.70f);
+					btnMisil.setColor(0.2f, 1f, 0.6f, 0.75f);
 					jugador.teclaLevantada(event, Keys.X);
 				}
 			});
 
 			// Botón de Bomba
 			final Image btnBomba = new Image(iconosAtlas.findRegion("iconobomba"));
-			btnBomba.setSize(60, 60);
-			btnBomba.setPosition(Juego.ANCHO_PANTALLA - 116, 196);
-			btnBomba.setColor(1f, 1f, 1f, 0.70f);
+			btnBomba.setSize(64, 64);
+			btnBomba.setPosition(Juego.ANCHO_PANTALLA - 115, 185);
+			btnBomba.setColor(1f, 0.4f, 0.3f, 0.75f);
 			btnBomba.addListener(new InputListener() {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnBomba.setColor(1f, 0.3f, 0.3f, 0.95f);
+					btnBomba.setColor(1f, 0.1f, 0.1f, 0.98f);
 					jugador.teclaPresionada(event, Keys.SPACE);
 					return true;
 				}
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnBomba.setColor(1f, 1f, 1f, 0.70f);
+					btnBomba.setColor(1f, 0.4f, 0.3f, 0.75f);
 					jugador.teclaLevantada(event, Keys.SPACE);
 				}
 			});
 			
-			nivel.addActor(btnIzquierda);
-			nivel.addActor(btnDerecha);
-			nivel.addActor(btnArriba);
-			nivel.addActor(btnAbajo);
 			nivel.addActor(btnDisparo);
 			nivel.addActor(btnMisil);
 			nivel.addActor(btnBomba);
@@ -1075,6 +1008,12 @@ public class PantallaJuego extends Pantalla {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actualizar(float delta) {
+
+		if (joystickVirtual != null && jugador != null) {
+			float vx = joystickVirtual.getKnobPercentX();
+			float vy = joystickVirtual.getKnobPercentY();
+			jugador.setEntradaVirtual(vx, vy);
+		}
 
 		//////////////////
 		// Box2D

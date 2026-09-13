@@ -19,7 +19,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	marineSlider: { name: default-slider, color: { r: 0.08, g: 0.28, b: 0.48, a: 0.85 } },
 	marineSliderKnob: { name: default-slider-knob, color: { r: 0.30, g: 0.85, b: 1.0, a: 1.0 } },
 	marineSelect: { name: default-select, color: { r: 0.08, g: 0.38, b: 0.62, a: 0.95 } },
-	marinePane: { name: default-pane, color: { r: 0.05, g: 0.16, b: 0.30, a: 0.90 } }
+	marinePane: { name: default-pane, color: { r: 0.05, g: 0.16, b: 0.30, a: 0.90 } },
+	joystickBg: { name: default-pane, color: { r: 0.06, g: 0.22, b: 0.44, a: 0.65 } },
+	joystickKnob: { name: default-round-large, color: { r: 0.25, g: 0.85, b: 1.0, a: 0.90 } }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: marineBtnDown, up: marineBtnUp },
@@ -70,7 +72,7 @@ com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: { fontColorUnselected: white, selection: selection, fontColorSelected: cyan, font: default-font }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
-	default: { background: marinePane, knob: default-round-large }
+	default: { background: joystickBg, knob: joystickKnob }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 	default: { minus: tree-minus, plus: tree-plus, selection: default-select-selection }

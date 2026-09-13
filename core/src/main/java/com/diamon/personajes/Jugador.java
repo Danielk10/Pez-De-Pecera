@@ -81,6 +81,10 @@ public class Jugador extends Personaje {
 
 	private float toqueObjetivoY = 0f;
 
+	private float entradaVirtualX = 0f;
+
+	private float entradaVirtualY = 0f;
+
 	private float tiempoTurbo;
 
 	private float tiempoEscudo;
@@ -803,13 +807,18 @@ public class Jugador extends Personaje {
 				cuerpo.applyForceToCenter(corriente.getFuerza(), true);
 			}
 
-			float fuerzaBase = isTurboActivo() ? 26.0f : 16.0f;
+			float fuerzaBase = isTurboActivo() ? 70.0f : 38.0f;
 			float fx = 0f;
 			float fy = 0f;
 			if (derecha) fx += fuerzaBase;
 			if (izquierda) fx -= fuerzaBase;
 			if (arriba) fy += fuerzaBase;
 			if (abajo) fy -= fuerzaBase;
+
+			if (entradaVirtualX != 0f || entradaVirtualY != 0f) {
+				fx += entradaVirtualX * fuerzaBase;
+				fy += entradaVirtualY * fuerzaBase;
+			}
 
 			if (toqueActivo) {
 				float px = cuerpo.getPosition().x;
@@ -828,18 +837,22 @@ public class Jugador extends Personaje {
 			}
 
 			com.badlogic.gdx.math.Vector2 vel = cuerpo.getLinearVelocity();
-			if (vel.len2() > 0.15f) {
-				float angulo = vel.angleDeg();
-				if (angulo > 90f && angulo < 270f) {
-					setFlip(true, false);
-					angulo = angulo - 180f;
-				} else {
-					setFlip(false, false);
-				}
-				float rotActual = getRotation();
-				float rotNueva = com.badlogic.gdx.math.MathUtils.lerpAngleDeg(rotActual, angulo, 0.18f);
-				setRotation(rotNueva);
+			if (vel.x < -0.15f) {
+				setFlip(true, false);
+			} else if (vel.x > 0.15f) {
+				setFlip(false, false);
 			}
+
+			// Inclinación sutil hidrodinámica (el pez se mantiene natural y horizontal)
+			float pitchObjetivo = 0f;
+			if (Math.abs(vel.y) > 0.2f) {
+				pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(vel.y * 2.8f, -15f, 15f);
+				if (isFlipX()) {
+					pitchObjetivo = -pitchObjetivo;
+				}
+			}
+			float rotNueva = com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.18f);
+			setRotation(rotNueva);
 		}
 
 		if (!finNivel) {
@@ -1220,6 +1233,11 @@ public class Jugador extends Personaje {
 		default:
 			return 0f;
 		}
+	}
+
+	public void setEntradaVirtual(float x, float y) {
+		this.entradaVirtualX = x;
+		this.entradaVirtualY = y;
 	}
 
 	public Array<ZonaCorriente> getCorrientesActivas() {

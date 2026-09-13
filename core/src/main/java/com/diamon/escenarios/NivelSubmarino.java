@@ -34,10 +34,7 @@ public class NivelSubmarino extends Nivel {
     private OrthogonalTiledMapRenderer renderTiled;
     private CargadorNivelTmx cargadorTmx;
     private CamaraSubmarina camaraSubmarina;
-
     private PointLight luzJugador;
-    private Particula particulaBurbujas;
-
     private Texture texturaFondoParalaje;
     private float anchoMapaMetros;
     private float altoMapaMetros;
@@ -111,29 +108,19 @@ public class NivelSubmarino extends Nivel {
 
         // 5. Configuración de iluminación orgánica (Box2DLight)
         RayHandler.setGammaCorrection(true);
-        luz.setAmbientLight(0.2f, 0.45f, 0.65f, 0.85f);
+        luz.setAmbientLight(0.25f, 0.50f, 0.70f, 0.90f);
         luz.setShadows(true);
 
-        // Luz propia que emana del Pez Payaso
-        luzJugador = new PointLight(luz, 300, new Color(1.0f, 0.95f, 0.7f, 0.85f), 5.5f, spawn.x, spawn.y);
+        // Luz de linterna/escudo para el Pez (apagada por defecto para no quemar el sprite)
+        luzJugador = new PointLight(luz, 48, new Color(0.3f, 0.8f, 1.0f, 0.4f), 3.0f, spawn.x, spawn.y);
         luzJugador.setSoft(true);
+        luzJugador.setActive(false);
         if (jugador.getCuerpo() != null) {
             luzJugador.attachToBody(jugador.getCuerpo());
         }
         luces.add(luzJugador);
 
-        // 6. Efecto de partículas submarinas con colisión física Box2D e iluminación
-        if (recurso.isLoaded("particulas/Particle Park Flame.p", ParticleEffect.class)) {
-            particulaBurbujas = new Particula(recurso.get("particulas/Particle Park Flame.p", ParticleEffect.class), pantalla);
-            particulaBurbujas.setEscala(0.4f);
-            PointLight luzBurbujas = new PointLight(luz, 120, new Color(0.3f, 0.85f, 1.0f, 0.55f), 1.2f, spawn.x, spawn.y);
-            luzBurbujas.setSoft(true);
-            luces.add(luzBurbujas);
-            particulaBurbujas.setPuntoLuz(luzBurbujas);
-            particulaBurbujas.iniciar();
-        }
-
-        // 7. Fondo de paralaje dinámico según el nivel actual
+        // 6. Fondo de paralaje dinámico según el nivel actual
         int numNivel = (datosNiveles != null) ? datosNiveles.getNumeroNivel() : 1;
         int indiceFondo = 1;
         if (numNivel >= 11 && numNivel <= 20) {
@@ -183,22 +170,20 @@ public class NivelSubmarino extends Nivel {
 
         // 5. Actualizar luces dinámicas y respuesta a power-ups
         if (luzJugador != null) {
-            float radioDeseado = jugador.isLinternaActiva() ? 11.0f : 5.5f;
-            luzJugador.setDistance(MathUtils.lerp(luzJugador.getDistance(), radioDeseado, 0.1f));
-            if (jugador.isEscudoActivo()) {
-                luzJugador.setColor(0.25f, 0.85f, 1.0f, 0.9f);
-            } else if (jugador.isTurboActivo()) {
-                luzJugador.setColor(1.0f, 0.6f, 0.2f, 0.9f);
+            if (jugador.isLinternaActiva()) {
+                luzJugador.setActive(true);
+                luzJugador.setColor(1.0f, 0.95f, 0.6f, 0.75f);
+                luzJugador.setDistance(8.0f);
+            } else if (jugador.isEscudoActivo()) {
+                luzJugador.setActive(true);
+                luzJugador.setColor(0.2f, 0.8f, 1.0f, 0.55f);
+                luzJugador.setDistance(3.5f);
             } else {
-                luzJugador.setColor(1.0f, 0.95f, 0.7f, 0.85f);
+                luzJugador.setActive(false);
             }
         }
 
         luz.update();
-        if (particulaBurbujas != null) {
-            particulaBurbujas.setPosicion(jugador.getX() - 0.8f, jugador.getY() - 0.3f);
-            particulaBurbujas.actualizar(delta);
-        }
     }
 
     private void actualizarGradienteProfundidad() {
@@ -250,9 +235,6 @@ public class NivelSubmarino extends Nivel {
                 personaje.dibujar(pincel, delta);
             }
         }
-        if (particulaBurbujas != null) {
-            particulaBurbujas.dibujar(pincel, delta);
-        }
         pincel.end();
 
         // --- FASE 4: Capas de Primer Plano del Tilemap (Oclusión frontal) ---
@@ -283,9 +265,6 @@ public class NivelSubmarino extends Nivel {
         personajes.clear();
         if (mapa != null) {
             mapa.dispose();
-        }
-        if (particulaBurbujas != null) {
-            particulaBurbujas.liberarRecursos();
         }
     }
 

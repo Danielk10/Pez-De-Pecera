@@ -29,6 +29,7 @@ public class Pulpo extends Personaje {
 	}
 
 	private float spawnY = -1;
+	private float spawnX = -1;
 	private float tiempoPulso = 0f;
 
 	@Override
@@ -36,11 +37,14 @@ public class Pulpo extends Personaje {
 		super.actualizar(delta);
 		if (spawnY < 0) {
 			spawnY = y;
+			spawnX = x;
 		}
 
-		tiempoPulso += delta * 2.0f;
-		y = spawnY + com.badlogic.gdx.math.MathUtils.sin(tiempoPulso) * 1.5f;
+		tiempoPulso += delta * 3.2f;
+		y = spawnY + com.badlogic.gdx.math.MathUtils.sin(tiempoPulso) * 3.0f;
+		x = spawnX + com.badlogic.gdx.math.MathUtils.cos(tiempoPulso * 0.5f) * 1.5f;
 		setY(y);
+		setX(x);
 	}
 
 	@Override

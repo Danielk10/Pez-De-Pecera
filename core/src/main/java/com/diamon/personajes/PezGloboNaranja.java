@@ -29,7 +29,7 @@ public class PezGloboNaranja extends Personaje {
 	}
 
 	private float spawnY = -1;
-	private float rangoPatrulla = 2.0f;
+	private float rangoPatrulla = 5.0f;
 	private int direccionY = 1;
 
 	@Override
@@ -39,7 +39,7 @@ public class PezGloboNaranja extends Personaje {
 			spawnY = y;
 		}
 
-		y += direccionY * 1.0f * delta;
+		y += direccionY * 2.6f * delta;
 		if (Math.abs(y - spawnY) > rangoPatrulla) {
 			direccionY = -direccionY;
 		}

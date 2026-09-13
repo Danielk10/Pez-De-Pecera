@@ -29,7 +29,7 @@ public class PezGloboAmarillo extends Personaje {
 	}
 
 	private float spawnX = -1;
-	private float rangoPatrulla = 2.5f;
+	private float rangoPatrulla = 6.0f;
 	private int direccion = -1;
 
 	@Override
@@ -39,7 +39,7 @@ public class PezGloboAmarillo extends Personaje {
 			spawnX = x;
 		}
 
-		x += direccion * 1.2f * delta;
+		x += direccion * 2.8f * delta;
 		if (Math.abs(x - spawnX) > rangoPatrulla) {
 			direccion = -direccion;
 			setFlip(direccion > 0, false);

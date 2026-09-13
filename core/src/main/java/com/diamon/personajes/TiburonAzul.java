@@ -45,7 +45,7 @@ public class TiburonAzul extends Personaje {
 	}
 
 	private float spawnX = -1;
-	private float rangoPatrulla = 4.5f;
+	private float rangoPatrulla = 9.0f;
 	private int direccion = -1;
 
 	@Override
@@ -55,7 +55,23 @@ public class TiburonAzul extends Personaje {
 			spawnX = x;
 		}
 
-		x += direccion * 1.8f * delta;
+		// Si el jugador está en pantalla, perseguirlo activamente
+		float vel = 3.6f;
+		if (personajes != null) {
+			for (Personaje p : personajes) {
+				if (p instanceof Jugador && ((Jugador) p).isVivo()) {
+					float dist = Math.abs(p.getX() - x);
+					if (dist < 7.0f) {
+						vel = 5.2f;
+						direccion = (p.getX() < x) ? -1 : 1;
+						setFlip(direccion > 0, false);
+						break;
+					}
+				}
+			}
+		}
+
+		x += direccion * vel * delta;
 		if (Math.abs(x - spawnX) > rangoPatrulla) {
 			direccion = -direccion;
 			setFlip(direccion > 0, false);
