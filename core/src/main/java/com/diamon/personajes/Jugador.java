@@ -8,11 +8,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Array;
+import com.diamon.items.TipoPowerUp;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 import com.diamon.nucleo.Personaje;
+import com.diamon.nucleo.ZonaCorriente;
 
 public class Jugador extends Personaje {
+
+	private final Array<ZonaCorriente> corrientesActivas = new Array<ZonaCorriente>();
 
 	private float deltaXTactil;
 
@@ -69,6 +73,12 @@ public class Jugador extends Personaje {
 	private int dedos;
 
 	private boolean deltaToque;
+
+	private float tiempoTurbo;
+
+	private float tiempoEscudo;
+
+	private float tiempoLinterna;
 
 	public Jugador(Array<AtlasRegion> texturaRegion, float tiempoAnimacion, PlayMode modo, Pantalla pantalla,
 			float ancho, float alto, int tipoDeCuerpo) {
@@ -763,6 +773,45 @@ public class Jugador extends Personaje {
 
 		super.actualizar(delta);
 
+		if (tiempoTurbo > 0) tiempoTurbo = Math.max(0f, tiempoTurbo - delta);
+		if (tiempoEscudo > 0) tiempoEscudo = Math.max(0f, tiempoEscudo - delta);
+		if (tiempoLinterna > 0) tiempoLinterna = Math.max(0f, tiempoLinterna - delta);
+
+		if (cuerpo != null && cuerpo.getType() == com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody) {
+			cuerpo.setLinearDamping(com.diamon.nucleo.Constantes.AMORTIGUACION_AGUA);
+
+			for (int i = 0; i < corrientesActivas.size; i++) {
+				ZonaCorriente corriente = corrientesActivas.get(i);
+				cuerpo.applyForceToCenter(corriente.getFuerza(), true);
+			}
+
+			float fuerzaBase = isTurboActivo() ? 26.0f : 14.0f;
+			float fx = 0f;
+			float fy = 0f;
+			if (derecha) fx += fuerzaBase;
+			if (izquierda) fx -= fuerzaBase;
+			if (arriba) fy += fuerzaBase;
+			if (abajo) fy -= fuerzaBase;
+
+			if (fx != 0 || fy != 0) {
+				cuerpo.applyForceToCenter(fx, fy, true);
+			}
+
+			com.badlogic.gdx.math.Vector2 vel = cuerpo.getLinearVelocity();
+			if (vel.len2() > 0.2f) {
+				float angulo = vel.angleDeg();
+				if (angulo > 90f && angulo < 270f) {
+					setFlip(true, false);
+					angulo = angulo - 180f;
+				} else {
+					setFlip(false, false);
+				}
+				float rotActual = getRotation();
+				float rotNueva = com.badlogic.gdx.math.MathUtils.lerpAngleDeg(rotActual, angulo, 0.15f);
+				setRotation(rotNueva);
+			}
+		}
+
 		if (!finNivel) {
 
 			if (intro) {
@@ -1045,6 +1094,96 @@ public class Jugador extends Personaje {
 
 		}
 
+	}
+
+	public void agregarCorriente(ZonaCorriente corriente) {
+		if (!corrientesActivas.contains(corriente, true)) {
+			corrientesActivas.add(corriente);
+		}
+	}
+
+	public void removerCorriente(ZonaCorriente corriente) {
+		corrientesActivas.removeValue(corriente, true);
+	}
+
+	public void agregarPuntos(int cantidad) {
+		puntos += cantidad;
+		if (datosNiveles != null) {
+			datosNiveles.setPuntos(puntos);
+		}
+	}
+
+	public void recuperarVida(int cantidad) {
+		vida = Math.min(vida + cantidad, 5);
+		if (datosNiveles != null) {
+			datosNiveles.setVidas(vida);
+		}
+	}
+
+	public void recibirDanio(int cantidad) {
+		if (inmune) {
+			return;
+		}
+		if (isEscudoActivo()) {
+			tiempoEscudo = 0;
+			inmune = true;
+			tiempoCuadroInmune = 0;
+			return;
+		}
+		vida = Math.max(0, vida - cantidad);
+		if (datosNiveles != null) {
+			datosNiveles.setVidas(vida);
+		}
+		inmune = true;
+		tiempoCuadroInmune = 0;
+		if (vida <= 0) {
+			setVivo(false);
+		}
+	}
+
+	public void activarPowerUp(TipoPowerUp tipo, float duracion) {
+		if (tipo == null) return;
+		switch (tipo) {
+		case TURBO:
+			tiempoTurbo = duracion;
+			break;
+		case ESCUDO:
+			tiempoEscudo = duracion;
+			break;
+		case LINTERNA:
+			tiempoLinterna = duracion;
+			break;
+		}
+	}
+
+	public boolean isTurboActivo() {
+		return tiempoTurbo > 0;
+	}
+
+	public boolean isEscudoActivo() {
+		return tiempoEscudo > 0;
+	}
+
+	public boolean isLinternaActiva() {
+		return tiempoLinterna > 0;
+	}
+
+	public float getTiempoRestantePowerUp(TipoPowerUp tipo) {
+		if (tipo == null) return 0f;
+		switch (tipo) {
+		case TURBO:
+			return Math.max(0f, tiempoTurbo);
+		case ESCUDO:
+			return Math.max(0f, tiempoEscudo);
+		case LINTERNA:
+			return Math.max(0f, tiempoLinterna);
+		default:
+			return 0f;
+		}
+	}
+
+	public Array<ZonaCorriente> getCorrientesActivas() {
+		return corrientesActivas;
 	}
 
 }

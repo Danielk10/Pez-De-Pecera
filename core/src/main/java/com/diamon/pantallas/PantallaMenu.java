@@ -66,19 +66,19 @@ public class PantallaMenu extends Pantalla {
         creditos = new TextButton("Creditos", skin);
         salir = new TextButton("Salir", skin);
 
-        // Diseño de la UI con Table
-        tabla.add(titulo).size(320, 320).padBottom(20);
+        // Diseño de la UI con Table centrada y botones ergonómicos para móvil y desktop
+        tabla.add(titulo).size(360, 200).padTop(10).padBottom(15);
         tabla.row();
         
         Table menuBotones = new Table();
-        menuBotones.add(jugar).size(213, 32).padBottom(10).row();
-        menuBotones.add(opciones).size(213, 32).padBottom(10).row();
-        menuBotones.add(puntuaciones).size(213, 32).padBottom(10).row();
-        menuBotones.add(creditos).size(213, 32).padBottom(10).row();
+        menuBotones.add(jugar).size(260, 48).padBottom(10).row();
+        menuBotones.add(opciones).size(260, 48).padBottom(10).row();
+        menuBotones.add(puntuaciones).size(260, 48).padBottom(10).row();
+        menuBotones.add(creditos).size(260, 48).padBottom(10).row();
         
         tabla.add(menuBotones).expandX();
         tabla.row();
-        tabla.add(salir).size(213, 32).left().bottom().expand().pad(32);
+        tabla.add(salir).size(200, 44).left().bottom().expand().pad(24);
 
         nivelMenu.addActor(tabla);
     }
@@ -172,5 +172,10 @@ public class PantallaMenu extends Pantalla {
     public void liberarRecursos() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+        return nivelMenu;
     }
 }

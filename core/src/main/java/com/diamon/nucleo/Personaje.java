@@ -547,8 +547,19 @@ public abstract class Personaje extends Sprite {
 		this.dureza = dureza;
 	}
 
-	public void setRemover(boolean remover) {
-		this.remover = remover;
+	public Body getCuerpo() {
+		return cuerpo;
+	}
+
+	public void setCuerpo(Body cuerpo) {
+		this.cuerpo = cuerpo;
+	}
+
+	public void destruirCuerpo(World mundo) {
+		if (cuerpo != null && mundo != null) {
+			mundo.destroyBody(cuerpo);
+			cuerpo = null;
+		}
 	}
 
 	public abstract void colision(Personaje personaje);

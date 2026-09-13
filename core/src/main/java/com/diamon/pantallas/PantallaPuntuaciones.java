@@ -190,4 +190,9 @@ public class PantallaPuntuaciones extends Pantalla {
 
 	}
 
+	@Override
+	protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+		return nivelMenu;
+	}
+
 }

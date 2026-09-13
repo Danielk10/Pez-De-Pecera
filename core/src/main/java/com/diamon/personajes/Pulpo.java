@@ -29,35 +29,26 @@ public class Pulpo extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
+	private float spawnY = -1;
+	private float tiempoPulso = 0f;
+
 	@Override
 	public void actualizar(float delta) {
-
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-			super.actualizar(delta);
-
-			y += Pulpo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
-
+		super.actualizar(delta);
+		if (spawnY < 0) {
+			spawnY = y;
 		}
 
-		if (y >= camara.position.y + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight())) {
-
-			remover = true;
-
-		}
-
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
-
-			remover = true;
-
-		}
-
+		tiempoPulso += delta * 2.0f;
+		y = spawnY + com.badlogic.gdx.math.MathUtils.sin(tiempoPulso) * 1.5f;
+		setY(y);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
-		// TODO Auto-generated method stub
-
+		if (personaje instanceof Jugador) {
+			((Jugador) personaje).recibirDanio(1);
+		}
 	}
 
 }

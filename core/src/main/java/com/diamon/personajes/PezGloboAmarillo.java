@@ -29,29 +29,30 @@ public class PezGloboAmarillo extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
+	private float spawnX = -1;
+	private float rangoPatrulla = 2.5f;
+	private int direccion = -1;
+
 	@Override
 	public void actualizar(float delta) {
-
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-			super.actualizar(delta);
-
-			x -= PezGloboAmarillo.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
-
+		super.actualizar(delta);
+		if (spawnX < 0) {
+			spawnX = x;
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2/ Juego.UNIDAD_DEL_MUNDO + getWidth()) ) {
-
-			remover = true;
-
+		x += direccion * 1.2f * delta;
+		if (Math.abs(x - spawnX) > rangoPatrulla) {
+			direccion = -direccion;
+			setFlip(direccion > 0, false);
 		}
-
+		setX(x);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
-		// TODO Auto-generated method stub
-
+		if (personaje instanceof Jugador) {
+			((Jugador) personaje).recibirDanio(1);
+		}
 	}
 
 }

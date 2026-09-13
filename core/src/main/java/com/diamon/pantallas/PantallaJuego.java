@@ -88,6 +88,8 @@ public class PantallaJuego extends Pantalla {
 
 	private Label textoMisil;
 
+	private Label textoPowerUp;
+
 	private Label textoPausa;
 
 	private Label gameOver;
@@ -162,13 +164,17 @@ public class PantallaJuego extends Pantalla {
 
 		textoMisil = new Label("", skin);
 
+		textoPowerUp = new Label("", skin);
+
 		Table hudSuperior = new Table();
 
 		hudSuperior.add(textoVida).padRight(20);
 
 		hudSuperior.add(textoBomba).padRight(20);
 
-		hudSuperior.add(textoMisil);
+		hudSuperior.add(textoMisil).padRight(20);
+
+		hudSuperior.add(textoPowerUp);
 
 		tablaHUD.add(hudSuperior).expandX().left().pad(20).top().row();
 
@@ -245,9 +251,14 @@ public class PantallaJuego extends Pantalla {
 		nivel.addActor(tablaPausa);
 
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
+				Animation.PlayMode.LOOP, this, 64, 64, Jugador.DIANAMICO);
 
-		mundo = new Niveles(this, jugador);
+		if (Gdx.files.internal("mapas/nivel1.tmx").exists()) {
+			com.badlogic.gdx.maps.tiled.TiledMap mapaTmx = new com.badlogic.gdx.maps.tiled.TmxMapLoader().load("mapas/nivel1.tmx");
+			mundo = new com.diamon.escenarios.NivelSubmarino(this, jugador, mapaTmx);
+		} else {
+			mundo = new Niveles(this, jugador);
+		}
 
 		jugador.setTerminarNivel(true);
 
@@ -877,25 +888,7 @@ public class PantallaJuego extends Pantalla {
 				}
 
 				// Box2D
-				mundoVirtual.getBodies(cuerpos);
-
-				if (cuerpos.size > 0) {
-
-					for (Body cuerpo : cuerpos) {
-
-						if (cuerpo.getUserData() instanceof Personaje) {
-
-							if (((Personaje) cuerpo.getUserData()).isRemover()) {
-
-								mundoVirtual.destroyBody(cuerpo);
-							}
-
-						}
-
-					}
-
-				}
-
+				personaje.destruirCuerpo(mundoVirtual);
 				personajes.removeIndex(i);
 
 			}
@@ -931,7 +924,7 @@ public class PantallaJuego extends Pantalla {
 
 			if (jugador.isGefe()) {
 
-				if (mundo != null) {
+				if (mundo instanceof Niveles) {
 
 					if (((Niveles) mundo).getJefeNivel() != null) {
 
@@ -1253,15 +1246,31 @@ public class PantallaJuego extends Pantalla {
 
 		pincel.end();
 
-		textoPuntos.setText("Puntos " + puntos);
+		puntos = jugador.getPuntos();
+		textoPuntos.setText("Perlas: " + puntos);
 
 		textoNumeroNivel.setText("Nivel " + datosNiveles.getNumeroNivel());
 
-		textoVida.setText("" + jugador.getVida());
+		textoVida.setText("Vida: " + jugador.getVida());
 
-		textoBomba.setText("" + jugador.getBomba());
+		textoBomba.setText("Bombas: " + jugador.getBomba());
 
-		textoMisil.setText("" + jugador.getMisil());
+		textoMisil.setText("Misiles: " + jugador.getMisil());
+
+		if (textoPowerUp != null) {
+			if (jugador.isTurboActivo()) {
+				textoPowerUp.setText("TURBO: " + String.format("%.1fs", jugador.getTiempoRestantePowerUp(com.diamon.items.TipoPowerUp.TURBO)));
+				textoPowerUp.setColor(com.badlogic.gdx.graphics.Color.ORANGE);
+			} else if (jugador.isEscudoActivo()) {
+				textoPowerUp.setText("ESCUDO BURBUJA");
+				textoPowerUp.setColor(com.badlogic.gdx.graphics.Color.CYAN);
+			} else if (jugador.isLinternaActiva()) {
+				textoPowerUp.setText("LINTERNA: " + String.format("%.1fs", jugador.getTiempoRestantePowerUp(com.diamon.items.TipoPowerUp.LINTERNA)));
+				textoPowerUp.setColor(com.badlogic.gdx.graphics.Color.YELLOW);
+			} else {
+				textoPowerUp.setText("");
+			}
+		}
 
 		if (dato.isPrueba()) {
 

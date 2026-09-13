@@ -830,4 +830,9 @@ public class PantallaOpciones extends Pantalla {
             recurso.get("audios/creditos.ogg", Music.class).stop();
         }
     }
+
+    @Override
+    protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+        return nivelMenu;
+    }
 }

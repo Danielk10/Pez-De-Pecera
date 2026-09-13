@@ -45,45 +45,37 @@ public class TiburonAzul extends Personaje {
 
 	}
 
+	private float spawnX = -1;
+	private float rangoPatrulla = 4.5f;
+	private int direccion = -1;
+
 	@Override
 	public void actualizar(float delta) {
-
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-			super.actualizar(delta);
-
-			x += 1 / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
-
+		super.actualizar(delta);
+		if (spawnX < 0) {
+			spawnX = x;
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
-
-			remover = true;
-
+		x += direccion * 1.8f * delta;
+		if (Math.abs(x - spawnX) > rangoPatrulla) {
+			direccion = -direccion;
+			setFlip(direccion > 0, false);
 		}
+		setX(x);
 
 		if (muerde) {
-
 			animacion = animacion2;
-
-			muerde = false;
-
 		} else {
-
 			animacion = animacion1;
-
 		}
-
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
-
 		if (personaje instanceof Jugador) {
-
 			muerde = true;
+			((Jugador) personaje).recibirDanio(2);
 		}
-
 	}
 
 }

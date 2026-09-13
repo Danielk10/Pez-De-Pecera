@@ -42,20 +42,20 @@ public class PantallaSeleccion extends Pantalla {
 
         tabla.setFillParent(true);
 
-        tabla.add(titulo).colspan(1).padBottom(40).row();
+        tabla.add(titulo).colspan(1).padBottom(30).row();
 
         if (dato.isContinuar()) {
 
-            tabla.add(continuarJuego).size(213, 32).padBottom(10).row();
+            tabla.add(continuarJuego).size(260, 48).padBottom(15).row();
 
-            tabla.add(nuevaPartida).size(213, 32).padBottom(10).row();
+            tabla.add(nuevaPartida).size(260, 48).padBottom(15).row();
 
         } else {
 
-            tabla.add(nuevaPartida).size(213, 32).padBottom(10).row();
+            tabla.add(nuevaPartida).size(260, 48).padBottom(15).row();
         }
 
-        tabla.add(atrasMenu).size(128, 32).expand().bottom().left().pad(32);
+        tabla.add(atrasMenu).size(160, 44).expand().bottom().left().pad(24);
 
         nivelMenu.addActor(tabla);
     }
@@ -172,6 +172,11 @@ public class PantallaSeleccion extends Pantalla {
 	public void liberarRecursos() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+		return nivelMenu;
 	}
 
 }

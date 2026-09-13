@@ -33,7 +33,7 @@ public abstract class Juego extends Game {
 
     public static final float ALTO_PANTALLA = 720f;
 
-    public static final float UNIDAD_DEL_MUNDO = 100f;
+    public static final float UNIDAD_DEL_MUNDO = Constantes.PPM;
 
     public static final float LARGO_NIVEL = 6400.0f;
 

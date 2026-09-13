@@ -460,4 +460,9 @@ public class PantallaCreditos extends Pantalla {
 
 	}
 
+	@Override
+	protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+		return nivelMenu;
+	}
+
 }

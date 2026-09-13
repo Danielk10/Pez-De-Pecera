@@ -124,7 +124,7 @@ public abstract class Pantalla implements Screen {
 	@Override
 	public void show() {
 
-		Gdx.input.setInputProcessor(nivel);
+		Gdx.input.setInputProcessor(obtenerProcesadorEntrada());
 
 		mostrar();
 
@@ -164,7 +164,7 @@ public abstract class Pantalla implements Screen {
 	@Override
 	public void resize(int ancho, int alto) {
 
-		nivel.getViewport().update(ancho, alto);
+		nivel.getViewport().update(ancho, alto, true);
 
 	}
 
@@ -187,8 +187,12 @@ public abstract class Pantalla implements Screen {
 	@Override
 	public void resume() {
 
-		Gdx.input.setInputProcessor(nivel);
+		Gdx.input.setInputProcessor(obtenerProcesadorEntrada());
 
+	}
+
+	protected com.badlogic.gdx.InputProcessor obtenerProcesadorEntrada() {
+		return nivel;
 	}
 
 	@Override

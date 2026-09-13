@@ -29,31 +29,29 @@ public class PezGloboNaranja extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
+	private float spawnY = -1;
+	private float rangoPatrulla = 2.0f;
+	private int direccionY = 1;
+
 	@Override
 	public void actualizar(float delta) {
-
-		if (x <= camara.position.x + Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-			super.actualizar(delta);
-
-			x -= PezGloboNaranja.VELOCIDAD_PEZ / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
-
+		super.actualizar(delta);
+		if (spawnY < 0) {
+			spawnY = y;
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
-
-			remover = true;
-
+		y += direccionY * 1.0f * delta;
+		if (Math.abs(y - spawnY) > rangoPatrulla) {
+			direccionY = -direccionY;
 		}
-		
-		
-	
+		setY(y);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
-		// TODO Auto-generated method stub
-
+		if (personaje instanceof Jugador) {
+			((Jugador) personaje).recibirDanio(1);
+		}
 	}
 
 }

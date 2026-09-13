@@ -117,6 +117,10 @@ public class PezDePecera extends Juego {
 
         recurso.load("uis/carga/neon-ui.json", Skin.class);
 
+        recurso.load("particulas/circle3.png", Texture.class);
+
+        recurso.load("particulas/circle4.png", Texture.class);
+
         recurso.load("particulas/Particle Park Flame.p", ParticleEffect.class);
 
         setScreen(new PantallaPrecentacion(this));

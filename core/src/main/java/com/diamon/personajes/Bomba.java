@@ -27,29 +27,27 @@ public class Bomba extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
+	private float spawnY = -1;
+	private float tiempoOscilacion = 0f;
+
 	@Override
 	public void actualizar(float delta) {
-		// TODO Auto-generated method stub
 		super.actualizar(delta);
-
-		if (y <= camara.position.y - (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getHeight())) {
-
-			remover = true;
+		if (spawnY < 0) {
+			spawnY = y;
 		}
 
-		if (x <= camara.position.x - (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + getWidth())) {
-
-			remover = true;
-
-		}
-
+		tiempoOscilacion += delta * 1.5f;
+		y = spawnY + com.badlogic.gdx.math.MathUtils.sin(tiempoOscilacion) * 0.3f;
+		setY(y);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
-
-		
-
+		if (personaje instanceof Jugador) {
+			((Jugador) personaje).recibirDanio(2);
+			remover();
+		}
 	}
 
 }
