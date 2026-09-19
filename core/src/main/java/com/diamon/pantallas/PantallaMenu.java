@@ -6,11 +6,14 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.diamon.nucleo.Juego;
 import com.diamon.nucleo.Pantalla;
 
@@ -59,6 +62,11 @@ public class PantallaMenu extends Pantalla {
         // tabla.setDebug(true); // Útil para depurar el diseño
 
         titulo = new Image(recurso.get("texturas/titulo.png", Texture.class));
+        titulo.setOrigin(Align.center);
+        titulo.addAction(Actions.forever(Actions.sequence(
+                Actions.moveBy(0, 10, 1.8f, Interpolation.sine),
+                Actions.moveBy(0, -10, 1.8f, Interpolation.sine)
+        )));
         
         jugar = new TextButton("Jugar", skin);
         opciones = new TextButton("Opciones", skin);
@@ -67,18 +75,18 @@ public class PantallaMenu extends Pantalla {
         salir = new TextButton("Salir", skin);
 
         // Diseño de la UI con Table centrada y botones ergonómicos para móvil y desktop
-        tabla.add(titulo).size(400, 220).padTop(40).padBottom(15);
+        tabla.add(titulo).size(420, 230).padTop(35).padBottom(15);
         tabla.row();
         
         Table menuBotones = new Table();
-        menuBotones.add(jugar).size(300, 52).padBottom(10).row();
-        menuBotones.add(opciones).size(300, 52).padBottom(10).row();
-        menuBotones.add(puntuaciones).size(300, 52).padBottom(10).row();
-        menuBotones.add(creditos).size(300, 52).padBottom(10).row();
+        menuBotones.add(jugar).size(320, 56).padBottom(12).row();
+        menuBotones.add(opciones).size(320, 56).padBottom(12).row();
+        menuBotones.add(puntuaciones).size(320, 56).padBottom(12).row();
+        menuBotones.add(creditos).size(320, 56).padBottom(12).row();
         
         tabla.add(menuBotones).expandX();
         tabla.row();
-        tabla.add(salir).size(240, 48).left().bottom().expand().pad(24);
+        tabla.add(salir).size(220, 50).left().bottom().expand().pad(24);
 
         nivelMenu.addActor(tabla);
     }

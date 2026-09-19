@@ -1,27 +1,31 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: default.fnt } },
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	default-font: { file: default.fnt }
+},
 com.badlogic.gdx.graphics.Color: {
 	green: { a: 1, b: 0.3, g: 0.95, r: 0.2 },
 	white: { a: 1, b: 1, g: 1, r: 1 },
 	red: { a: 1, b: 0.2, g: 0.2, r: 0.95 },
 	black: { a: 1, b: 0, g: 0, r: 0 },
-	cyan: { a: 1, b: 1, g: 0.92, r: 0.35 },
+	cyan: { a: 1, b: 1.0, g: 0.92, r: 0.35 },
 	gold: { a: 1, b: 0.2, g: 0.85, r: 1.0 },
 	coral: { a: 1, b: 0.35, g: 0.55, r: 1.0 },
-	ocean: { a: 1, b: 0.9, g: 0.7, r: 0.15 }
+	ocean: { a: 1, b: 0.9, g: 0.7, r: 0.15 },
+	marineLight: { a: 1, b: 1.0, g: 0.88, r: 0.4 },
+	marineDark: { a: 0.92, b: 0.35, g: 0.18, r: 0.05 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
-	dialogDim: { name: white, color: { r: 0.02, g: 0.06, b: 0.16, a: 0.65 } },
-	marineBtnUp: { name: default-round, color: { r: 0.10, g: 0.40, b: 0.65, a: 0.95 } },
-	marineBtnDown: { name: default-round-down, color: { r: 0.04, g: 0.58, b: 0.88, a: 1.0 } },
-	marineBtnChecked: { name: default-round-down, color: { r: 0.08, g: 0.50, b: 0.78, a: 1.0 } },
-	marineWindow: { name: default-window, color: { r: 0.06, g: 0.20, b: 0.38, a: 0.94 } },
-	marineSlider: { name: default-slider, color: { r: 0.08, g: 0.28, b: 0.48, a: 0.85 } },
-	marineSliderKnob: { name: default-slider-knob, color: { r: 0.30, g: 0.85, b: 1.0, a: 1.0 } },
+	dialogDim: { name: white, color: { r: 0.02, g: 0.06, b: 0.16, a: 0.68 } },
+	marineBtnUp: { name: default-round, color: { r: 0.10, g: 0.42, b: 0.68, a: 0.95 } },
+	marineBtnDown: { name: default-round-down, color: { r: 0.05, g: 0.62, b: 0.92, a: 1.0 } },
+	marineBtnChecked: { name: default-round-down, color: { r: 0.08, g: 0.52, b: 0.82, a: 1.0 } },
+	marineWindow: { name: default-window, color: { r: 0.05, g: 0.18, b: 0.35, a: 0.94 } },
+	marineSlider: { name: default-slider, color: { r: 0.08, g: 0.28, b: 0.48, a: 0.88 } },
+	marineSliderKnob: { name: default-slider-knob, color: { r: 0.30, g: 0.88, b: 1.0, a: 1.0 } },
 	marineSelect: { name: default-select, color: { r: 0.08, g: 0.38, b: 0.62, a: 0.95 } },
-	marinePane: { name: default-pane, color: { r: 0.05, g: 0.16, b: 0.30, a: 0.90 } },
-	joystickBg: { name: default-pane, color: { r: 0.06, g: 0.22, b: 0.44, a: 0.65 } },
-	joystickKnob: { name: default-round-large, color: { r: 0.25, g: 0.85, b: 1.0, a: 0.90 } }
+	marinePane: { name: default-pane, color: { r: 0.04, g: 0.15, b: 0.28, a: 0.90 } },
+	marineScroll: { name: default-scroll, color: { r: 0.06, g: 0.22, b: 0.38, a: 0.80 } },
+	marineKnobLarge: { name: default-round-large, color: { r: 0.25, g: 0.75, b: 0.95, a: 1.0 } }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: marineBtnDown, up: marineBtnUp },
@@ -32,7 +36,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	toggle: { down: marineBtnDown, up: marineBtnUp, checked: marineBtnChecked, font: default-font, fontColor: white, downFontColor: coral }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { vScroll: default-scroll, hScrollKnob: default-round-large, background: default-rect, hScroll: default-scroll, vScrollKnob: default-round-large }
+	default: { vScroll: marineScroll, hScrollKnob: marineKnobLarge, background: marinePane, hScroll: marineScroll, vScrollKnob: marineKnobLarge }
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
@@ -46,21 +50,22 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-horizontal: { handle: default-splitpane }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-	default: { titleFont: default-font, background: marineWindow, titleFontColor: gold },
+	default: { titleFont: default-font, background: marineWindow, titleFontColor: cyan },
 	dialog: { titleFont: default-font, background: marineWindow, titleFontColor: gold, stageBackground: dialogDim }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: marineSlider, knob: marineSliderKnob },
-	default-vertical: { background: marineSlider, knob: default-round-large }
+	default-vertical: { background: marineSlider, knob: marineKnobLarge }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: marineSlider, knob: marineSliderKnob },
-	default-vertical: { background: marineSlider, knob: default-round-large }
+	default-vertical: { background: marineSlider, knob: marineKnobLarge }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
-	title: { font: default-font, fontColor: gold },
-	highlight: { font: default-font, fontColor: cyan }
+	gold: { font: default-font, fontColor: gold },
+	cyan: { font: default-font, fontColor: cyan },
+	coral: { font: default-font, fontColor: coral }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }
@@ -69,10 +74,10 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: { checkboxOn: check-on, checkboxOff: check-off, font: default-font, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	default: { fontColorUnselected: white, selection: selection, fontColorSelected: cyan, font: default-font }
+	default: { fontColorUnselected: white, selection: selection, fontColorSelected: gold, font: default-font }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
-	default: { background: joystickBg, knob: joystickKnob }
+	default: { background: marinePane, knob: marineKnobLarge }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 	default: { minus: tree-minus, plus: tree-plus, selection: default-select-selection }

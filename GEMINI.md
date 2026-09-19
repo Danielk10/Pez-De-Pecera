@@ -32,14 +32,22 @@ Para evitar el consumo de espacio persistente en `/home`, todas las dependencias
 
 ---
 
-## 🚀 Instalación y Compilación
+## ⚠️ REQUISITO PREVIO OBLIGATORIO: Instalación del SDK/NDK
 
-### 1. Inicialización del SDK y NDK
-Antes de compilar, es obligatorio ejecutar el script de aprovisionamiento automatizado:
+> **IMPORTANTE**: Antes de ejecutar cualquier comando de compilación, Gradle (`./gradlew`) o prueba, **SIEMPRE** se debe instalar e inicializar el SDK y NDK ejecutando primero el script de configuración:
+> ```bash
+> bash setup-sdk.sh
+> ```
+> *Este script aprovisiona de forma automatizada `cmdline-tools`, `platform-tools`, `platforms;android-23`, `platforms;android-37.0`, `build-tools;37.0.0`, `cmake;4.1.2` y `ndk;30.0.14904198` en `/tmp/android-sdk`, y genera el archivo esencial `local.properties` requerido por Gradle.*
+
+---
+
+## 🚀 Instalación y Flujo de Compilación
+
+### 1. Paso Obligatorio: Ejecutar Script de Aprovisionamiento
 ```bash
 bash setup-sdk.sh
 ```
-*Este script descarga `cmdline-tools`, instala automáticamente las `platform-tools`, `platforms;android-23`, `platforms;android-37.0`, `build-tools;37.0.0`, `cmake;4.1.2` y `ndk;30.0.14904198` en `/tmp/android-sdk`, y genera `local.properties`.*
 
 ### 2. Comandos de Compilación
 

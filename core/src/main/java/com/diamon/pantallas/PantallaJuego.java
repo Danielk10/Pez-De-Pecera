@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.diamon.escenarios.Niveles;
 import com.diamon.nucleo.Juego;
@@ -37,7 +36,6 @@ import box2dLight.Light;
 
 public class PantallaJuego extends Pantalla {
 
-	private Touchpad joystickVirtual;
 
 	private Table tablaHUD;
 
@@ -86,10 +84,6 @@ public class PantallaJuego extends Pantalla {
 	private Label textoNumeroNivel;
 
 	private Label textoVida;
-
-	private Label textoBomba;
-
-	private Label textoMisil;
 
 	private Label textoPowerUp;
 
@@ -166,33 +160,30 @@ public class PantallaJuego extends Pantalla {
 		textoVida = new Label("", skin);
 		textoVida.setColor(com.badlogic.gdx.graphics.Color.CORAL);
 
-		textoBomba = new Label("", skin);
-		textoBomba.setColor(com.badlogic.gdx.graphics.Color.ORANGE);
-
-		textoMisil = new Label("", skin);
-		textoMisil.setColor(com.badlogic.gdx.graphics.Color.CYAN);
-
 		textoPowerUp = new Label("", skin);
+
+		TextureAtlas atlasIconos = recurso.get("texturas/iconos.atlas", TextureAtlas.class);
+
+		Image iconoCorazon = new Image(atlasIconos.findRegion("iconocorazon"));
+		Image iconoPerla = new Image(atlasIconos.findRegion("iconoperla"));
 
 		Table hudSuperior = new Table();
 
-		hudSuperior.add(textoVida).padRight(20);
+		hudSuperior.add(iconoCorazon).size(36, 36).padRight(8);
+		hudSuperior.add(textoVida).padRight(25);
 
-		hudSuperior.add(textoBomba).padRight(20);
+		hudSuperior.add(iconoPerla).size(36, 36).padRight(8);
+		hudSuperior.add(textoPuntos).padRight(25);
 
-		hudSuperior.add(textoMisil).padRight(20);
-
-		hudSuperior.add(textoPowerUp);
+		hudSuperior.add(textoPowerUp).expandX().left();
 
 		tablaHUD.add(hudSuperior).expandX().left().pad(20).top().row();
 
 		Table hudInferior = new Table();
 
-		hudInferior.add(textoPuntos).padRight(20);
-
 		hudInferior.add(textoNumeroNivel).expandX().left();
 
-		hudInferior.add(fps);
+		hudInferior.add(fps).right();
 
 		tablaHUD.add().expand().row();
 
@@ -200,11 +191,26 @@ public class PantallaJuego extends Pantalla {
 
 		nivel.addActor(tablaHUD);
 
-		pausa = new Image(recurso.get("texturas/pausa.png", Texture.class));
+		if (Gdx.app.getType() == Gdx.app.getType().Android) {
+			Image btnImpulso = new Image(atlasIconos.findRegion("iconoimpulso"));
+			btnImpulso.setSize(84, 84);
+			btnImpulso.setPosition(Juego.ANCHO_PANTALLA - 110, 24);
+			btnImpulso.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					if (jugador != null) {
+						jugador.darImpulso();
+					}
+				}
+			});
+			nivel.addActor(btnImpulso);
+		}
 
-		pausa.setSize(64, 64);
+		pausa = new Image(atlasIconos.findRegion("iconopausa"));
 
-		pausa.setPosition(Juego.ANCHO_PANTALLA - 84, Juego.ALTO_PANTALLA - 84);
+		pausa.setSize(56, 56);
+
+		pausa.setPosition(Juego.ANCHO_PANTALLA - 76, Juego.ALTO_PANTALLA - 76);
 
 		tablaPausa = new Table();
 
@@ -262,7 +268,7 @@ public class PantallaJuego extends Pantalla {
 		nivel.addActor(tablaPausa);
 
 		jugador = new Jugador(recurso.get("texturas/pez.atlas", TextureAtlas.class).getRegions(), 0.3f,
-				Animation.PlayMode.LOOP, this, 64, 64, Jugador.DIANAMICO);
+				Animation.PlayMode.LOOP, this, 64, 64, Jugador.ESTATICO);
 
 		if (Gdx.files.internal("mapas/nivel1.tmx").exists()) {
 			com.badlogic.gdx.maps.tiled.TiledMap mapaTmx = new com.badlogic.gdx.maps.tiled.TmxMapLoader().load("mapas/nivel1.tmx");
@@ -277,78 +283,7 @@ public class PantallaJuego extends Pantalla {
 
 		cursor.setPosition(0, 0);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
-			TextureAtlas iconosAtlas = recurso.get("texturas/iconos.atlas", TextureAtlas.class);
-			
-			// Joystick Virtual Analógico 360° (idéntico al sistema de Whisk3D Android)
-			Touchpad.TouchpadStyle touchpadStyle = skin.get(Touchpad.TouchpadStyle.class);
-			joystickVirtual = new Touchpad(10f, touchpadStyle);
-			joystickVirtual.setSize(180, 180);
-			joystickVirtual.setPosition(35, 35);
-			joystickVirtual.setColor(1f, 1f, 1f, 0.85f);
-			nivel.addActor(joystickVirtual);
 
-			// Botón de Disparo Principal (Burbujas / Torpedos)
-			final Image btnDisparo = new Image(iconosAtlas.findRegion("iconofaro"));
-			btnDisparo.setSize(80, 80);
-			btnDisparo.setPosition(Juego.ANCHO_PANTALLA - 115, 85);
-			btnDisparo.setColor(0.3f, 0.9f, 1.0f, 0.75f);
-			btnDisparo.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnDisparo.setColor(1f, 0.6f, 0.2f, 0.98f);
-					jugador.teclaPresionada(event, Keys.Z);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnDisparo.setColor(0.3f, 0.9f, 1.0f, 0.75f);
-					jugador.teclaLevantada(event, Keys.Z);
-				}
-			});
-
-			// Botón de Misil
-			final Image btnMisil = new Image(iconosAtlas.findRegion("iconoexplosion"));
-			btnMisil.setSize(64, 64);
-			btnMisil.setPosition(Juego.ANCHO_PANTALLA - 205, 45);
-			btnMisil.setColor(0.2f, 1f, 0.6f, 0.75f);
-			btnMisil.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnMisil.setColor(0.3f, 1f, 0.3f, 0.98f);
-					jugador.teclaPresionada(event, Keys.X);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnMisil.setColor(0.2f, 1f, 0.6f, 0.75f);
-					jugador.teclaLevantada(event, Keys.X);
-				}
-			});
-
-			// Botón de Bomba
-			final Image btnBomba = new Image(iconosAtlas.findRegion("iconobomba"));
-			btnBomba.setSize(64, 64);
-			btnBomba.setPosition(Juego.ANCHO_PANTALLA - 115, 185);
-			btnBomba.setColor(1f, 0.4f, 0.3f, 0.75f);
-			btnBomba.addListener(new InputListener() {
-				@Override
-				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					btnBomba.setColor(1f, 0.1f, 0.1f, 0.98f);
-					jugador.teclaPresionada(event, Keys.SPACE);
-					return true;
-				}
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					btnBomba.setColor(1f, 0.4f, 0.3f, 0.75f);
-					jugador.teclaLevantada(event, Keys.SPACE);
-				}
-			});
-			
-			nivel.addActor(btnDisparo);
-			nivel.addActor(btnMisil);
-			nivel.addActor(btnBomba);
-		}
 
 		pausar = false;
 
@@ -1009,12 +944,6 @@ public class PantallaJuego extends Pantalla {
 	@Override
 	public void actualizar(float delta) {
 
-		if (joystickVirtual != null && jugador != null) {
-			float vx = joystickVirtual.getKnobPercentX();
-			float vy = joystickVirtual.getKnobPercentY();
-			jugador.setEntradaVirtual(vx, vy);
-		}
-
 		//////////////////
 		// Box2D
 		///////////////////
@@ -1374,10 +1303,6 @@ public class PantallaJuego extends Pantalla {
 		textoNumeroNivel.setText("Nivel " + datosNiveles.getNumeroNivel());
 
 		textoVida.setText("Vida: " + jugador.getVida());
-
-		textoBomba.setText("Bombas: " + jugador.getBomba());
-
-		textoMisil.setText("Misiles: " + jugador.getMisil());
 
 		if (textoPowerUp != null) {
 			if (jugador.isTurboActivo()) {

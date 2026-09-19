@@ -75,16 +75,6 @@ public class Jugador extends Personaje {
 
 	private boolean deltaToque;
 
-	private boolean toqueActivo = false;
-
-	private float toqueObjetivoX = 0f;
-
-	private float toqueObjetivoY = 0f;
-
-	private float entradaVirtualX = 0f;
-
-	private float entradaVirtualY = 0f;
-
 	private float tiempoTurbo;
 
 	private float tiempoEscudo;
@@ -377,21 +367,11 @@ public class Jugador extends Personaje {
 
 			break;
 
-		case Keys.Z:
-
-			disparar = true;
-
-			break;
-
-		case Keys.X:
-
-			dispararMisil = true;
-
-			break;
-
 		case Keys.SPACE:
+		case Keys.SHIFT_LEFT:
+		case Keys.SHIFT_RIGHT:
 
-			dispararBomba = true;
+			darImpulso();
 
 			break;
 
@@ -433,24 +413,6 @@ public class Jugador extends Personaje {
 		case Keys.DOWN:
 
 			abajo = false;
-
-			break;
-
-		case Keys.Z:
-
-			disparar = false;
-
-			break;
-
-		case Keys.X:
-
-			dispararMisil = false;
-
-			break;
-
-		case Keys.SPACE:
-
-			dispararBomba = false;
 
 			break;
 
@@ -525,10 +487,6 @@ public class Jugador extends Personaje {
 
 		if (!finNivel) {
 
-			toqueActivo = true;
-			toqueObjetivoX = camara.position.x + (x - Juego.ANCHO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
-			toqueObjetivoY = camara.position.y + (y - Juego.ALTO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
-
 			if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
 				if (dedos == 0) {
@@ -546,9 +504,24 @@ public class Jugador extends Personaje {
 						deltaToque = false;
 					}
 
-					x1 = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
+					float nuevoX = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
+					float nuevoY = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
 
-					y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
+					if (nuevoX < this.x - 0.02f) {
+						setFlip(true, false);
+					} else if (nuevoX > this.x + 0.02f) {
+						setFlip(false, false);
+					}
+
+					float diffY = nuevoY - this.y;
+					float pitch = com.badlogic.gdx.math.MathUtils.clamp(diffY * 16f, -15f, 15f);
+					if (isFlipX()) {
+						pitch = -pitch;
+					}
+					setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitch, 0.25f));
+
+					x1 = nuevoX;
+					y1 = nuevoY;
 
 					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
@@ -591,6 +564,12 @@ public class Jugador extends Personaje {
 
 				y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
 
+				if (x1 < this.x - 0.02f) {
+					setFlip(true, false);
+				} else if (x1 > this.x + 0.02f) {
+					setFlip(false, false);
+				}
+
 				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
 
 					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
@@ -630,8 +609,6 @@ public class Jugador extends Personaje {
 
 	@SuppressWarnings("static-access")
 	public boolean toqueLevantado(InputEvent ev, float x, float y, int puntero, int boton) {
-
-		toqueActivo = false;
 
 		if (!finNivel) {
 
@@ -675,10 +652,6 @@ public class Jugador extends Personaje {
 	public boolean toquePresionado(InputEvent ev, float x, float y, int puntero, int boton) {
 
 		if (!finNivel) {
-
-			toqueActivo = true;
-			toqueObjetivoX = camara.position.x + (x - Juego.ANCHO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
-			toqueObjetivoY = camara.position.y + (y - Juego.ALTO_PANTALLA / 2f) / Juego.UNIDAD_DEL_MUNDO;
 
 			if (Gdx.app.getType() == Gdx.app.getType().Android) {
 
@@ -798,62 +771,30 @@ public class Jugador extends Personaje {
 		if (tiempoEscudo > 0) tiempoEscudo = Math.max(0f, tiempoEscudo - delta);
 		if (tiempoLinterna > 0) tiempoLinterna = Math.max(0f, tiempoLinterna - delta);
 
-		if (cuerpo != null && cuerpo.getType() == com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody) {
-			cuerpo.setGravityScale(0f);
-			cuerpo.setLinearDamping(com.diamon.nucleo.Constantes.AMORTIGUACION_AGUA);
-
-			for (int i = 0; i < corrientesActivas.size; i++) {
-				ZonaCorriente corriente = corrientesActivas.get(i);
-				cuerpo.applyForceToCenter(corriente.getFuerza(), true);
-			}
-
-			float fuerzaBase = isTurboActivo() ? 70.0f : 38.0f;
-			float fx = 0f;
-			float fy = 0f;
-			if (derecha) fx += fuerzaBase;
-			if (izquierda) fx -= fuerzaBase;
-			if (arriba) fy += fuerzaBase;
-			if (abajo) fy -= fuerzaBase;
-
-			if (entradaVirtualX != 0f || entradaVirtualY != 0f) {
-				fx += entradaVirtualX * fuerzaBase;
-				fy += entradaVirtualY * fuerzaBase;
-			}
-
-			if (toqueActivo) {
-				float px = cuerpo.getPosition().x;
-				float py = cuerpo.getPosition().y;
-				float dx = toqueObjetivoX - px;
-				float dy = toqueObjetivoY - py;
-				float dist = (float) Math.sqrt(dx * dx + dy * dy);
-				if (dist > 0.35f) {
-					fx += (dx / dist) * fuerzaBase;
-					fy += (dy / dist) * fuerzaBase;
-				}
-			}
-
-			if (fx != 0 || fy != 0) {
-				cuerpo.applyForceToCenter(fx, fy, true);
-			}
-
-			com.badlogic.gdx.math.Vector2 vel = cuerpo.getLinearVelocity();
-			if (vel.x < -0.15f) {
-				setFlip(true, false);
-			} else if (vel.x > 0.15f) {
-				setFlip(false, false);
-			}
-
-			// Inclinación sutil hidrodinámica (el pez se mantiene natural y horizontal)
-			float pitchObjetivo = 0f;
-			if (Math.abs(vel.y) > 0.2f) {
-				pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(vel.y * 2.8f, -15f, 15f);
-				if (isFlipX()) {
-					pitchObjetivo = -pitchObjetivo;
-				}
-			}
-			float rotNueva = com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.18f);
-			setRotation(rotNueva);
+		// Corrientes marinas activas
+		for (int i = 0; i < corrientesActivas.size; i++) {
+			ZonaCorriente corriente = corrientesActivas.get(i);
+			x += (corriente.getFuerza().x / com.diamon.nucleo.Constantes.PPM) * delta * 2.0f;
+			y += (corriente.getFuerza().y / com.diamon.nucleo.Constantes.PPM) * delta * 2.0f;
 		}
+
+		float multVelocidad = isTurboActivo() ? 1.75f : 1.0f;
+
+		if (velocidadX < -0.1f) {
+			setFlip(true, false);
+		} else if (velocidadX > 0.1f) {
+			setFlip(false, false);
+		}
+
+		float pitchObjetivo = 0f;
+		if (Math.abs(velocidadY) > 0.1f) {
+			pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(velocidadY * 1.5f, -15f, 15f);
+			if (isFlipX()) {
+				pitchObjetivo = -pitchObjetivo;
+			}
+		}
+		float rotNueva = com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.2f);
+		setRotation(rotNueva);
 
 		if (!finNivel) {
 
@@ -1235,9 +1176,8 @@ public class Jugador extends Personaje {
 		}
 	}
 
-	public void setEntradaVirtual(float x, float y) {
-		this.entradaVirtualX = x;
-		this.entradaVirtualY = y;
+	public void darImpulso() {
+		activarPowerUp(TipoPowerUp.TURBO, 1.5f);
 	}
 
 	public Array<ZonaCorriente> getCorrientesActivas() {

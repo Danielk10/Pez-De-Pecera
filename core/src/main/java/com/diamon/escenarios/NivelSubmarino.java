@@ -95,6 +95,9 @@ public class NivelSubmarino extends Nivel {
         jugador.setVivo(true);
         jugador.setFinNivel(false);
         jugador.setTerminarNivel(false);
+        jugador.setIntro(false);
+        this.intro = false;
+        this.moverCamara = false;
         if (jugador.getCuerpo() != null) {
             jugador.getCuerpo().setGravityScale(0f);
             jugador.getCuerpo().setLinearDamping(Constantes.AMORTIGUACION_AGUA);
@@ -120,19 +123,21 @@ public class NivelSubmarino extends Nivel {
         }
         luces.add(luzJugador);
 
-        // 6. Fondo de paralaje dinámico según el nivel actual
+        // 6. Fondo de paralaje dinámico según el nivel actual (Nivel 1 utiliza fondo4 como referencia de estilo)
         int numNivel = (datosNiveles != null) ? datosNiveles.getNumeroNivel() : 1;
-        int indiceFondo = 1;
+        int indiceFondo = 4;
         if (numNivel >= 11 && numNivel <= 20) {
             indiceFondo = 2;
         } else if (numNivel >= 21 && numNivel <= 30) {
             indiceFondo = 3;
         } else if (numNivel >= 31) {
-            indiceFondo = 4;
+            indiceFondo = 1;
         }
         String rutaFondo = "texturas/fondo" + indiceFondo + ".png";
         if (recurso.isLoaded(rutaFondo, Texture.class)) {
             texturaFondoParalaje = recurso.get(rutaFondo, Texture.class);
+        } else if (recurso.isLoaded("texturas/fondo4.png", Texture.class)) {
+            texturaFondoParalaje = recurso.get("texturas/fondo4.png", Texture.class);
         } else if (recurso.isLoaded("texturas/fondo1.png", Texture.class)) {
             texturaFondoParalaje = recurso.get("texturas/fondo1.png", Texture.class);
         }
