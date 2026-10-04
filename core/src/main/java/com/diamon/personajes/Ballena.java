@@ -50,9 +50,11 @@ public class Ballena extends Personaje {
 
         // Movimiento de nado horizontal suave
         float dir = direccionDerecha ? 1f : -1f;
-        x += dir * velocidadNado * delta;
+        float vx = dir * velocidadNado;
+        x += vx * delta;
 
         // Ondulación vertical senoidal de gran criatura pelágica
+        float vy = MathUtils.cos(tiempoOndulacion * 0.7f) * 0.45f;
         y = baseY + MathUtils.sin(tiempoOndulacion * 0.7f) * (40f / Constantes.PPM);
 
         // Giro en los límites del océano abierto
@@ -62,25 +64,22 @@ public class Ballena extends Personaje {
             direccionDerecha = true;
         }
 
-        // El sprite original de ballena mira hacia la izquierda
-        setFlip(!direccionDerecha, false);
+        // Orientación e inclinación suave: la textura original mira a la IZQUIERDA
+        orientarHaciaDireccion(vx, vy, false, delta);
 
         // Dispersión sutil de burbujas desde el espiráculo
         tiempoSiguienteBurbuja += delta;
         if (tiempoSiguienteBurbuja > 0.8f) {
             tiempoSiguienteBurbuja = 0f;
             if (pantalla instanceof com.diamon.pantallas.PantallaJuego) {
-                float blowholeX = direccionDerecha ? (x + getWidth() * 0.25f) : (x + getWidth() * 0.75f);
+                float blowholeX = direccionDerecha ? (x + getWidth() * 0.75f) : (x + getWidth() * 0.25f);
                 float blowholeY = y + getHeight() * 0.85f;
-                // Emitir burbujas ascendentes
-                com.diamon.nucleo.Pantalla p = pantalla;
-                // Dejar un sutil rastro
             }
         }
 
         // Sincronizar Box2D si existe cuerpo cinemático
         if (cuerpo != null) {
-            cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, 0f);
+            cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * MathUtils.degreesToRadians);
         }
     }
 

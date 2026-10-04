@@ -55,9 +55,11 @@ public class TortugaMarina extends Personaje {
 
         // Desplazamiento horizontal
         float dir = direccionDerecha ? 1f : -1f;
-        x += dir * velocidadNado * delta;
+        float vx = dir * velocidadNado;
+        x += vx * delta;
 
         // Ondulación vertical rítmica
+        float vy = MathUtils.cos(tiempoOndulacion * 1.4f) * 0.5f;
         y = baseY + MathUtils.sin(tiempoOndulacion * 1.4f) * (20f / Constantes.PPM);
 
         // Patrullaje entre límites
@@ -67,11 +69,11 @@ public class TortugaMarina extends Personaje {
             direccionDerecha = true;
         }
 
-        // El sprite original mira hacia la derecha
-        setFlip(!direccionDerecha, false);
+        // Orientación suave: la textura original mira a la DERECHA
+        orientarHaciaDireccion(vx, vy, true, delta);
 
         if (cuerpo != null) {
-            cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, 0f);
+            cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * MathUtils.degreesToRadians);
         }
     }
 

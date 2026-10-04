@@ -235,7 +235,7 @@ public class FondoMenuMarino extends Actor {
             ballena.anchoBase = 240f;
             ballena.altoBase = 120f;
             ballena.escala = 0.90f;
-            ballena.miraDerechaPorDefecto = true;
+            ballena.miraDerechaPorDefecto = false; // La textura original de ballena mira a la izquierda
             ballena.tinteProfundidad.set(0.45f, 0.65f, 0.90f, 0.45f); // Muy profunda en el océano
             ballena.reiniciar(false);
             ballena.x = -250f;
@@ -284,14 +284,23 @@ public class FondoMenuMarino extends Actor {
             // Determinar si hay que voltear horizontalmente el sprite
             boolean voltear = c.miraDerechaPorDefecto ? !c.haciaDerecha : c.haciaDerecha;
 
+            // Inclinación hidrodinámica según vaivén vertical
+            float vy = MathUtils.cos(c.faseOndulacion) * c.amplitudOndulacion * 2.2f;
+            float pitch = MathUtils.clamp(MathUtils.atan2(vy, Math.abs(c.velocidadX)) * MathUtils.radDeg, -14f, 14f);
+            if (!c.haciaDerecha) {
+                pitch = -pitch;
+            }
+
             batch.setColor(c.tinteProfundidad.r, c.tinteProfundidad.g, c.tinteProfundidad.b,
                     c.tinteProfundidad.a * parentAlpha);
 
-            if (voltear) {
-                batch.draw(frame, c.x + drawWidth, c.y, -drawWidth, drawHeight);
-            } else {
-                batch.draw(frame, c.x, c.y, drawWidth, drawHeight);
-            }
+            float sX = voltear ? -1f : 1f;
+            batch.draw(frame,
+                    c.x, c.y,
+                    drawWidth / 2f, drawHeight / 2f,
+                    drawWidth, drawHeight,
+                    sX, 1f,
+                    pitch);
         }
 
         // 2. Dibujar burbujas ascendentes

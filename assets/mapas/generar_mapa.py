@@ -22,88 +22,45 @@ def generate_tmx():
         fondo_grid[34][x] = 7
 
     # 2. Capa terreno_solido
+    # 2. Capa terreno_solido (Lecho marino orgánico con arena dorada y arrecifes en el fondo)
     terreno_grid = [[0 for _ in range(width)] for _ in range(height)]
 
-    # Suelo marino de guijarros y arena dorada (filas 33 y 34)
+    # Suelo marino base de guijarros y arena dorada (filas 33 y 34)
     for x in range(width):
         terreno_grid[33][x] = 1 # Arena / guijarros
         terreno_grid[34][x] = 2 # Roca base
 
-    # Algas, corales y anémonas sobre el lecho marino (fila 32)
-    flora_marina = [11, 0, 9, 11, 12, 0, 10, 11, 0, 16, 11, 12]
+    # Algas, corales, anémonas y fauna sésil sobre el lecho marino (fila 32)
+    flora_marina = [11, 0, 9, 11, 12, 0, 10, 11, 0, 16, 11, 12, 10, 0, 15]
     for x in range(width):
         terreno_grid[32][x] = flora_marina[x % len(flora_marina)]
 
-    # Formación rocosa izquierda estilo fondo4.png (columna natural)
-    for y in range(12, 33):
-        terreno_grid[y][0] = 4
-        terreno_grid[y][1] = 4
-    for y in range(18, 33):
-        terreno_grid[y][2] = 4
-    for y in range(24, 33):
-        terreno_grid[y][3] = 4
-    # Algas trepando la columna izquierda
-    terreno_grid[11][1] = 11
-    terreno_grid[17][2] = 11
-    terreno_grid[23][3] = 11
+    # Formaciones orgánicas bajas en el lecho marino (ondulaciones naturales de coral y roca, sin torres cuadradas)
+    # Arrecife 1 (x: 24 a 28) - montículo de coral suave
+    for x in range(24, 29):
+        terreno_grid[31][x] = 13
+    terreno_grid[30][26] = 10
 
-    # Formación 1: Arco rocoso submarino en el fondo (como el arco en fondo4.png) (x: 24 a 30)
-    for y in range(26, 32):
-        terreno_grid[y][24] = 4
-        terreno_grid[y][30] = 4
-    for x in range(24, 31):
-        terreno_grid[25][x] = 4
-    terreno_grid[24][26] = 11
-    terreno_grid[24][28] = 9
+    # Arrecife 2 (x: 50 a 54) - jardín de anémonas y cristales
+    for x in range(50, 55):
+        terreno_grid[31][x] = 14
+    terreno_grid[30][52] = 15
 
-    # Formación 2: Montículo de coral y columna antigua (x: 48 a 54)
-    for y in range(25, 32):
-        for x in range(49, 54):
-            terreno_grid[y][x] = 13
-    terreno_grid[24][50] = 10
-    terreno_grid[24][51] = 15
-    terreno_grid[24][52] = 12
+    # Arrecife 3 (x: 74 a 78) - roca abisal
+    for x in range(74, 79):
+        terreno_grid[31][x] = 13
+    terreno_grid[30][76] = 12
 
-    # Formación 3: Arrecife de cristales y géiser del lecho marino (x: 72 a 77)
-    for y in range(24, 32):
-        for x in range(73, 77):
-            terreno_grid[y][x] = 14
-    terreno_grid[23][74] = 15
-    terreno_grid[23][75] = 10
+    # Arrecife 4 (x: 100 a 104) - banco de coral profundo
+    for x in range(100, 105):
+        terreno_grid[31][x] = 14
+    terreno_grid[30][102] = 10
 
-    # Formación 4: Gran arco / ruina sumergida (x: 96 a 102)
-    for y in range(25, 32):
-        terreno_grid[y][96] = 4
-        terreno_grid[y][102] = 4
-    for x in range(96, 103):
-        terreno_grid[24][x] = 4
-    terreno_grid[23][98] = 11
-    terreno_grid[23][100] = 9
-
-    # Formación 5: Banco de coral y pedestal abisal (x: 120 a 125)
-    for y in range(26, 32):
-        for x in range(120, 126):
-            terreno_grid[y][x] = 13
-    terreno_grid[25][122] = 15
-    terreno_grid[25][123] = 12
-
-    # Formación rocosa derecha estilo fondo4.png (repisas escalonadas hacia el final)
-    for y in range(14, 33):
-        terreno_grid[y][149] = 4
-        terreno_grid[y][148] = 4
-    for y in range(20, 33):
-        terreno_grid[y][147] = 4
-    for y in range(25, 33):
-        terreno_grid[y][146] = 4
-    terreno_grid[13][148] = 11
-    terreno_grid[19][147] = 10
-    terreno_grid[24][146] = 11
-
-    # 3. Capa primer_plano (detalles frente al pez: plantas marinas)
+    # 3. Capa primer_plano (detalles frente al pez: plantas marinas que oscilan)
     frente_grid = [[0 for _ in range(width)] for _ in range(height)]
-    for x in range(5, width - 5, 7):
+    for x in range(4, width - 4, 6):
         frente_grid[31][x] = 11
-    for x in range(9, width - 5, 11):
+    for x in range(7, width - 4, 9):
         frente_grid[31][x] = 9
 
     def grid_to_csv(grid):
@@ -144,20 +101,11 @@ def generate_tmx():
  </layer>
 
  <objectgroup id="4" name="colisiones">
-  <!-- Límites del escenario: techo de agua superficial invisible, suelo y laterales -->
+  <!-- Límites naturales del océano abierto: suelo arenoso, superficie y orillas (sin bloques cuadrados aéreos) -->
   <object id="1" name="TechoSuperficie" x="0" y="0" width="{total_px_width}" height="64"/>
   <object id="2" name="SueloMarino" x="0" y="2112" width="{total_px_width}" height="128"/>
   <object id="3" name="ParedIzquierda" x="0" y="0" width="64" height="{total_px_height}"/>
   <object id="4" name="ParedDerecha" x="{total_px_width - 64}" y="0" width="64" height="{total_px_height}"/>
-
-  <!-- Formaciones rocosas naturales del lecho marino (sin bloques aéreos) -->
-  <object id="5" name="ColumnaIzquierda" x="0" y="1152" width="256" height="960"/>
-  <object id="6" name="ArcoSubmarino1" x="1536" y="1600" width="448" height="512"/>
-  <object id="7" name="ArrecifeCentral" x="3136" y="1536" width="320" height="576"/>
-  <object id="8" name="CristalesMarinos" x="4672" y="1472" width="256" height="640"/>
-  <object id="9" name="ArcoSubmarino2" x="6144" y="1536" width="448" height="576"/>
-  <object id="10" name="PedestalAbisal" x="7680" y="1664" width="384" height="448"/>
-  <object id="11" name="RepisasDerecha" x="9344" y="1280" width="256" height="832"/>
  </objectgroup>
 
  <objectgroup id="5" name="corrientes">

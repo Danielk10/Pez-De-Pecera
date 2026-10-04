@@ -182,16 +182,17 @@ public class NivelSubmarino extends Nivel {
 
         // 5. Actualizar luces dinámicas y respuesta a power-ups
         if (luzJugador != null) {
+            luzJugador.setActive(true);
             if (jugador.isLinternaActiva()) {
-                luzJugador.setActive(true);
-                luzJugador.setColor(1.0f, 0.95f, 0.6f, 0.75f);
-                luzJugador.setDistance(8.0f);
+                luzJugador.setColor(1.0f, 0.95f, 0.6f, 0.85f);
+                luzJugador.setDistance(8.5f);
             } else if (jugador.isEscudoActivo()) {
-                luzJugador.setActive(true);
-                luzJugador.setColor(0.2f, 0.8f, 1.0f, 0.55f);
-                luzJugador.setDistance(3.5f);
+                luzJugador.setColor(0.2f, 0.9f, 1.0f, 0.70f);
+                luzJugador.setDistance(4.0f);
             } else {
-                luzJugador.setActive(false);
+                // Aura luminiscente tenue constante para visibilidad del pez en el mar
+                luzJugador.setColor(0.35f, 0.85f, 1.0f, 0.35f);
+                luzJugador.setDistance(2.2f);
             }
         }
 
@@ -213,34 +214,37 @@ public class NivelSubmarino extends Nivel {
             return;
         }
 
-        // Factor 1.0 en superficie, 0.0 en el fondo abisal
+        // Factor 1.0 en superficie del agua, 0.0 en el lecho marino abisal
         float factor = MathUtils.clamp(jugador.getY() / altoMapaMetros, 0.0f, 1.0f);
 
-        // En superficie: azul translúcido con visibilidad alta
-        // En el fondo: penumbra densa / negro casi total
-        float r = MathUtils.lerp(0.04f, 0.15f, factor);
-        float g = MathUtils.lerp(0.12f, 0.40f, factor);
-        float b = MathUtils.lerp(0.30f, 0.70f, factor);
-        float a = MathUtils.lerp(0.40f, 0.90f, factor);
+        // En superficie: azul turquesa luminoso y nítido (0.35, 0.65, 0.88, 0.96)
+        // En profundidad abisal: azul marino profundo pero legible (0.16, 0.28, 0.50, 0.90)
+        float r = MathUtils.lerp(0.16f, 0.35f, factor);
+        float g = MathUtils.lerp(0.28f, 0.65f, factor);
+        float b = MathUtils.lerp(0.50f, 0.88f, factor);
+        float a = MathUtils.lerp(0.90f, 0.96f, factor);
 
         luz.setAmbientLight(r, g, b, a);
     }
 
     @Override
     public void dibujar(Batch pincel, float delta) {
-        // --- FASE 1: Paralaje de Fondo ---
+        // --- FASE 1: Paralaje de Fondo Infinito y Continuo ---
         pincel.setProjectionMatrix(camara.combined);
         pincel.begin();
         if (texturaFondoParalaje != null) {
-            float bgW = Constantes.ANCHO_METROS * 2.6f;
-            float bgH = Constantes.ALTO_METROS * 2.6f;
-            float paralajeOffsetX = camara.position.x * 0.15f;
-            float paralajeOffsetY = camara.position.y * 0.08f;
-            pincel.draw(texturaFondoParalaje,
-                    camara.position.x - bgW / 2f - paralajeOffsetX,
-                    camara.position.y - bgH / 2f - paralajeOffsetY,
-                    bgW,
-                    bgH);
+            float bgW = Constantes.ANCHO_METROS * 1.8f;
+            float bgH = Math.max(altoMapaMetros, Constantes.ALTO_METROS * 2.0f);
+            float paralajeOffsetX = camara.position.x * 0.20f;
+
+            float viewW = camara.viewportWidth * camara.zoom;
+            float minX = camara.position.x - viewW / 2f;
+            float maxX = camara.position.x + viewW / 2f;
+
+            float startX = (float) Math.floor((minX - paralajeOffsetX) / bgW) * bgW + paralajeOffsetX;
+            for (float px = startX; px <= maxX + bgW; px += bgW) {
+                pincel.draw(texturaFondoParalaje, px, 0, bgW, bgH);
+            }
         }
         pincel.end();
 

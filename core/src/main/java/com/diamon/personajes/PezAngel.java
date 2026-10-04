@@ -43,6 +43,9 @@ public class PezAngel extends Personaje {
 		super(texturaRegion, pantalla, ancho, alto, tipoDeCuerpo);
 	}
 
+	private float vx = 0f;
+	private float vy = 0f;
+
 	@Override
 	public void actualizar(float delta) {
 		super.actualizar(delta);
@@ -54,21 +57,79 @@ public class PezAngel extends Personaje {
 
 		tiempoNado += delta * 2.2f;
 
-		// Movimiento orgánico en onda senoidal (nado elegante de pez ángel)
-		y = spawnY + com.badlogic.gdx.math.MathUtils.sin(tiempoNado) * 0.8f;
-		x += direccionX * 1.8f * delta;
-
-		if (Math.abs(x - spawnX) > 5.0f) {
-			direccionX = (x > spawnX) ? -1 : 1;
+		// 1. Huir si hay un tiburón cerca
+		boolean huyendoDeTiburon = false;
+		if (personajes != null) {
+			for (Personaje p : personajes) {
+				if (p instanceof TiburonAzul && !((TiburonAzul) p).isAturdido()) {
+					float distX = x - p.getX();
+					float distY = y - p.getY();
+					float distT = (float) Math.hypot(distX, distY);
+					if (distT < 6.5f) {
+						huyendoDeTiburon = true;
+						float norm = Math.max(0.1f, distT);
+						float escapeVx = (distX / norm) * 3.6f;
+						float escapeVy = (distY / norm) * 2.2f;
+						vx = com.badlogic.gdx.math.MathUtils.lerp(vx, escapeVx, 5.0f * delta);
+						vy = com.badlogic.gdx.math.MathUtils.lerp(vy, escapeVy, 5.0f * delta);
+						break;
+					}
+				}
+			}
 		}
 
-		// La textura natural mira hacia la IZQUIERDA.
-		// Si se mueve hacia la derecha (direccionX > 0), debe voltearse (flipX = true).
-		setFlip(direccionX > 0, false);
+		// 2. Si no huye, nado libre con curiosidad hacia el jugador
+		if (!huyendoDeTiburon) {
+			boolean siguiendoJugador = false;
+			if (personajes != null) {
+				for (Personaje p : personajes) {
+					if (p instanceof Jugador && ((Jugador) p).isVivo()) {
+						float distX = p.getX() - x;
+						float distY = p.getY() - y;
+						float distJ = (float) Math.hypot(distX, distY);
+						if (distJ < 5.0f) {
+							siguiendoJugador = true;
+							float norm = Math.max(0.1f, distJ);
+							float targetVx = (distX / norm) * 2.2f;
+							float targetVy = (distY / norm) * 1.8f;
+							vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 3.5f * delta);
+							vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 3.5f * delta);
+
+							if (distJ < 2.2f && !ayudado) {
+								((Jugador) p).agregarPuntos(50);
+								((Jugador) p).recuperarVida(1);
+								ayudado = true;
+								activarHitFlash(0.4f, new com.badlogic.gdx.graphics.Color(0.4f, 1.0f, 0.6f, 1.0f));
+							}
+							break;
+						}
+					}
+				}
+			}
+
+			if (!siguiendoJugador) {
+				// Nado orgánico de cardumen
+				if (Math.abs(x - spawnX) > 6.0f) {
+					direccionX = (x > spawnX) ? -1 : 1;
+				}
+				float targetVx = direccionX * 1.8f;
+				float targetVy = com.badlogic.gdx.math.MathUtils.sin(tiempoNado) * 0.9f;
+				vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 3.0f * delta);
+				vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 3.0f * delta);
+			}
+		}
+
+		x += vx * delta;
+		y += vy * delta;
 		setX(x);
 		setY(y);
 
-		// Si el jugador está muy cerca, orientarse curiosamente hacia él
+		// Orientación correcta: la textura pez1.png mira a la DERECHA por defecto
+		orientarHaciaDireccion(vx, vy, true, delta);
+
+		if (cuerpo != null) {
+			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
+		}
 		if (personajes != null) {
 			for (Personaje p : personajes) {
 				if (p instanceof Jugador && ((Jugador) p).isVivo()) {

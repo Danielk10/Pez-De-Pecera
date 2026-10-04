@@ -45,22 +45,31 @@ public class TiburonAzul extends Personaje {
 	}
 
 	private float spawnX = -1;
-	private float rangoPatrulla = 9.0f;
+	private float spawnY = -1;
+	private float rangoPatrulla = 10.0f;
 	private int direccion = -1;
 	private float tiempoAturdido = 0f;
 	private float tiempoMuerde = 0f;
+	private float tiempoPatrulla = 0f;
+	private float vx = 0f;
+	private float vy = 0f;
 
 	@Override
 	public void actualizar(float delta) {
 		super.actualizar(delta);
 		if (spawnX < 0) {
 			spawnX = x;
+			spawnY = y;
 		}
 
 		if (tiempoAturdido > 0) {
 			tiempoAturdido -= delta;
-			// Aturdido: flota levemente sin atacar
-			y += com.badlogic.gdx.math.MathUtils.sin(tiempoAturdido * 4f) * 0.02f;
+			// Aturdido: retrocede levemente y se balancea
+			vx *= Math.pow(0.85, delta * 60);
+			vy *= Math.pow(0.85, delta * 60);
+			x += vx * delta;
+			y += vy * delta + com.badlogic.gdx.math.MathUtils.sin(tiempoAturdido * 4f) * 0.02f;
+			setX(x);
 			setY(y);
 			return;
 		}
@@ -72,39 +81,79 @@ public class TiburonAzul extends Personaje {
 			}
 		}
 
-		// Si el jugador está en rango, acechar y perseguir
-		float vel = 2.8f;
+		tiempoPatrulla += delta;
+
+		// 1. Verificar si hay una Ballena gigante cerca (temor natural del tiburón)
+		boolean huyendoDeBallena = false;
 		if (personajes != null) {
 			for (Personaje p : personajes) {
-				if (p instanceof Jugador && ((Jugador) p).isVivo()) {
-					float distX = p.getX() - x;
-					float distY = p.getY() - y;
-					float dist = (float) Math.sqrt(distX * distX + distY * distY);
-					if (dist < 8.0f) {
-						vel = 4.2f;
-						direccion = (distX < 0) ? -1 : 1;
-						// Desplazamiento vertical suave para cazar al pez en 2D submarino
-						y += Math.signum(distY) * 1.5f * delta;
-						setY(y);
-						if (dist < 2.0f) {
-							muerde = true;
-							tiempoMuerde = 0.8f;
-						}
+				if (p instanceof Ballena) {
+					float dX = x - p.getX();
+					float dY = y - p.getY();
+					float distBallena = (float) Math.hypot(dX, dY);
+					if (distBallena < 10.0f) {
+						huyendoDeBallena = true;
+						float norm = Math.max(0.1f, distBallena);
+						float targetVx = (dX / norm) * 3.8f;
+						float targetVy = (dY / norm) * 2.2f;
+						vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 4.0f * delta);
+						vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 4.0f * delta);
 						break;
 					}
 				}
 			}
 		}
 
-		x += direccion * vel * delta;
-		if (Math.abs(x - spawnX) > rangoPatrulla) {
-			direccion = (x > spawnX) ? -1 : 1;
+		// 2. Si no huye, buscar y cazar al jugador o patrullar
+		if (!huyendoDeBallena) {
+			boolean cazando = false;
+			if (personajes != null) {
+				for (Personaje p : personajes) {
+					if (p instanceof Jugador && ((Jugador) p).isVivo()) {
+						float distX = p.getX() - x;
+						float distY = p.getY() - y;
+						float dist = (float) Math.hypot(distX, distY);
+						if (dist < 9.5f) {
+							cazando = true;
+							float norm = Math.max(0.1f, dist);
+							float targetVx = (distX / norm) * 4.2f;
+							float targetVy = (distY / norm) * 3.0f;
+							vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 5.0f * delta);
+							vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 5.0f * delta);
+
+							if (dist < 2.2f) {
+								muerde = true;
+								tiempoMuerde = 0.8f;
+							}
+							break;
+						}
+					}
+				}
+			}
+
+			if (!cazando) {
+				// Nado patrullaje orgánico con vaivén senoidal
+				if (Math.abs(x - spawnX) > rangoPatrulla) {
+					direccion = (x > spawnX) ? -1 : 1;
+				}
+				float targetVx = direccion * 2.5f;
+				float targetVy = com.badlogic.gdx.math.MathUtils.sin(tiempoPatrulla * 1.6f) * 1.1f;
+				vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 3.2f * delta);
+				vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 3.2f * delta);
+			}
 		}
 
-		// La textura natural del tiburón mira hacia la DERECHA.
-		// Si se mueve hacia la izquierda (direccion < 0), debe voltearse (flipX = true).
-		setFlip(direccion < 0, false);
+		x += vx * delta;
+		y += vy * delta;
 		setX(x);
+		setY(y);
+
+		// Orientación e inclinación 360° fluida (la textura mira a la derecha por defecto)
+		orientarHaciaDireccion(vx, vy, true, delta);
+
+		if (cuerpo != null) {
+			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
+		}
 
 		if (muerde) {
 			animacion = animacion2;

@@ -160,6 +160,14 @@ public class SistemaBurbujas {
             float tam = MathUtils.random(0.08f, 0.26f);
             float vy = MathUtils.random(1.2f, 2.8f);
             spawnBurbuja(spawnX, spawnY, MathUtils.random(-0.2f, 0.2f), vy, tam, MathUtils.random(4f, 8f), null);
+
+            // Generación de plancton / nieve marina bioluminiscente en suspensión
+            if (MathUtils.randomBoolean(0.45f)) {
+                float px = camX + MathUtils.random(-viewportWidthMetros / 2f, viewportWidthMetros / 2f);
+                float py = camY + MathUtils.random(-viewportHeightMetros / 2f, viewportHeightMetros / 2f);
+                Color cPlancton = new Color(0.35f, 0.9f, 0.85f, MathUtils.random(0.3f, 0.65f));
+                spawnBurbuja(px, py, MathUtils.random(-0.15f, 0.15f), MathUtils.random(0.15f, 0.5f), MathUtils.random(0.04f, 0.08f), MathUtils.random(4f, 7f), cPlancton);
+            }
         }
 
         // 2. Actualizar burbujas activas

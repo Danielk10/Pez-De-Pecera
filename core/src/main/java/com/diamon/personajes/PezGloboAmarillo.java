@@ -64,15 +64,23 @@ public class PezGloboAmarillo extends Personaje {
 		setSize(anchoBase * escalaInflado, altoBase * escalaInflado);
 
 		float vel = inflado ? 1.2f : 2.4f; // Más lento cuando está inflado
-		x += direccion * vel * delta;
+		float vx = direccion * vel;
+		float vy = com.badlogic.gdx.math.MathUtils.sin(tiempo * 2.0f) * 0.6f;
+		x += vx * delta;
+		y += vy * delta;
 		if (Math.abs(x - spawnX) > rangoPatrulla) {
 			direccion = (x > spawnX) ? -1 : 1;
 		}
 
-		// La textura natural del pez globo mira hacia la IZQUIERDA.
-		// Al desplazarse hacia la derecha (direccion > 0), debe voltearse horizontalmente.
-		setFlip(direccion > 0, false);
 		setX(x);
+		setY(y);
+
+		// Orientación suave: la textura natural del pez globo mira hacia la IZQUIERDA
+		orientarHaciaDireccion(vx, vy, false, delta);
+
+		if (cuerpo != null) {
+			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
+		}
 	}
 
 	@Override

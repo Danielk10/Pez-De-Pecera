@@ -613,36 +613,17 @@ public class Jugador extends Personaje {
 				tiempoIdle = 0f;
 			}
 
-			// Orientación horizontal: la textura pez.png mira hacia la DERECHA
-			if (velocidadX < -0.15f) {
-				setFlip(true, false);
-			} else if (velocidadX > 0.15f) {
-				setFlip(false, false);
-			}
+			// Orientación e inclinación 360° fluida (estilo Hungry Shark)
+			orientarHaciaDireccion(velocidadX, velocidadY, true, delta);
 
-			// Inclinación hidrodinámica según vector vertical
-			float pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(velocidadY * 3.5f, -18f, 18f);
-			if (isFlipX()) {
-				pitchObjetivo = -pitchObjetivo;
-			}
-			setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.25f));
+			// Delimitación libre en el océano abierto (sin atrapar al jugador en un recuadro de cámara)
+			float anchoOceano = 300f;
+			float altoOceano = 68f;
+			x = com.badlogic.gdx.math.MathUtils.clamp(x, 0.5f, anchoOceano - getWidth() - 0.5f);
+			y = com.badlogic.gdx.math.MathUtils.clamp(y, 0.8f, altoOceano - getHeight() - 0.5f);
 
-			// Delimitación dentro de límites de cámara / pantalla
-			if (camara != null) {
-				float medioAncho = Juego.ANCHO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
-				float medioAlto = Juego.ALTO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
-				if (x <= camara.position.x - medioAncho) {
-					x = camara.position.x - medioAncho;
-				}
-				if (x >= camara.position.x + medioAncho - getWidth()) {
-					x = camara.position.x + medioAncho - getWidth();
-				}
-				if (y <= camara.position.y - medioAlto + 0.2f) {
-					y = camara.position.y - medioAlto + 0.2f;
-				}
-				if (y >= camara.position.y + medioAlto - getHeight() - 0.2f) {
-					y = camara.position.y + medioAlto - getHeight() - 0.2f;
-				}
+			if (cuerpo != null) {
+				cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
 			}
 
 			if (choque) {

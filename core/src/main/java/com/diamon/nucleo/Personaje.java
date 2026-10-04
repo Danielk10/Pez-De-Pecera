@@ -37,7 +37,7 @@ public abstract class Personaje extends Sprite {
 
 	protected Animation<TextureRegion> animacion;
 
-	private float tiempo;
+	protected float tiempo;
 
 	private boolean animar;
 
@@ -418,9 +418,14 @@ public abstract class Personaje extends Sprite {
 	public void dibujar(Batch pincel, float delta) {
 
 		if (animar && animacion != null) {
-
-			setRegion(animacion.getKeyFrame(tiempo, true));
-			super.setFlip(flipX, flipY);
+			TextureRegion frame = animacion.getKeyFrame(tiempo, true);
+			setRegion(frame);
+			if (flipX != isFlipX()) {
+				flip(true, false);
+			}
+			if (flipY != isFlipY()) {
+				flip(false, true);
+			}
 		}
 
 		draw(pincel);
@@ -431,7 +436,43 @@ public abstract class Personaje extends Sprite {
 	public void setFlip(boolean x, boolean y) {
 		this.flipX = x;
 		this.flipY = y;
-		super.setFlip(x, y);
+		if (isFlipX() != x) {
+			flip(true, false);
+		}
+		if (isFlipY() != y) {
+			flip(false, true);
+		}
+	}
+
+	/**
+	 * Orienta e inclina suavemente la criatura marina hacia su vector de movimiento (360°),
+	 * aplicando volteo horizontal correcto e inclinación hidrodinámica (estilo Hungry Shark).
+	 */
+	public void orientarHaciaDireccion(float vx, float vy, boolean miraDerechaPorDefecto, float delta) {
+		float rapidez = (float) Math.hypot(vx, vy);
+		if (rapidez < 0.12f) {
+			// En reposo, retornar gradualmente a rotación horizontal (0°)
+			setRotation(MathUtils.lerpAngleDeg(getRotation(), 0f, 3.5f * delta));
+			return;
+		}
+
+		float anguloMov = MathUtils.atan2(vy, vx) * MathUtils.radDeg;
+		boolean haciaDerecha = (vx >= 0f);
+		boolean debeVoltear = miraDerechaPorDefecto ? !haciaDerecha : haciaDerecha;
+
+		float rotObjetivo;
+		if (haciaDerecha) {
+			rotObjetivo = MathUtils.clamp(anguloMov, -80f, 80f);
+		} else {
+			rotObjetivo = 180f - anguloMov;
+			while (rotObjetivo > 180f) rotObjetivo -= 360f;
+			while (rotObjetivo < -180f) rotObjetivo += 360f;
+			rotObjetivo = MathUtils.clamp(rotObjetivo, -80f, 80f);
+		}
+
+		setFlip(debeVoltear, false);
+		float nuevaRot = MathUtils.lerpAngleDeg(getRotation(), rotObjetivo, 7.5f * delta);
+		setRotation(nuevaRot);
 	}
 
 	@Override

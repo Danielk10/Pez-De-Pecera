@@ -64,15 +64,23 @@ public class PezGloboNaranja extends Personaje {
 		setSize(anchoBase * escalaInflado, altoBase * escalaInflado);
 
 		float vel = inflado ? 1.2f : 2.2f;
-		y += direccionY * vel * delta;
+		float vy = direccionY * vel;
+		float vx = com.badlogic.gdx.math.MathUtils.sin(tiempo * 1.5f) * 0.7f;
+		x += vx * delta;
+		y += vy * delta;
 		if (Math.abs(y - spawnY) > rangoPatrulla) {
 			direccionY = (y > spawnY) ? -1 : 1;
 		}
 
-		// Inclinación hidrodinámica vertical
-		float pitch = direccionY > 0 ? 10f : -10f;
-		setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitch, 0.15f));
+		setX(x);
 		setY(y);
+
+		// Orientación suave: la textura natural del pez globo mira hacia la IZQUIERDA
+		orientarHaciaDireccion(vx, vy, false, delta);
+
+		if (cuerpo != null) {
+			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
+		}
 	}
 
 	@Override
