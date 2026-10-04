@@ -34,11 +34,16 @@ import com.diamon.nucleo.Personaje;
 import com.diamon.nucleo.ZonaCorriente;
 import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
+import com.diamon.personajes.Ballena;
+import com.diamon.personajes.CardumenKrill;
+import com.diamon.personajes.ErizoMarino;
+import com.diamon.personajes.OstraGigante;
 import com.diamon.personajes.PezAngel;
 import com.diamon.personajes.PezGloboAmarillo;
 import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.TiburonAzul;
+import com.diamon.personajes.TortugaMarina;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -364,6 +369,46 @@ public class CargadorNivelTmx {
                         pu.setPosition(x, y);
                         listaPersonajes.add(pu);
                     }
+                }
+            } else if (name.equalsIgnoreCase("Ballena")) {
+                if (recurso.isLoaded("texturas/ballena.atlas", TextureAtlas.class)) {
+                    Ballena ballena = new Ballena(
+                            recurso.get("texturas/ballena.atlas", TextureAtlas.class).getRegions(),
+                            0.2f, Animation.PlayMode.LOOP, pantalla, 240, 120, Personaje.ESTATICO);
+                    ballena.setPosition(x, y);
+                    listaPersonajes.add(ballena);
+                }
+            } else if (name.equalsIgnoreCase("Ostra") || name.equalsIgnoreCase("OstraGigante")) {
+                if (recurso.isLoaded("texturas/ostra.atlas", TextureAtlas.class)) {
+                    OstraGigante ostra = new OstraGigante(
+                            recurso.get("texturas/ostra.atlas", TextureAtlas.class).getRegions(),
+                            0.25f, Animation.PlayMode.LOOP, pantalla, 64, 64, Personaje.ESTATICO);
+                    ostra.setPosition(x, y);
+                    listaPersonajes.add(ostra);
+                }
+            } else if (name.equalsIgnoreCase("Tortuga") || name.equalsIgnoreCase("TortugaMarina")) {
+                if (recurso.isLoaded("texturas/tortuga.atlas", TextureAtlas.class)) {
+                    TortugaMarina tortuga = new TortugaMarina(
+                            recurso.get("texturas/tortuga.atlas", TextureAtlas.class).getRegions(),
+                            0.15f, Animation.PlayMode.LOOP, pantalla, 96, 72, Personaje.ESTATICO);
+                    tortuga.setPosition(x, y);
+                    listaPersonajes.add(tortuga);
+                }
+            } else if (name.equalsIgnoreCase("Krill") || name.equalsIgnoreCase("CardumenKrill")) {
+                if (recurso.isLoaded("texturas/krill.png", Texture.class)) {
+                    CardumenKrill krill = new CardumenKrill(
+                            recurso.get("texturas/krill.png", Texture.class),
+                            pantalla, 20);
+                    krill.setPosition(x, y);
+                    listaPersonajes.add(krill);
+                }
+            } else if (name.equalsIgnoreCase("Erizo") || name.equalsIgnoreCase("ErizoMarino")) {
+                if (recurso.isLoaded("texturas/erizo.png", Texture.class)) {
+                    ErizoMarino erizo = new ErizoMarino(
+                            recurso.get("texturas/erizo.png", Texture.class),
+                            pantalla, 40, 40, Personaje.ESTATICO);
+                    erizo.setPosition(x, y);
+                    listaPersonajes.add(erizo);
                 }
             }
         }

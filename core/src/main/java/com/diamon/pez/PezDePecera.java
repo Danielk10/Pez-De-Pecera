@@ -105,6 +105,12 @@ public class PezDePecera extends Juego {
 
         recurso.load("texturas/tiburon.atlas", TextureAtlas.class);
 
+        recurso.load("texturas/ballena.atlas", TextureAtlas.class);
+        recurso.load("texturas/ostra.atlas", TextureAtlas.class);
+        recurso.load("texturas/tortuga.atlas", TextureAtlas.class);
+        recurso.load("texturas/krill.png", Texture.class);
+        recurso.load("texturas/erizo.png", Texture.class);
+
         recurso.load("audios/explosion.ogg", Sound.class);
 
         recurso.load("audios/musica.ogg", Music.class);

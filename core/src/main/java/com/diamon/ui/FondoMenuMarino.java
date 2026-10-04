@@ -208,6 +208,42 @@ public class FondoMenuMarino extends Actor {
             medusa.amplitudOndulacion = 35f;
             criaturas.add(medusa);
         }
+
+        // --- 6. Tortuga Marina (deslizándose plácidamente en las profundidades medias) ---
+        if (recurso.isLoaded("texturas/tortuga.atlas", TextureAtlas.class)) {
+            TextureAtlas atlas = recurso.get("texturas/tortuga.atlas", TextureAtlas.class);
+            CriaturaMenu tortuga = new CriaturaMenu();
+            tortuga.animacion = new Animation<TextureRegion>(0.16f, atlas.getRegions(), Animation.PlayMode.LOOP);
+            tortuga.anchoBase = 96f;
+            tortuga.altoBase = 72f;
+            tortuga.escala = 0.85f;
+            tortuga.miraDerechaPorDefecto = true;
+            tortuga.tinteProfundidad.set(0.9f, 1f, 0.9f, 0.85f);
+            tortuga.reiniciar(false);
+            tortuga.x = 150f;
+            tortuga.baseY = 90f;
+            tortuga.velocidadX = 24f;
+            tortuga.amplitudOndulacion = 18f;
+            criaturas.add(tortuga);
+        }
+
+        // --- 7. Ballena Azul (en la lejanía profunda, majestuosa y colosal) ---
+        if (recurso.isLoaded("texturas/ballena.atlas", TextureAtlas.class)) {
+            TextureAtlas atlas = recurso.get("texturas/ballena.atlas", TextureAtlas.class);
+            CriaturaMenu ballena = new CriaturaMenu();
+            ballena.animacion = new Animation<TextureRegion>(0.22f, atlas.getRegions(), Animation.PlayMode.LOOP);
+            ballena.anchoBase = 240f;
+            ballena.altoBase = 120f;
+            ballena.escala = 0.90f;
+            ballena.miraDerechaPorDefecto = true;
+            ballena.tinteProfundidad.set(0.45f, 0.65f, 0.90f, 0.45f); // Muy profunda en el océano
+            ballena.reiniciar(false);
+            ballena.x = -250f;
+            ballena.baseY = 310f;
+            ballena.velocidadX = 18f;
+            ballena.amplitudOndulacion = 14f;
+            criaturas.insert(0, ballena); // Renderizar detrás de todas las demás
+        }
     }
 
     @Override

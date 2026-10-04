@@ -264,33 +264,51 @@ def generate_tmx():
   <object name="PowerUp_Escudo" x="7350" y="1680" width="36" height="36"/>
   <object name="PowerUp_Turbo" x="8750" y="1500" width="36" height="36"/>
 
-  <!-- Fauna marina: Aliados (PezAngel), peces globo defensivos y depredadores -->
-  <!-- Zona 1: Cardumen inicial de peces ángel aliados -->
+  <!-- Fauna marina y Ecosistema Dinámico por Biomas -->
+  <!-- BIOMA 1: Arrecife de Coral Luminoso (x: 0 - 2400) -->
   <object name="PezAngel" x="650" y="1750" width="64" height="32"/>
-  <object name="PezAngel" x="750" y="1720" width="64" height="32"/>
+  <object name="CardumenKrill" x="800" y="1600" width="48" height="48"/>
+  <object name="PezAngel" x="1150" y="1680" width="64" height="32"/>
+  <object name="OstraGigante" x="1200" y="2048" width="64" height="64"/>
   <object name="PezGloboAmarillo" x="1400" y="1800" width="64" height="32"/>
-  <object name="Bomba" x="1800" y="1450" width="64" height="64"/>
-  <!-- Zona 2: Corrientes y arrecife intermedio -->
+  <object name="ErizoMarino" x="1550" y="2048" width="40" height="40"/>
+  <object name="TortugaMarina" x="1650" y="1520" width="96" height="72"/>
+  <object name="Bomba" x="1950" y="1450" width="64" height="64"/>
+
+  <!-- BIOMA 2: Bosque de Algas y Arrecife Rocoso (x: 2400 - 4600) -->
   <object name="PezAngel" x="2450" y="1550" width="64" height="32"/>
-  <object name="PezAngel" x="2580" y="1580" width="64" height="32"/>
+  <object name="CardumenKrill" x="2700" y="1400" width="48" height="48"/>
   <object name="PezGloboNaranja" x="2850" y="1720" width="96" height="64"/>
+  <object name="ErizoMarino" x="3180" y="2048" width="40" height="40"/>
   <object name="TiburonAzul" x="3300" y="1380" width="192" height="192"/>
+  <object name="OstraGigante" x="3500" y="2048" width="64" height="64"/>
   <object name="Pulpo" x="3750" y="1600" width="48" height="96"/>
   <object name="Bomba" x="4000" y="1300" width="64" height="64"/>
-  <!-- Zona 3: El Gran Geiser y cañón -->
+  <object name="TortugaMarina" x="4300" y="1450" width="96" height="72"/>
+
+  <!-- BIOMA 3: Fosa Abisal y Geiser Hidrotermal (x: 4600 - 6800) -->
   <object name="PezAngel" x="4600" y="1550" width="64" height="32"/>
+  <object name="ErizoMarino" x="4720" y="2048" width="40" height="40"/>
   <object name="PezGloboAmarillo" x="5100" y="1750" width="64" height="32"/>
+  <object name="CardumenKrill" x="5300" y="1350" width="48" height="48"/>
   <object name="TiburonAzul" x="5750" y="1350" width="192" height="192"/>
+  <object name="OstraGigante" x="5900" y="2048" width="64" height="64"/>
+  <object name="ErizoMarino" x="6160" y="2048" width="40" height="40"/>
   <object name="Pulpo" x="6250" y="1650" width="48" height="96"/>
   <object name="Bomba" x="6700" y="1400" width="64" height="64"/>
-  <!-- Zona 4: Santuario y aguas profundas -->
-  <object name="PezAngel" x="7150" y="1620" width="64" height="32"/>
-  <object name="PezAngel" x="7300" y="1650" width="64" height="32"/>
+
+  <!-- BIOMA 4: Santuario de la Ballena y Mar Abierto (x: 6800 - 9600) -->
+  <object name="TortugaMarina" x="7100" y="1400" width="96" height="72"/>
+  <object name="PezAngel" x="7250" y="1620" width="64" height="32"/>
   <object name="PezGloboNaranja" x="7550" y="1720" width="96" height="64"/>
+  <object name="ErizoMarino" x="7720" y="2048" width="40" height="40"/>
+  <object name="Ballena" x="7800" y="900" width="240" height="120"/>
   <object name="Pulpo" x="8000" y="1600" width="48" height="96"/>
-  <object name="TiburonAzul" x="8600" y="1380" width="192" height="192"/>
-  <object name="Bomba" x="8950" y="1450" width="64" height="64"/>
-  <object name="TiburonAzul" x="9250" y="1450" width="192" height="192"/>
+  <object name="CardumenKrill" x="8300" y="1500" width="48" height="48"/>
+  <object name="OstraGigante" x="8450" y="2048" width="64" height="64"/>
+  <object name="TiburonAzul" x="8700" y="1380" width="192" height="192"/>
+  <object name="Bomba" x="9000" y="1450" width="64" height="64"/>
+  <object name="Ballena" x="9150" y="1100" width="240" height="120"/>
  </objectgroup>
 
  <objectgroup id="7" name="luces">

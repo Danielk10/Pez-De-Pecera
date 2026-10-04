@@ -18,6 +18,11 @@ import com.diamon.personajes.PezGloboAmarillo;
 import com.diamon.personajes.PezGloboNaranja;
 import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.TiburonAzul;
+import com.diamon.personajes.Ballena;
+import com.diamon.personajes.CardumenKrill;
+import com.diamon.personajes.ErizoMarino;
+import com.diamon.personajes.OstraGigante;
+import com.diamon.personajes.TortugaMarina;
 
 import box2dLight.RayHandler;
 
@@ -36,7 +41,32 @@ public class FabricaActores {
         String lower = tipo.toLowerCase();
         Personaje p = null;
 
-        if (lower.contains("pulpo")) {
+        if (lower.contains("ballena")) {
+            if (recurso.isLoaded("texturas/ballena.atlas", TextureAtlas.class)) {
+                p = new Ballena(recurso.get("texturas/ballena.atlas", TextureAtlas.class).getRegions(),
+                        0.14f, Animation.PlayMode.LOOP, pantalla, 384, 192, Personaje.CINESTECICO);
+            }
+        } else if (lower.contains("ostra")) {
+            if (recurso.isLoaded("texturas/ostra.atlas", TextureAtlas.class)) {
+                p = new OstraGigante(recurso.get("texturas/ostra.atlas", TextureAtlas.class).getRegions(),
+                        pantalla, 96, 96, Personaje.ESTATICO);
+            }
+        } else if (lower.contains("krill")) {
+            if (recurso.isLoaded("texturas/krill.png", Texture.class)) {
+                p = new CardumenKrill(recurso.get("texturas/krill.png", Texture.class),
+                        pantalla, 120, 120, Personaje.ESTATICO);
+            }
+        } else if (lower.contains("tortuga")) {
+            if (recurso.isLoaded("texturas/tortuga.atlas", TextureAtlas.class)) {
+                p = new TortugaMarina(recurso.get("texturas/tortuga.atlas", TextureAtlas.class).getRegions(),
+                        0.12f, Animation.PlayMode.LOOP, pantalla, 128, 96, Personaje.CINESTECICO);
+            }
+        } else if (lower.contains("erizo")) {
+            if (recurso.isLoaded("texturas/erizo.png", Texture.class)) {
+                p = new ErizoMarino(recurso.get("texturas/erizo.png", Texture.class),
+                        pantalla, 48, 48, Personaje.ESTATICO);
+            }
+        } else if (lower.contains("pulpo")) {
             if (recurso.isLoaded("texturas/pulpo.atlas", TextureAtlas.class)) {
                 p = new Pulpo(recurso.get("texturas/pulpo.atlas", TextureAtlas.class).getRegions(),
                         0.07f, Animation.PlayMode.LOOP, pantalla, 48, 96, Personaje.ESTATICO);

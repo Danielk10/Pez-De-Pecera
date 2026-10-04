@@ -1,0 +1,33 @@
+ballena.png
+size: 768, 384
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+ballena1
+  rotate: false
+  xy: 0, 0
+  size: 384, 192
+  orig: 384, 192
+  offset: 0, 0
+  index: -1
+ballena2
+  rotate: false
+  xy: 384, 0
+  size: 384, 192
+  orig: 384, 192
+  offset: 0, 0
+  index: -1
+ballena3
+  rotate: false
+  xy: 0, 192
+  size: 384, 192
+  orig: 384, 192
+  offset: 0, 0
+  index: -1
+ballena4
+  rotate: false
+  xy: 384, 192
+  size: 384, 192
+  orig: 384, 192
+  offset: 0, 0
+  index: -1

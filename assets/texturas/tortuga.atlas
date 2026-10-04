@@ -1,0 +1,33 @@
+tortuga.png
+size: 512, 96
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+tortuga1
+  rotate: false
+  xy: 0, 0
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
+tortuga2
+  rotate: false
+  xy: 128, 0
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
+tortuga3
+  rotate: false
+  xy: 256, 0
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
+tortuga4
+  rotate: false
+  xy: 384, 0
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
