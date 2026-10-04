@@ -31,26 +31,55 @@ public class PezGloboAmarillo extends Personaje {
 	private float spawnX = -1;
 	private float rangoPatrulla = 6.0f;
 	private int direccion = -1;
+	private float escalaInflado = 1.0f;
+	private boolean inflado = false;
+	private float anchoBase = 64f;
+	private float altoBase = 32f;
 
 	@Override
 	public void actualizar(float delta) {
 		super.actualizar(delta);
 		if (spawnX < 0) {
 			spawnX = x;
+			anchoBase = getWidth() * com.diamon.nucleo.Juego.UNIDAD_DEL_MUNDO;
+			altoBase = getHeight() * com.diamon.nucleo.Juego.UNIDAD_DEL_MUNDO;
 		}
 
-		x += direccion * 2.8f * delta;
-		if (Math.abs(x - spawnX) > rangoPatrulla) {
-			direccion = -direccion;
-			setFlip(direccion > 0, false);
+		// Detección de proximidad del jugador para inflado defensivo con púas
+		inflado = false;
+		if (personajes != null) {
+			for (Personaje p : personajes) {
+				if (p instanceof Jugador && ((Jugador) p).isVivo()) {
+					float dist = (float) Math.hypot(p.getX() - x, p.getY() - y);
+					if (dist < 3.2f) {
+						inflado = true;
+						break;
+					}
+				}
+			}
 		}
+
+		float escalaObjetivo = inflado ? 1.6f : 1.0f;
+		escalaInflado = com.badlogic.gdx.math.MathUtils.lerp(escalaInflado, escalaObjetivo, 5.0f * delta);
+		setSize(anchoBase * escalaInflado, altoBase * escalaInflado);
+
+		float vel = inflado ? 1.2f : 2.4f; // Más lento cuando está inflado
+		x += direccion * vel * delta;
+		if (Math.abs(x - spawnX) > rangoPatrulla) {
+			direccion = (x > spawnX) ? -1 : 1;
+		}
+
+		// La textura natural del pez globo mira hacia la IZQUIERDA.
+		// Al desplazarse hacia la derecha (direccion > 0), debe voltearse horizontalmente.
+		setFlip(direccion > 0, false);
 		setX(x);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
 		if (personaje instanceof Jugador) {
-			((Jugador) personaje).recibirDanio(1);
+			int danio = inflado ? 2 : 1;
+			((Jugador) personaje).recibirDanio(danio);
 		}
 	}
 

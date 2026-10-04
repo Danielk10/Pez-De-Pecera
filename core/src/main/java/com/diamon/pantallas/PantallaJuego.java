@@ -189,22 +189,51 @@ public class PantallaJuego extends Pantalla {
 
 		tablaHUD.add(hudInferior).fillX().pad(20).bottom();
 
+		tablaHUD.setTouchable(Touchable.childrenOnly);
 		nivel.addActor(tablaHUD);
 
-		if (Gdx.app.getType() == Gdx.app.getType().Android) {
-			Image btnImpulso = new Image(atlasIconos.findRegion("iconoimpulso"));
-			btnImpulso.setSize(84, 84);
-			btnImpulso.setPosition(Juego.ANCHO_PANTALLA - 110, 24);
-			btnImpulso.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					if (jugador != null) {
-						jugador.darImpulso();
-					}
+		// Botones táctiles de habilidades submarinas (disponibles para Android y Desktop)
+		Image btnImpulso = new Image(atlasIconos.findRegion("iconoimpulso"));
+		btnImpulso.setSize(68, 68);
+		btnImpulso.setPosition(Juego.ANCHO_PANTALLA - 88, 20);
+		btnImpulso.setColor(1f, 1f, 1f, 0.85f);
+		btnImpulso.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (jugador != null && !pausar) {
+					jugador.darImpulso();
 				}
-			});
-			nivel.addActor(btnImpulso);
-		}
+			}
+		});
+		nivel.addActor(btnImpulso);
+
+		Image btnEscudo = new Image(atlasIconos.findRegion("iconoescudo"));
+		btnEscudo.setSize(58, 58);
+		btnEscudo.setPosition(Juego.ANCHO_PANTALLA - 160, 24);
+		btnEscudo.setColor(1f, 1f, 1f, 0.85f);
+		btnEscudo.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (jugador != null && !pausar) {
+					jugador.activarEscudo();
+				}
+			}
+		});
+		nivel.addActor(btnEscudo);
+
+		Image btnSonar = new Image(atlasIconos.findRegion("iconofaro"));
+		btnSonar.setSize(58, 58);
+		btnSonar.setPosition(Juego.ANCHO_PANTALLA - 84, 98);
+		btnSonar.setColor(1f, 1f, 1f, 0.85f);
+		btnSonar.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (jugador != null && !pausar) {
+					jugador.activarSonar();
+				}
+			}
+		});
+		nivel.addActor(btnSonar);
 
 		pausa = new Image(atlasIconos.findRegion("iconopausa"));
 
@@ -415,6 +444,8 @@ public class PantallaJuego extends Pantalla {
 	@Override
 	public void eventos() {
 
+		configurarInputJuego();
+
 		pausa.addListener(new ClickListener() {
 
 			@SuppressWarnings("static-access")
@@ -608,37 +639,36 @@ public class PantallaJuego extends Pantalla {
 	}
 
 	private void configurarInputJuego() {
-		if (!pausar) {
+		nivel.addListener(new InputListener() {
 
-			nivel.addListener(new InputListener() {
+			@Override
+			public boolean handle(Event ev) {
+				return super.handle(ev);
+			}
 
-				@Override
-				public boolean handle(Event ev) {
-
-					return super.handle(ev);
+			@Override
+			public boolean touchDown(InputEvent ev, float x, float y, int puntero, int boton) {
+				if (pausar) {
+					return false;
 				}
 
-				@Override
-				public boolean touchDown(InputEvent ev, float x, float y, int puntero, int boton) {
-
-					if (editar) {
-						editor.toquePresionado(ev, x, y, puntero, boton);
-						return true;
-					}
-
-					cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
-
-					if (mundo.isIntro()) {
-
-						return true;
-
-					} else {
-
-						return jugador.toquePresionado(ev, x, y, puntero, boton);
-
-					}
-
+				if (editar) {
+					editor.toquePresionado(ev, x, y, puntero, boton);
+					return true;
 				}
+
+				if (ev.getTarget() != null && ev.getTarget() != nivel.getRoot() && ev.getTarget() != tablaHUD) {
+					return false;
+				}
+
+				cursor.setPosition(x + (camara.position.x * Juego.UNIDAD_DEL_MUNDO - Juego.ANCHO_PANTALLA / 2), y);
+
+				if (mundo.isIntro()) {
+					return true;
+				} else {
+					return jugador.toquePresionado(ev, x, y, puntero, boton);
+				}
+			}
 
 				@Override
 				public void touchUp(InputEvent ev, float x, float y, int puntero, int boton) {
@@ -860,7 +890,6 @@ public class PantallaJuego extends Pantalla {
 					return super.keyTyped(event, character);
 				}
 			});
-		}
 
 	}
 
@@ -1364,6 +1393,15 @@ public class PantallaJuego extends Pantalla {
 
 		}
 
+	}
+
+	public void emitirSonar(float x, float y) {
+		if (mundo instanceof com.diamon.escenarios.NivelSubmarino) {
+			com.diamon.escenarios.NivelSubmarino ns = (com.diamon.escenarios.NivelSubmarino) mundo;
+			if (ns.getSistemaBurbujas() != null) {
+				ns.getSistemaBurbujas().activarSonar(x, y);
+			}
+		}
 	}
 
 }

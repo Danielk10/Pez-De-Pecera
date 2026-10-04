@@ -67,7 +67,7 @@ public class FabricaActores {
             }
         } else if (lower.contains("algas")) {
             if (recurso.isLoaded("texturas/algas.png", Texture.class)) {
-                p = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Personaje.CINESTECICO);
+                p = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Personaje.ESTATICO);
             }
         } else if (lower.contains("perla")) {
             TextureRegion reg = null;

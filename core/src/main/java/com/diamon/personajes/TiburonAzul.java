@@ -47,6 +47,8 @@ public class TiburonAzul extends Personaje {
 	private float spawnX = -1;
 	private float rangoPatrulla = 9.0f;
 	private int direccion = -1;
+	private float tiempoAturdido = 0f;
+	private float tiempoMuerde = 0f;
 
 	@Override
 	public void actualizar(float delta) {
@@ -55,16 +57,39 @@ public class TiburonAzul extends Personaje {
 			spawnX = x;
 		}
 
-		// Si el jugador está en pantalla, perseguirlo activamente
-		float vel = 3.6f;
+		if (tiempoAturdido > 0) {
+			tiempoAturdido -= delta;
+			// Aturdido: flota levemente sin atacar
+			y += com.badlogic.gdx.math.MathUtils.sin(tiempoAturdido * 4f) * 0.02f;
+			setY(y);
+			return;
+		}
+
+		if (tiempoMuerde > 0) {
+			tiempoMuerde -= delta;
+			if (tiempoMuerde <= 0) {
+				muerde = false;
+			}
+		}
+
+		// Si el jugador está en rango, acechar y perseguir
+		float vel = 2.8f;
 		if (personajes != null) {
 			for (Personaje p : personajes) {
 				if (p instanceof Jugador && ((Jugador) p).isVivo()) {
-					float dist = Math.abs(p.getX() - x);
-					if (dist < 7.0f) {
-						vel = 5.2f;
-						direccion = (p.getX() < x) ? -1 : 1;
-						setFlip(direccion > 0, false);
+					float distX = p.getX() - x;
+					float distY = p.getY() - y;
+					float dist = (float) Math.sqrt(distX * distX + distY * distY);
+					if (dist < 8.0f) {
+						vel = 4.2f;
+						direccion = (distX < 0) ? -1 : 1;
+						// Desplazamiento vertical suave para cazar al pez en 2D submarino
+						y += Math.signum(distY) * 1.5f * delta;
+						setY(y);
+						if (dist < 2.0f) {
+							muerde = true;
+							tiempoMuerde = 0.8f;
+						}
 						break;
 					}
 				}
@@ -73,9 +98,12 @@ public class TiburonAzul extends Personaje {
 
 		x += direccion * vel * delta;
 		if (Math.abs(x - spawnX) > rangoPatrulla) {
-			direccion = -direccion;
-			setFlip(direccion > 0, false);
+			direccion = (x > spawnX) ? -1 : 1;
 		}
+
+		// La textura natural del tiburón mira hacia la DERECHA.
+		// Si se mueve hacia la izquierda (direccion < 0), debe voltearse (flipX = true).
+		setFlip(direccion < 0, false);
 		setX(x);
 
 		if (muerde) {
@@ -85,10 +113,21 @@ public class TiburonAzul extends Personaje {
 		}
 	}
 
+	public void aturdir(float duracion) {
+		this.tiempoAturdido = duracion;
+		this.muerde = false;
+		activarHitFlash(duracion, new com.badlogic.gdx.graphics.Color(0.5f, 0.8f, 1.0f, 1.0f));
+	}
+
+	public boolean isAturdido() {
+		return tiempoAturdido > 0;
+	}
+
 	@Override
 	public void colision(Personaje personaje) {
-		if (personaje instanceof Jugador) {
+		if (personaje instanceof Jugador && !isAturdido()) {
 			muerde = true;
+			tiempoMuerde = 0.8f;
 			((Jugador) personaje).recibirDanio(2);
 		}
 	}

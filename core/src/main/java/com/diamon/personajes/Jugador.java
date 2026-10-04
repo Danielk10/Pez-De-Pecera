@@ -23,6 +23,22 @@ public class Jugador extends Personaje {
 
 	private float deltaYTactil;
 
+	private float dirTactilX = 0f;
+
+	private float dirTactilY = 0f;
+
+	private float dirTeclasX = 0f;
+
+	private float dirTeclasY = 0f;
+
+	private float tiempoIdle = 0f;
+
+	private boolean tocando = false;
+
+	private float toqueActualX = 0f;
+
+	private float toqueActualY = 0f;
+
 	private float x1;
 
 	private float y1;
@@ -344,24 +360,28 @@ public class Jugador extends Personaje {
 		switch (key) {
 
 		case Keys.LEFT:
+		case Keys.A:
 
 			izquierda = true;
 
 			break;
 
 		case Keys.RIGHT:
+		case Keys.D:
 
 			derecha = true;
 
 			break;
 
 		case Keys.UP:
+		case Keys.W:
 
 			arriba = true;
 
 			break;
 
 		case Keys.DOWN:
+		case Keys.S:
 
 			abajo = true;
 
@@ -372,6 +392,18 @@ public class Jugador extends Personaje {
 		case Keys.SHIFT_RIGHT:
 
 			darImpulso();
+
+			break;
+
+		case Keys.E:
+
+			activarSonar();
+
+			break;
+
+		case Keys.Q:
+
+			activarEscudo();
 
 			break;
 
@@ -393,24 +425,28 @@ public class Jugador extends Personaje {
 		switch (key) {
 
 		case Keys.LEFT:
+		case Keys.A:
 
 			izquierda = false;
 
 			break;
 
 		case Keys.RIGHT:
+		case Keys.D:
 
 			derecha = false;
 
 			break;
 
 		case Keys.UP:
+		case Keys.W:
 
 			arriba = false;
 
 			break;
 
 		case Keys.DOWN:
+		case Keys.S:
 
 			abajo = false;
 
@@ -482,289 +518,54 @@ public class Jugador extends Personaje {
 
 	}
 
-	@SuppressWarnings("static-access")
+	private void actualizarVectorTactil(float screenX, float screenY) {
+		if (camara == null) return;
+		float fishScreenX = (this.x - camara.position.x) * Juego.UNIDAD_DEL_MUNDO + Juego.ANCHO_PANTALLA / 2f;
+		float fishScreenY = (this.y - camara.position.y) * Juego.UNIDAD_DEL_MUNDO + Juego.ALTO_PANTALLA / 2f;
+
+		float dx = screenX - fishScreenX;
+		float dy = screenY - fishScreenY;
+		float dist = (float) Math.hypot(dx, dy);
+
+		if (dist > 18f) {
+			float maxPull = 140f;
+			float intensidad = Math.min(1.0f, dist / maxPull);
+			dirTactilX = (dx / dist) * intensidad;
+			dirTactilY = (dy / dist) * intensidad;
+		} else {
+			dirTactilX = 0f;
+			dirTactilY = 0f;
+		}
+	}
+
 	public void toqueDeslizando(InputEvent ev, float x, float y, int puntero) {
-
 		if (!finNivel) {
-
-			if (Gdx.app.getType() == Gdx.app.getType().Android) {
-
-				if (dedos == 0) {
-
-					if (deltaToque) {
-
-						x1 = this.getX();
-
-						y1 = this.getY();
-
-						deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
-
-						deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
-
-						deltaToque = false;
-					}
-
-					float nuevoX = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
-					float nuevoY = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
-
-					if (nuevoX < this.x - 0.02f) {
-						setFlip(true, false);
-					} else if (nuevoX > this.x + 0.02f) {
-						setFlip(false, false);
-					}
-
-					float diffY = nuevoY - this.y;
-					float pitch = com.badlogic.gdx.math.MathUtils.clamp(diffY * 16f, -15f, 15f);
-					if (isFlipX()) {
-						pitch = -pitch;
-					}
-					setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitch, 0.25f));
-
-					x1 = nuevoX;
-					y1 = nuevoY;
-
-					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
-
-					}
-
-					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
-
-						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
-					}
-
-					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-							- 32 / Juego.UNIDAD_DEL_MUNDO)) {
-
-						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-								- 32 / Juego.UNIDAD_DEL_MUNDO);
-
-					}
-
-					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-							+ 32 / Juego.UNIDAD_DEL_MUNDO) {
-
-						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-								+ 32 / Juego.UNIDAD_DEL_MUNDO;
-
-					}
-
-					this.x = x1;
-
-					this.y = y1;
-
-				}
-
-			}
-
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-				x1 = x / Juego.UNIDAD_DEL_MUNDO - deltaXTactil;
-
-				y1 = y / Juego.UNIDAD_DEL_MUNDO - deltaYTactil;
-
-				if (x1 < this.x - 0.02f) {
-					setFlip(true, false);
-				} else if (x1 > this.x + 0.02f) {
-					setFlip(false, false);
-				}
-
-				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
-
-				}
-
-				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
-
-					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
-				}
-
-				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-						- 32 / Juego.UNIDAD_DEL_MUNDO)) {
-
-					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-							- 32 / Juego.UNIDAD_DEL_MUNDO);
-
-				}
-
-				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-						+ 32 / Juego.UNIDAD_DEL_MUNDO) {
-
-					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-							+ 32 / Juego.UNIDAD_DEL_MUNDO;
-
-				}
-
-				this.x = x1;
-
-				this.y = y1;
-
-			}
-
+			tocando = true;
+			toqueActualX = x;
+			toqueActualY = y;
+			actualizarVectorTactil(x, y);
 		}
-
 	}
 
-	@SuppressWarnings("static-access")
 	public boolean toqueLevantado(InputEvent ev, float x, float y, int puntero, int boton) {
-
-		if (!finNivel) {
-
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-				if (boton == 0) {
-
-					disparar = false;
-
-				}
-
-				if (boton == 1) {
-
-					dispararMisil = false;
-
-				}
-
-			}
-
-			if (Gdx.app.getType() == Gdx.app.getType().Android) {
-
-				deltaToque = true;
-
-				dedos--;
-
-				if (dedos <= 0) {
-
-					disparar = false;
-
-				}
-
-			}
-
-		}
-
+		tocando = false;
+		dirTactilX = 0f;
+		dirTactilY = 0f;
 		return true;
-
 	}
 
-	@SuppressWarnings("static-access")
 	public boolean toquePresionado(InputEvent ev, float x, float y, int puntero, int boton) {
-
 		if (!finNivel) {
-
-			if (Gdx.app.getType() == Gdx.app.getType().Android) {
-
-				dedos++;
-
-				if (dedos == 0) {
-
-					x1 = this.getX();
-
-					y1 = this.getY();
-
-					deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
-
-					deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
-
-					if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-						x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
-
-					}
-
-					if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-							- 32 / Juego.UNIDAD_DEL_MUNDO)) {
-
-						y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-								- 32 / Juego.UNIDAD_DEL_MUNDO);
-
-					}
-
-					if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-							+ 32 / Juego.UNIDAD_DEL_MUNDO) {
-
-						y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-								+ 32 / Juego.UNIDAD_DEL_MUNDO;
-
-					}
-					if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
-
-						x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
-					}
-
-					if (boton == 0) {
-
-						disparar = true;
-
-					}
-
-				}
-
-			}
-
-			if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-
-				if (dato.isDiparoAutomatico()) {
-
-					x1 = this.getX();
-
-					y1 = this.getY();
-
-					deltaXTactil = x / Juego.UNIDAD_DEL_MUNDO - x1;
-
-					deltaYTactil = y / Juego.UNIDAD_DEL_MUNDO - y1;
-
-				}
-
-				if (x1 <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-					x1 = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
-
-				}
-
-				if (y1 >= camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-						- 32 / Juego.UNIDAD_DEL_MUNDO)) {
-
-					y1 = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-							- 32 / Juego.UNIDAD_DEL_MUNDO);
-
-				}
-
-				if (y1 <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-						+ 32 / Juego.UNIDAD_DEL_MUNDO) {
-
-					y1 = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-							+ 32 / Juego.UNIDAD_DEL_MUNDO;
-
-				}
-				if (x1 >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
-
-					x1 = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
-				}
-
-				if (boton == 0) {
-
-					disparar = true;
-
-				}
-
-				if (boton == 1) {
-
-					dispararMisil = true;
-
-				}
-
-			}
-
+			tocando = true;
+			toqueActualX = x;
+			toqueActualY = y;
+			actualizarVectorTactil(x, y);
 		}
-
 		return true;
-
 	}
 
+	@Override
 	public void actualizar(float delta) {
-
 		super.actualizar(delta);
 
 		if (tiempoTurbo > 0) tiempoTurbo = Math.max(0f, tiempoTurbo - delta);
@@ -778,203 +579,88 @@ public class Jugador extends Personaje {
 			y += (corriente.getFuerza().y / com.diamon.nucleo.Constantes.PPM) * delta * 2.0f;
 		}
 
-		float multVelocidad = isTurboActivo() ? 1.75f : 1.0f;
+		if (!finNivel) {
+			if (tocando) {
+				actualizarVectorTactil(toqueActualX, toqueActualY);
+			}
 
-		if (velocidadX < -0.1f) {
-			setFlip(true, false);
-		} else if (velocidadX > 0.1f) {
-			setFlip(false, false);
-		}
+			float inputX = (dirTactilX != 0f) ? dirTactilX : dirTeclasX;
+			float inputY = (dirTactilY != 0f) ? dirTactilY : dirTeclasY;
 
-		float pitchObjetivo = 0f;
-		if (Math.abs(velocidadY) > 0.1f) {
-			pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(velocidadY * 1.5f, -15f, 15f);
+			float multTurbo = isTurboActivo() ? 1.85f : 1.0f;
+			float velMax = 5.2f * multTurbo;
+			float targetVx = inputX * velMax;
+			float targetVy = inputY * velMax;
+
+			float aceleracion = (inputX != 0 || inputY != 0) ? 8.0f : 3.5f;
+			velocidadX = com.badlogic.gdx.math.MathUtils.lerp(velocidadX, targetVx, aceleracion * delta);
+			velocidadY = com.badlogic.gdx.math.MathUtils.lerp(velocidadY, targetVy, aceleracion * delta);
+
+			if (inputX == 0 && inputY == 0) {
+				velocidadX *= Math.pow(0.88, delta * 60);
+				velocidadY *= Math.pow(0.88, delta * 60);
+			}
+
+			// Desplazamiento por velocidad propia
+			x += velocidadX * delta;
+			y += velocidadY * delta;
+
+			// Micro-flotabilidad en reposo (respiración acuática de Little Nemo)
+			if (Math.hypot(velocidadX, velocidadY) < 0.25f) {
+				tiempoIdle += delta;
+				y += com.badlogic.gdx.math.MathUtils.sin(tiempoIdle * 2.2f) * 0.035f * delta * 60f;
+			} else {
+				tiempoIdle = 0f;
+			}
+
+			// Orientación horizontal: la textura pez.png mira hacia la DERECHA
+			if (velocidadX < -0.15f) {
+				setFlip(true, false);
+			} else if (velocidadX > 0.15f) {
+				setFlip(false, false);
+			}
+
+			// Inclinación hidrodinámica según vector vertical
+			float pitchObjetivo = com.badlogic.gdx.math.MathUtils.clamp(velocidadY * 3.5f, -18f, 18f);
 			if (isFlipX()) {
 				pitchObjetivo = -pitchObjetivo;
 			}
-		}
-		float rotNueva = com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.2f);
-		setRotation(rotNueva);
+			setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitchObjetivo, 0.25f));
 
-		if (!finNivel) {
-
-			if (intro) {
-
-				if (!gefe) {
-
-					if (itemVelocidad) {
-
-						deltaXTactil -= velocidadCamaraItem / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
-
-					} else {
-
-						deltaXTactil -= Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
-
-					}
-
+			// Delimitación dentro de límites de cámara / pantalla
+			if (camara != null) {
+				float medioAncho = Juego.ANCHO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
+				float medioAlto = Juego.ALTO_PANTALLA / 2f / Juego.UNIDAD_DEL_MUNDO;
+				if (x <= camara.position.x - medioAncho) {
+					x = camara.position.x - medioAncho;
 				}
-
-			}
-
-			if (!gefe) {
-
-				if (itemVelocidad) {
-
-					x += velocidadCamaraItem / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
-
-				} else {
-
-					x += Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO / Juego.DELTA_A_PIXEL * delta;
-
+				if (x >= camara.position.x + medioAncho - getWidth()) {
+					x = camara.position.x + medioAncho - getWidth();
 				}
-
-			}
-
-			x += velocidadX / Juego.DELTA_A_PIXEL * delta;
-
-			y += velocidadY / Juego.DELTA_A_PIXEL * delta;
-
-			// cuerpo.setGravityScale(0);
-
-			/*
-			 * cuerpo.setLinearVelocity((Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO /
-			 * Juego.DELTA_A_PIXEL * delta) Juego.UNIDAD_DEL_MUNDO * (Juego.FPS /
-			 * Juego.UNIDAD_DEL_MUNDO) + velocidadX * Juego.UNIDAD_DEL_MUNDO, velocidadY *
-			 * Juego.UNIDAD_DEL_MUNDO);
-			 */
-
-			if (x >= camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth())) {
-
-				x = camara.position.x + (Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getWidth());
-
-			}
-
-			if (x <= camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO) {
-
-				if (intro) {
-
-					x = camara.position.x - Juego.ANCHO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO;
-
+				if (y <= camara.position.y - medioAlto + 0.2f) {
+					y = camara.position.y - medioAlto + 0.2f;
 				}
-
-			}
-
-			if (y >= camara.position.y
-					+ (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight() - 32 / Juego.UNIDAD_DEL_MUNDO)) {
-
-				y = camara.position.y + (Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO - getHeight()
-						- 32 / Juego.UNIDAD_DEL_MUNDO);
-
-			}
-
-			if (y <= camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO
-					+ 32 / Juego.UNIDAD_DEL_MUNDO) {
-
-				y = camara.position.y - Juego.ALTO_PANTALLA / 2 / Juego.UNIDAD_DEL_MUNDO + 32 / Juego.UNIDAD_DEL_MUNDO;
-
-			}
-
-			for (int i = 0; i < personajes.size; i++) {
-
-				if (personajes.get(i) instanceof Terreno) {
-
-					if (getBoundingRectangle().overlaps(personajes.get(i).getBoundingRectangle())) {
-
-						if (velocidadX > 0) {
-
-							if (getX() + this.getWidth() - velocidadX
-									- Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO <= personajes.get(i).getX()) {
-
-								x = getX() - velocidadX;
-
-								velocidadX = 0;
-
-								break;
-
-							}
-
-						} else
-
-						{
-
-							if (getX() + this.getWidth() - Juego.VELOCIDAD_CAMARA / Juego.UNIDAD_DEL_MUNDO
-									- velocidadX <= personajes.get(i).getX()) {
-
-								x = getX();
-
-								velocidadX = 0;
-
-							}
-
-						}
-
-						if (getX() - velocidadX >= personajes.get(i).getX() + personajes.get(i).getWidth()) {
-
-							x = getX();
-
-							velocidadX = 0;
-
-							break;
-
-						}
-
-						if (getY() + this.getHeight() - velocidadY <= personajes.get(i).getY()) {
-
-							y = getY();
-
-							velocidadY = 0;
-
-							break;
-
-						}
-
-						if (getY() - velocidadY >= personajes.get(i).getY() + personajes.get(i).getHeight()) {
-
-							y = getY();
-
-							velocidadY = 0;
-
-							break;
-
-						}
-
-					}
-
+				if (y >= camara.position.y + medioAlto - getHeight() - 0.2f) {
+					y = camara.position.y + medioAlto - getHeight() - 0.2f;
 				}
-
 			}
 
 			if (choque) {
-
 				tiempoCuadroInmune += delta;
-
 				tiempoCuadroParpadeo += delta;
-
 				if (tiempoCuadroParpadeo / 0.08f >= 1) {
-
 					setAlpha(0);
-
 					tiempoCuadroParpadeo = 0;
-
 				} else {
-
 					setAlpha(1);
 				}
-
-				if (tiempoCuadroInmune / 3.33f >= 1) {
-
+				if (tiempoCuadroInmune / 2.5f >= 1) {
 					setAlpha(1);
-
 					inmune = false;
-
 					choque = false;
-
 					tiempoCuadroInmune = 0;
-
 				}
-
 			}
-
 		} else {
 
 			x += Juego.VELOCIDAD_CAMARA / Juego.DELTA_A_PIXEL * delta / Juego.UNIDAD_DEL_MUNDO;
@@ -1080,6 +766,20 @@ public class Jugador extends Personaje {
 
 	}
 
+	public float getVelocidadX() {
+		if (cuerpo != null) {
+			return cuerpo.getLinearVelocity().x;
+		}
+		return velocidadX;
+	}
+
+	public float getVelocidadY() {
+		if (cuerpo != null) {
+			return cuerpo.getLinearVelocity().y;
+		}
+		return velocidadY;
+	}
+
 	public void agregarCorriente(ZonaCorriente corriente) {
 		if (!corrientesActivas.contains(corriente, true)) {
 			corrientesActivas.add(corriente);
@@ -1177,7 +877,33 @@ public class Jugador extends Personaje {
 	}
 
 	public void darImpulso() {
-		activarPowerUp(TipoPowerUp.TURBO, 1.5f);
+		activarPowerUp(TipoPowerUp.TURBO, 2.0f);
+		float dir = isFlipX() ? -1f : 1f;
+		velocidadX = dir * 8.5f;
+		activarHitFlash(0.16f, new Color(1.0f, 0.8f, 0.2f, 1.0f));
+	}
+
+	public void activarSonar() {
+		activarPowerUp(TipoPowerUp.LINTERNA, 8.0f);
+		activarHitFlash(0.25f, new Color(0.3f, 0.85f, 1.0f, 1.0f));
+		if (personajes != null) {
+			for (Personaje p : personajes) {
+				if (p instanceof TiburonAzul) {
+					float d = (float) Math.hypot(p.getX() - x, p.getY() - y);
+					if (d < 10.0f) {
+						((TiburonAzul) p).aturdir(3.5f);
+					}
+				}
+			}
+		}
+		if (pantalla instanceof com.diamon.pantallas.PantallaJuego) {
+			((com.diamon.pantallas.PantallaJuego) pantalla).emitirSonar(x + getWidth() / 2f, y + getHeight() / 2f);
+		}
+	}
+
+	public void activarEscudo() {
+		activarPowerUp(TipoPowerUp.ESCUDO, 15.0f);
+		activarHitFlash(0.2f, new Color(0.25f, 0.75f, 1.0f, 1.0f));
 	}
 
 	public Array<ZonaCorriente> getCorrientesActivas() {

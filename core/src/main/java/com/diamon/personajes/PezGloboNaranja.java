@@ -31,25 +31,55 @@ public class PezGloboNaranja extends Personaje {
 	private float spawnY = -1;
 	private float rangoPatrulla = 5.0f;
 	private int direccionY = 1;
+	private float escalaInflado = 1.0f;
+	private boolean inflado = false;
+	private float anchoBase = 96f;
+	private float altoBase = 64f;
 
 	@Override
 	public void actualizar(float delta) {
 		super.actualizar(delta);
 		if (spawnY < 0) {
 			spawnY = y;
+			anchoBase = getWidth() * com.diamon.nucleo.Juego.UNIDAD_DEL_MUNDO;
+			altoBase = getHeight() * com.diamon.nucleo.Juego.UNIDAD_DEL_MUNDO;
 		}
 
-		y += direccionY * 2.6f * delta;
-		if (Math.abs(y - spawnY) > rangoPatrulla) {
-			direccionY = -direccionY;
+		// Detección de proximidad del jugador
+		inflado = false;
+		if (personajes != null) {
+			for (Personaje p : personajes) {
+				if (p instanceof Jugador && ((Jugador) p).isVivo()) {
+					float dist = (float) Math.hypot(p.getX() - x, p.getY() - y);
+					if (dist < 3.5f) {
+						inflado = true;
+						break;
+					}
+				}
+			}
 		}
+
+		float escalaObjetivo = inflado ? 1.5f : 1.0f;
+		escalaInflado = com.badlogic.gdx.math.MathUtils.lerp(escalaInflado, escalaObjetivo, 5.0f * delta);
+		setSize(anchoBase * escalaInflado, altoBase * escalaInflado);
+
+		float vel = inflado ? 1.2f : 2.2f;
+		y += direccionY * vel * delta;
+		if (Math.abs(y - spawnY) > rangoPatrulla) {
+			direccionY = (y > spawnY) ? -1 : 1;
+		}
+
+		// Inclinación hidrodinámica vertical
+		float pitch = direccionY > 0 ? 10f : -10f;
+		setRotation(com.badlogic.gdx.math.MathUtils.lerp(getRotation(), pitch, 0.15f));
 		setY(y);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
 		if (personaje instanceof Jugador) {
-			((Jugador) personaje).recibirDanio(1);
+			int danio = inflado ? 2 : 1;
+			((Jugador) personaje).recibirDanio(danio);
 		}
 	}
 

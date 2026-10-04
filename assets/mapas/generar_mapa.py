@@ -182,114 +182,146 @@ def generate_tmx():
  </objectgroup>
 
  <objectgroup id="6" name="spawns">
-  <!-- Spawn Jugador en aguas abiertas a la izquierda -->
-  <object id="30" name="SpawnJugador" x="320" y="1100" width="32" height="32"/>
+  <!-- Spawn Jugador en aguas someras cerca del lecho marino con arena y algas visibles -->
+  <object id="30" name="SpawnJugador" x="350" y="1800" width="32" height="32"/>
+
+  <!-- Bosque de algas marinas enraizadas en el lecho arenoso (y=2048 en TMX = lecho marino en LibGDX) -->
+  <object name="Algas" x="180" y="2048" width="96" height="64"/>
+  <object name="Algas" x="380" y="2048" width="96" height="64"/>
+  <object name="Algas" x="580" y="2048" width="96" height="64"/>
+  <object name="Algas" x="800" y="2048" width="96" height="64"/>
+  <object name="Algas" x="1050" y="2048" width="96" height="64"/>
+  <object name="Algas" x="1300" y="2048" width="96" height="64"/>
+  <object name="Algas" x="2050" y="2048" width="96" height="64"/>
+  <object name="Algas" x="2300" y="2048" width="96" height="64"/>
+  <object name="Algas" x="2600" y="2048" width="96" height="64"/>
+  <object name="Algas" x="2900" y="2048" width="96" height="64"/>
+  <object name="Algas" x="3450" y="2048" width="96" height="64"/>
+  <object name="Algas" x="3800" y="2048" width="96" height="64"/>
+  <object name="Algas" x="4150" y="2048" width="96" height="64"/>
+  <object name="Algas" x="4450" y="2048" width="96" height="64"/>
+  <object name="Algas" x="5050" y="2048" width="96" height="64"/>
+  <object name="Algas" x="5400" y="2048" width="96" height="64"/>
+  <object name="Algas" x="5800" y="2048" width="96" height="64"/>
+  <object name="Algas" x="6250" y="2048" width="96" height="64"/>
+  <object name="Algas" x="6650" y="2048" width="96" height="64"/>
+  <object name="Algas" x="7050" y="2048" width="96" height="64"/>
+  <object name="Algas" x="7450" y="2048" width="96" height="64"/>
+  <object name="Algas" x="8100" y="2048" width="96" height="64"/>
+  <object name="Algas" x="8450" y="2048" width="96" height="64"/>
+  <object name="Algas" x="8800" y="2048" width="96" height="64"/>
+  <object name="Algas" x="9150" y="2048" width="96" height="64"/>
 
   <!-- Perlas coleccionables (+100 pts) en curvas naturales de nado -->
-  <!-- Zona 1: Aguas de Arrecife -->
-  <object id="31" name="Perla" x="450" y="1100" width="24" height="24"/>
-  <object id="32" name="Perla" x="600" y="1000" width="24" height="24"/>
-  <object id="33" name="Perla" x="750" y="900" width="24" height="24"/>
-  <object id="34" name="Perla" x="950" y="850" width="24" height="24"/>
-  <object id="35" name="Perla" x="1150" y="900" width="24" height="24"/>
-  <object id="36" name="Perla" x="1350" y="1000" width="24" height="24"/>
-  <object id="37" name="Perla" x="1550" y="1100" width="24" height="24"/>
-  <object id="38" name="Perla" x="1750" y="1150" width="24" height="24"/>
-  <!-- Zona 2: Corrientes del Mediodía -->
-  <object id="39" name="Perla" x="2200" y="800" width="24" height="24"/>
-  <object id="40" name="Perla" x="2400" y="750" width="24" height="24"/>
-  <object id="41" name="Perla" x="2600" y="800" width="24" height="24"/>
-  <object id="42" name="Perla" x="2800" y="900" width="24" height="24"/>
-  <object id="43" name="Perla" x="3300" y="1100" width="24" height="24"/>
-  <object id="44" name="Perla" x="3500" y="1150" width="24" height="24"/>
-  <object id="45" name="Perla" x="3700" y="1100" width="24" height="24"/>
-  <object id="46" name="Perla" x="4100" y="850" width="24" height="24"/>
-  <!-- Zona 3: El Gran Geiser -->
-  <object id="47" name="Perla" x="4900" y="800" width="24" height="24"/>
-  <object id="48" name="Perla" x="5100" y="750" width="24" height="24"/>
-  <object id="49" name="Perla" x="5300" y="800" width="24" height="24"/>
-  <object id="50" name="Perla" x="5600" y="1050" width="24" height="24"/>
-  <object id="51" name="Perla" x="5800" y="1100" width="24" height="24"/>
-  <object id="52" name="Perla" x="6300" y="1200" width="24" height="24"/>
-  <object id="53" name="Perla" x="6500" y="1250" width="24" height="24"/>
-  <!-- Zona 4: El Santuario Oceánico -->
-  <object id="54" name="Perla" x="7100" y="900" width="24" height="24"/>
-  <object id="55" name="Perla" x="7300" y="850" width="24" height="24"/>
-  <object id="56" name="Perla" x="7500" y="900" width="24" height="24"/>
-  <object id="57" name="Perla" x="8000" y="1150" width="24" height="24"/>
-  <object id="58" name="Perla" x="8200" y="1200" width="24" height="24"/>
-  <object id="59" name="Perla" x="8700" y="1050" width="24" height="24"/>
-  <object id="60" name="Perla" x="8900" y="1100" width="24" height="24"/>
-  <object id="61" name="Perla" x="9100" y="1150" width="24" height="24"/>
+  <!-- Zona 1: Lecho de Arena y Arrecife de Entrada -->
+  <object name="Perla" x="480" y="1780" width="24" height="24"/>
+  <object name="Perla" x="620" y="1720" width="24" height="24"/>
+  <object name="Perla" x="760" y="1660" width="24" height="24"/>
+  <object name="Perla" x="940" y="1620" width="24" height="24"/>
+  <object name="Perla" x="1120" y="1660" width="24" height="24"/>
+  <object name="Perla" x="1300" y="1720" width="24" height="24"/>
+  <object name="Perla" x="1480" y="1780" width="24" height="24"/>
+  <object name="Perla" x="1750" y="1550" width="24" height="24"/>
+  <!-- Zona 2: Corrientes de Aguas Abiertas y Gran Banco de Coral -->
+  <object name="Perla" x="2150" y="1450" width="24" height="24"/>
+  <object name="Perla" x="2350" y="1400" width="24" height="24"/>
+  <object name="Perla" x="2550" y="1450" width="24" height="24"/>
+  <object name="Perla" x="2750" y="1550" width="24" height="24"/>
+  <object name="Perla" x="3250" y="1720" width="24" height="24"/>
+  <object name="Perla" x="3450" y="1760" width="24" height="24"/>
+  <object name="Perla" x="3650" y="1720" width="24" height="24"/>
+  <object name="Perla" x="4050" y="1500" width="24" height="24"/>
+  <!-- Zona 3: El Gran Geiser Hidrotermal y Cañón Abisal -->
+  <object name="Perla" x="4850" y="1450" width="24" height="24"/>
+  <object name="Perla" x="5050" y="1400" width="24" height="24"/>
+  <object name="Perla" x="5250" y="1450" width="24" height="24"/>
+  <object name="Perla" x="5550" y="1680" width="24" height="24"/>
+  <object name="Perla" x="5750" y="1720" width="24" height="24"/>
+  <object name="Perla" x="6250" y="1550" width="24" height="24"/>
+  <object name="Perla" x="6450" y="1600" width="24" height="24"/>
+  <!-- Zona 4: El Santuario Marino y Arrecife Dorado -->
+  <object name="Perla" x="7050" y="1500" width="24" height="24"/>
+  <object name="Perla" x="7250" y="1450" width="24" height="24"/>
+  <object name="Perla" x="7450" y="1500" width="24" height="24"/>
+  <object name="Perla" x="7950" y="1750" width="24" height="24"/>
+  <object name="Perla" x="8150" y="1780" width="24" height="24"/>
+  <object name="Perla" x="8650" y="1620" width="24" height="24"/>
+  <object name="Perla" x="8850" y="1680" width="24" height="24"/>
+  <object name="Perla" x="9050" y="1720" width="24" height="24"/>
 
-  <!-- Burbujas de oxígeno (salud) -->
-  <object id="70" name="Burbuja" x="1000" y="1300" width="28" height="28"/>
-  <object id="71" name="Burbuja" x="2700" y="1100" width="28" height="28"/>
-  <object id="72" name="Burbuja" x="4500" y="1300" width="28" height="28"/>
-  <object id="73" name="Burbuja" x="6400" y="850" width="28" height="28"/>
-  <object id="74" name="Burbuja" x="8300" y="1250" width="28" height="28"/>
+  <!-- Burbujas de oxígeno y vitalidad marina -->
+  <object name="Burbuja" x="980" y="1750" width="28" height="28"/>
+  <object name="Burbuja" x="2650" y="1600" width="28" height="28"/>
+  <object name="Burbuja" x="4450" y="1750" width="28" height="28"/>
+  <object name="Burbuja" x="6350" y="1450" width="28" height="28"/>
+  <object name="Burbuja" x="8250" y="1720" width="28" height="28"/>
 
-  <!-- Power-Ups -->
-  <object id="75" name="PowerUp_Turbo" x="850" y="650" width="36" height="36"/>
-  <object id="76" name="PowerUp_Escudo" x="2300" y="1000" width="36" height="36"/>
-  <object id="77" name="PowerUp_Turbo" x="4200" y="600" width="36" height="36"/>
-  <object id="78" name="PowerUp_Linterna" x="5500" y="800" width="36" height="36"/>
-  <object id="79" name="PowerUp_Escudo" x="7400" y="1050" width="36" height="36"/>
-  <object id="80" name="PowerUp_Turbo" x="8800" y="850" width="36" height="36"/>
+  <!-- Power-Ups de exploración submarina -->
+  <object name="PowerUp_Turbo" x="850" y="1550" width="36" height="36"/>
+  <object name="PowerUp_Escudo" x="2250" y="1650" width="36" height="36"/>
+  <object name="PowerUp_Turbo" x="4150" y="1400" width="36" height="36"/>
+  <object name="PowerUp_Linterna" x="5450" y="1550" width="36" height="36"/>
+  <object name="PowerUp_Escudo" x="7350" y="1680" width="36" height="36"/>
+  <object name="PowerUp_Turbo" x="8750" y="1500" width="36" height="36"/>
 
-  <!-- Fauna submarina y peligros distribuidos en aguas abiertas -->
-  <!-- Zona 1 -->
-  <object id="81" name="PezAngel" x="1100" y="800" width="64" height="32"/>
-  <object id="82" name="PezGloboAmarillo" x="1400" y="1250" width="64" height="32"/>
-  <object id="83" name="Bomba" x="1800" y="950" width="64" height="64"/>
-  <!-- Zona 2 -->
-  <object id="84" name="PezGloboNaranja" x="2500" y="850" width="96" height="64"/>
-  <object id="85" name="TiburonAzul" x="3100" y="950" width="192" height="192"/>
-  <object id="86" name="Pulpo" x="3600" y="1350" width="48" height="96"/>
-  <object id="87" name="Bomba" x="3900" y="700" width="64" height="64"/>
-  <object id="88" name="PezAngel" x="4300" y="650" width="64" height="32"/>
-  <!-- Zona 3 -->
-  <object id="89" name="PezGloboAmarillo" x="5000" y="1200" width="64" height="32"/>
-  <object id="90" name="TiburonAzul" x="5700" y="900" width="192" height="192"/>
-  <object id="91" name="Pulpo" x="6200" y="1400" width="48" height="96"/>
-  <object id="92" name="Bomba" x="6700" y="850" width="64" height="64"/>
-  <!-- Zona 4 -->
-  <object id="93" name="PezGloboNaranja" x="7200" y="750" width="96" height="64"/>
-  <object id="94" name="Pulpo" x="7900" y="1400" width="48" height="96"/>
-  <object id="95" name="TiburonAzul" x="8500" y="950" width="192" height="192"/>
-  <object id="96" name="Bomba" x="8900" y="800" width="64" height="64"/>
-  <object id="97" name="TiburonAzul" x="9200" y="1100" width="192" height="192"/>
+  <!-- Fauna marina: Aliados (PezAngel), peces globo defensivos y depredadores -->
+  <!-- Zona 1: Cardumen inicial de peces ángel aliados -->
+  <object name="PezAngel" x="650" y="1750" width="64" height="32"/>
+  <object name="PezAngel" x="750" y="1720" width="64" height="32"/>
+  <object name="PezGloboAmarillo" x="1400" y="1800" width="64" height="32"/>
+  <object name="Bomba" x="1800" y="1450" width="64" height="64"/>
+  <!-- Zona 2: Corrientes y arrecife intermedio -->
+  <object name="PezAngel" x="2450" y="1550" width="64" height="32"/>
+  <object name="PezAngel" x="2580" y="1580" width="64" height="32"/>
+  <object name="PezGloboNaranja" x="2850" y="1720" width="96" height="64"/>
+  <object name="TiburonAzul" x="3300" y="1380" width="192" height="192"/>
+  <object name="Pulpo" x="3750" y="1600" width="48" height="96"/>
+  <object name="Bomba" x="4000" y="1300" width="64" height="64"/>
+  <!-- Zona 3: El Gran Geiser y cañón -->
+  <object name="PezAngel" x="4600" y="1550" width="64" height="32"/>
+  <object name="PezGloboAmarillo" x="5100" y="1750" width="64" height="32"/>
+  <object name="TiburonAzul" x="5750" y="1350" width="192" height="192"/>
+  <object name="Pulpo" x="6250" y="1650" width="48" height="96"/>
+  <object name="Bomba" x="6700" y="1400" width="64" height="64"/>
+  <!-- Zona 4: Santuario y aguas profundas -->
+  <object name="PezAngel" x="7150" y="1620" width="64" height="32"/>
+  <object name="PezAngel" x="7300" y="1650" width="64" height="32"/>
+  <object name="PezGloboNaranja" x="7550" y="1720" width="96" height="64"/>
+  <object name="Pulpo" x="8000" y="1600" width="48" height="96"/>
+  <object name="TiburonAzul" x="8600" y="1380" width="192" height="192"/>
+  <object name="Bomba" x="8950" y="1450" width="64" height="64"/>
+  <object name="TiburonAzul" x="9250" y="1450" width="192" height="192"/>
  </objectgroup>
 
  <objectgroup id="7" name="luces">
-  <object id="100" name="LuzArrecife" x="500" y="1100">
+  <object name="LuzArrecife" x="500" y="1750">
    <properties>
     <property name="color" value="#44ccff"/>
-    <property name="distancia" type="float" value="6.0"/>
+    <property name="distancia" type="float" value="6.5"/>
    </properties>
   </object>
-  <object id="101" name="LuzArco1" x="1750" y="1500">
+  <object name="LuzArco1" x="1750" y="1650">
    <properties>
     <property name="color" value="#22aaff"/>
-    <property name="distancia" type="float" value="7.0"/>
+    <property name="distancia" type="float" value="7.5"/>
    </properties>
   </object>
-  <object id="102" name="LuzGeiser" x="4800" y="1300">
+  <object name="LuzGeiser" x="4800" y="1500">
    <properties>
     <property name="color" value="#ff7722"/>
-    <property name="distancia" type="float" value="8.0"/>
+    <property name="distancia" type="float" value="8.5"/>
    </properties>
   </object>
-  <object id="103" name="LuzArco2" x="6300" y="1450">
+  <object name="LuzArco2" x="6300" y="1600">
    <properties>
     <property name="color" value="#44ccff"/>
-    <property name="distancia" type="float" value="7.0"/>
+    <property name="distancia" type="float" value="7.5"/>
    </properties>
   </object>
-  <object id="104" name="LuzSantuario" x="9200" y="1300">
+  <object name="LuzSantuario" x="9200" y="1650">
    <properties>
     <property name="color" value="#ffd700"/>
-    <property name="distancia" type="float" value="8.5"/>
+    <property name="distancia" type="float" value="9.0"/>
    </properties>
   </object>
  </objectgroup>

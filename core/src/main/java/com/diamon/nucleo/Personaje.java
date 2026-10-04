@@ -31,6 +31,10 @@ public abstract class Personaje extends Sprite {
 
 	protected boolean remover;
 
+	protected boolean flipX = false;
+
+	protected boolean flipY = false;
+
 	protected Animation<TextureRegion> animacion;
 
 	private float tiempo;
@@ -413,13 +417,31 @@ public abstract class Personaje extends Sprite {
 
 	public void dibujar(Batch pincel, float delta) {
 
-		if (animar) {
+		if (animar && animacion != null) {
 
-			setRegion(animacion.getKeyFrame(tiempo, false));
+			setRegion(animacion.getKeyFrame(tiempo, true));
+			super.setFlip(flipX, flipY);
 		}
 
 		draw(pincel);
 
+	}
+
+	@Override
+	public void setFlip(boolean x, boolean y) {
+		this.flipX = x;
+		this.flipY = y;
+		super.setFlip(x, y);
+	}
+
+	@Override
+	public boolean isFlipX() {
+		return flipX;
+	}
+
+	@Override
+	public boolean isFlipY() {
+		return flipY;
 	}
 
 	public boolean isRemover() {

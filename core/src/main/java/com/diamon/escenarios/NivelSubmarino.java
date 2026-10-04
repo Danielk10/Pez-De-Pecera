@@ -36,6 +36,7 @@ public class NivelSubmarino extends Nivel {
     private CamaraSubmarina camaraSubmarina;
     private PointLight luzJugador;
     private Texture texturaFondoParalaje;
+    private com.diamon.particulas.SistemaBurbujas sistemaBurbujas;
     private float anchoMapaMetros;
     private float altoMapaMetros;
 
@@ -141,6 +142,12 @@ public class NivelSubmarino extends Nivel {
         } else if (recurso.isLoaded("texturas/fondo1.png", Texture.class)) {
             texturaFondoParalaje = recurso.get("texturas/fondo1.png", Texture.class);
         }
+
+        // 7. Inicializar Sistema de Partículas de Burbujas Submarinas
+        if (recurso.isLoaded("particulas/circle4.png", Texture.class)) {
+            sistemaBurbujas = new com.diamon.particulas.SistemaBurbujas(recurso.get("particulas/circle4.png", Texture.class));
+            sistemaBurbujas.setLimiteYSuperficie(altoMapaMetros);
+        }
     }
 
     @Override
@@ -185,6 +192,16 @@ public class NivelSubmarino extends Nivel {
                 luzJugador.setDistance(3.5f);
             } else {
                 luzJugador.setActive(false);
+            }
+        }
+
+        // 6. Actualizar sistema de partículas de burbujas submarinas
+        if (sistemaBurbujas != null) {
+            sistemaBurbujas.actualizar(delta, camara.position.x, camara.position.y, Constantes.ANCHO_METROS, Constantes.ALTO_METROS);
+            if (Math.abs(jugador.getVelocidadX()) > 0.4f || Math.abs(jugador.getVelocidadY()) > 0.4f || jugador.isTurboActivo()) {
+                float colaX = jugador.isFlipX() ? (jugador.getX() + jugador.getWidth() * 0.85f) : (jugador.getX() + jugador.getWidth() * 0.15f);
+                float colaY = jugador.getY() + jugador.getHeight() * 0.45f;
+                sistemaBurbujas.emitirEstelaPropulsion(colaX, colaY, jugador.isTurboActivo(), !jugador.isFlipX());
             }
         }
 
@@ -240,6 +257,9 @@ public class NivelSubmarino extends Nivel {
                 personaje.dibujar(pincel, delta);
             }
         }
+        if (sistemaBurbujas != null) {
+            sistemaBurbujas.dibujar(pincel);
+        }
         pincel.end();
 
         // --- FASE 4: Capas de Primer Plano del Tilemap (Oclusión frontal) ---
@@ -275,5 +295,9 @@ public class NivelSubmarino extends Nivel {
 
     public CamaraSubmarina getCamaraSubmarina() {
         return camaraSubmarina;
+    }
+
+    public com.diamon.particulas.SistemaBurbujas getSistemaBurbujas() {
+        return sistemaBurbujas;
     }
 }

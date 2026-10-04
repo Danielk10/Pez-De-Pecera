@@ -258,8 +258,16 @@ public class CargadorNivelTmx {
     private void procesarCapaSpawns(MapLayer layer, Array<Personaje> listaPersonajes) {
         for (MapObject object : layer.getObjects()) {
             String name = object.getName() != null ? object.getName() : "";
-            float x = obtenerFloatPropiedad(object, "x", 0f);
-            float y = obtenerFloatPropiedad(object, "y", 0f);
+            float x, y;
+            if (object instanceof RectangleMapObject) {
+                Rectangle r = ((RectangleMapObject) object).getRectangle();
+                x = r.x;
+                y = r.y;
+            } else {
+                x = obtenerFloatPropiedad(object, "x", 0f);
+                float rawY = obtenerFloatPropiedad(object, "y", 0f);
+                y = (altoMetros * Constantes.PPM) - rawY;
+            }
 
             if (name.equalsIgnoreCase("SpawnJugador") || name.equalsIgnoreCase("Jugador")) {
                 spawnJugador.set(x / Constantes.PPM, y / Constantes.PPM);
@@ -311,7 +319,7 @@ public class CargadorNivelTmx {
                 }
             } else if (name.equalsIgnoreCase("Algas")) {
                 if (recurso.isLoaded("texturas/algas.png", Texture.class)) {
-                    Algas algas = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Personaje.CINESTECICO);
+                    Algas algas = new Algas(recurso.get("texturas/algas.png", Texture.class), pantalla, 96, 64, Personaje.ESTATICO);
                     algas.setPosition(x, y);
                     listaPersonajes.add(algas);
                 }
@@ -367,8 +375,16 @@ public class CargadorNivelTmx {
         }
 
         for (MapObject object : layer.getObjects()) {
-            float x = obtenerFloatPropiedad(object, "x", 0f) / Constantes.PPM;
-            float y = obtenerFloatPropiedad(object, "y", 0f) / Constantes.PPM;
+            float x, y;
+            if (object instanceof RectangleMapObject) {
+                Rectangle r = ((RectangleMapObject) object).getRectangle();
+                x = (r.x + r.width / 2f) / Constantes.PPM;
+                y = (r.y + r.height / 2f) / Constantes.PPM;
+            } else {
+                x = obtenerFloatPropiedad(object, "x", 0f) / Constantes.PPM;
+                float rawY = obtenerFloatPropiedad(object, "y", 0f);
+                y = altoMetros - (rawY / Constantes.PPM);
+            }
             float distancia = obtenerFloatPropiedad(object, "distancia", 6.0f);
             String colorHex = object.getProperties().get("color", String.class);
 

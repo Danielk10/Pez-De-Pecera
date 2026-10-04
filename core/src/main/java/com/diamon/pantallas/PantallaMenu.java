@@ -88,6 +88,9 @@ public class PantallaMenu extends Pantalla {
         tabla.row();
         tabla.add(salir).size(220, 50).left().bottom().expand().pad(24);
 
+        // Fondo submarino dinámico con fauna y burbujas nadando en el menú
+        nivelMenu.addActor(new com.diamon.ui.FondoMenuMarino(recurso));
+
         nivelMenu.addActor(tabla);
     }
 

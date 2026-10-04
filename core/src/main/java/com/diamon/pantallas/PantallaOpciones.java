@@ -165,9 +165,7 @@ public class PantallaOpciones extends Pantalla {
         // --- TABLA OPCIONES PRINCIPALES ---
         tablaOpciones = new Table();
         tablaOpciones.add(titulo).colspan(1).padBottom(40).row();
-        if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-            tablaOpciones.add(partida).size(Juego.ANCHO_PANTALLA / 3, 32).padBottom(10).row();
-        }
+        tablaOpciones.add(partida).size(Juego.ANCHO_PANTALLA / 3, 32).padBottom(10).row();
         tablaOpciones.add(controles).size(Juego.ANCHO_PANTALLA / 3, 32).padBottom(10).row();
         tablaOpciones.add(sonido).size(Juego.ANCHO_PANTALLA / 3, 32).padBottom(10).row();
         tablaOpciones.add(graficos).size(Juego.ANCHO_PANTALLA / 3, 32).padBottom(10).row();
@@ -275,35 +273,39 @@ public class PantallaOpciones extends Pantalla {
         textoAbajo = new Label("Abajo", skin);
         textoIzquierda = new Label("Izquierda", skin);
         textoDerecha = new Label("Derecha", skin);
-        textoDisparo = new Label("Disparar", skin);
-        textoDisparoMisil = new Label("Disparar Misil", skin);
-        textoDisparoBomba = new Label("Disparar Bomba", skin);
+        textoDisparo = new Label("Nado Táctil", skin);
+        textoDisparoMisil = new Label("Turbo / Impulso", skin);
+        textoDisparoBomba = new Label("Escudo Burbuja", skin);
         textoPausaJuego = new Label("Pausa", skin);
+        Label textoSonar = new Label("Ecolocalización", skin);
 
         TextureAtlas atlasControles = recurso.get("texturas/controles.atlas", TextureAtlas.class);
         TextureAtlas atlasDedos = recurso.get("texturas/dedos.atlas", TextureAtlas.class);
         TextureAtlas atlasIconos = recurso.get("texturas/iconos.atlas", TextureAtlas.class);
 
+        Image sonarImg;
         if (Gdx.app.getType() == Gdx.app.getType().Desktop) {
-            pausaJuego = new Image(atlasControles.findRegion("controlEscape"));
-            arriba = new Image(atlasControles.findRegion("controlArriba"));
-            abajo = new Image(atlasControles.findRegion("controlAbajo"));
-            izquierda = new Image(atlasControles.findRegion("controlIzquierdo"));
-            derecha = new Image(atlasControles.findRegion("controlDerecho"));
-            disparo = new Image(atlasControles.findRegion("controlZ"));
-            disparoMisil = new Image(atlasControles.findRegion("controlX"));
-            disparoBomba = new Image(atlasControles.findRegion("controlEspacio"));
-            clicIzquierdo = new Image(atlasControles.findRegion("clicIzquierdo"));
-            clicDerecho = new Image(atlasControles.findRegion("clicDerecho"));
+            pausaJuego = crearImagenSegura(atlasControles, "controlEscape");
+            arriba = crearImagenSegura(atlasControles, "controlArriba");
+            abajo = crearImagenSegura(atlasControles, "controlAbajo");
+            izquierda = crearImagenSegura(atlasControles, "controlIzquierdo");
+            derecha = crearImagenSegura(atlasControles, "controlDerecho");
+            disparo = crearImagenSegura(atlasControles, "controlZ");
+            disparoMisil = crearImagenSegura(atlasControles, "controlEspacio");
+            disparoBomba = crearImagenSegura(atlasControles, "controlX");
+            sonarImg = crearImagenSegura(atlasIconos, "iconofaro");
+            clicIzquierdo = crearImagenSegura(atlasControles, "clicIzquierdo");
+            clicDerecho = crearImagenSegura(atlasControles, "clicDerecho");
         } else {
-            pausaJuego = new Image(recurso.get("texturas/pausa.png", Texture.class));
-            arriba = new Image(atlasDedos.findRegion("arriba"));
-            abajo = new Image(atlasDedos.findRegion("abajo"));
-            izquierda = new Image(atlasDedos.findRegion("izquierda"));
-            derecha = new Image(atlasDedos.findRegion("derecha"));
-            disparo = new Image(atlasDedos.findRegion("precionado"));
-            disparoMisil = new Image(atlasIconos.findRegion("iconoexplosion"));
-            disparoBomba = new Image(atlasIconos.findRegion("iconobomba"));
+            pausaJuego = crearImagenSegura(atlasIconos, "iconopausa");
+            arriba = crearImagenSegura(atlasDedos, "arriba");
+            abajo = crearImagenSegura(atlasDedos, "abajo");
+            izquierda = crearImagenSegura(atlasDedos, "izquierda");
+            derecha = crearImagenSegura(atlasDedos, "derecha");
+            disparo = crearImagenSegura(atlasDedos, "precionado");
+            disparoMisil = crearImagenSegura(atlasIconos, "iconoimpulso");
+            disparoBomba = crearImagenSegura(atlasIconos, "iconoescudo");
+            sonarImg = crearImagenSegura(atlasIconos, "iconofaro");
         }
 
         tablaControles = new Table();
@@ -316,12 +318,23 @@ public class PantallaOpciones extends Pantalla {
         agregarFilaControl(tablaControles, textoDisparo, disparo, Gdx.app.getType() == Gdx.app.getType().Desktop ? clicIzquierdo : null);
         agregarFilaControl(tablaControles, textoDisparoMisil, disparoMisil, Gdx.app.getType() == Gdx.app.getType().Desktop ? clicDerecho : null);
         agregarFilaControl(tablaControles, textoDisparoBomba, disparoBomba, null);
+        agregarFilaControl(tablaControles, textoSonar, sonarImg, null);
         agregarFilaControl(tablaControles, textoPausaJuego, pausaJuego, null);
 
         tablaControles.add(atrasControles).size(160, 32).colspan(3).expand().bottom().left().pad(32);
 
         nivelMenu.addActor(tablaPrincipal);
         anadirBotonesOpciones(true);
+    }
+
+    private Image crearImagenSegura(TextureAtlas atlas, String regionName) {
+        if (atlas != null && regionName != null) {
+            TextureAtlas.AtlasRegion reg = atlas.findRegion(regionName);
+            if (reg != null) {
+                return new Image(reg);
+            }
+        }
+        return new Image();
     }
 
     private void agregarFilaControl(Table tabla, Label texto, Image imagen, Image clic) {
