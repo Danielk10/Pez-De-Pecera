@@ -61,6 +61,8 @@ public class PezDePecera extends Juego {
 
         recurso.load("texturas/algas.png", Texture.class);
 
+        recurso.load("texturas/rayos_sol.png", Texture.class);
+
         recurso.load("texturas/invisible.png", Texture.class);
 
         recurso.load("texturas/fondo1.png", Texture.class);
@@ -108,6 +110,7 @@ public class PezDePecera extends Juego {
         recurso.load("texturas/ballena.atlas", TextureAtlas.class);
         recurso.load("texturas/ostra.atlas", TextureAtlas.class);
         recurso.load("texturas/tortuga.atlas", TextureAtlas.class);
+        recurso.load("texturas/cardumen.atlas", TextureAtlas.class);
         recurso.load("texturas/krill.png", Texture.class);
         recurso.load("texturas/erizo.png", Texture.class);
 

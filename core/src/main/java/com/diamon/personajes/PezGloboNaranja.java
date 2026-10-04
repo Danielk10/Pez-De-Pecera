@@ -77,6 +77,7 @@ public class PezGloboNaranja extends Personaje {
 
 		// Orientación suave: la textura natural del pez globo mira hacia la IZQUIERDA
 		orientarHaciaDireccion(vx, vy, false, delta);
+		setMultiplicadorVelocidadAnimacion(inflado ? 1.75f : 0.85f);
 
 		if (cuerpo != null) {
 			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);

@@ -415,17 +415,20 @@ public abstract class Personaje extends Sprite {
 
 	}
 
+	protected float multiplicadorVelocidadAnimacion = 1.0f;
+
 	public void dibujar(Batch pincel, float delta) {
 
 		if (animar && animacion != null) {
 			TextureRegion frame = animacion.getKeyFrame(tiempo, true);
 			setRegion(frame);
-			if (flipX != isFlipX()) {
-				flip(true, false);
-			}
-			if (flipY != isFlipY()) {
-				flip(false, true);
-			}
+		}
+
+		if (flipX != super.isFlipX()) {
+			super.flip(true, false);
+		}
+		if (flipY != super.isFlipY()) {
+			super.flip(false, true);
 		}
 
 		draw(pincel);
@@ -436,17 +439,21 @@ public abstract class Personaje extends Sprite {
 	public void setFlip(boolean x, boolean y) {
 		this.flipX = x;
 		this.flipY = y;
-		if (isFlipX() != x) {
-			flip(true, false);
+		if (super.isFlipX() != x) {
+			super.flip(true, false);
 		}
-		if (isFlipY() != y) {
-			flip(false, true);
+		if (super.isFlipY() != y) {
+			super.flip(false, true);
 		}
 	}
 
+	protected boolean miraDerechaActual = true;
+
 	/**
-	 * Orienta e inclina suavemente la criatura marina hacia su vector de movimiento (360°),
-	 * aplicando volteo horizontal correcto e inclinación hidrodinámica (estilo Hungry Shark).
+	 * Orienta e inclina hidrodinámicamente la criatura marina hacia su vector de movimiento (360°),
+	 * con histéresis de giro para permitir retroceso suave con aletas (como peces reales),
+	 * coherencia direccional estricta (cabeza siempre al frente al nadar hacia adelante)
+	 * y continuidad de rotación sin saltos espasmódicos ni inversiones al revés.
 	 */
 	public void orientarHaciaDireccion(float vx, float vy, boolean miraDerechaPorDefecto, float delta) {
 		float rapidez = (float) Math.hypot(vx, vy);
@@ -456,33 +463,63 @@ public abstract class Personaje extends Sprite {
 			return;
 		}
 
-		float anguloMov = MathUtils.atan2(vy, vx) * MathUtils.radDeg;
-		boolean haciaDerecha = (vx >= 0f);
-		boolean debeVoltear = miraDerechaPorDefecto ? !haciaDerecha : haciaDerecha;
-
-		float rotObjetivo;
-		if (haciaDerecha) {
-			rotObjetivo = MathUtils.clamp(anguloMov, -80f, 80f);
-		} else {
-			rotObjetivo = 180f - anguloMov;
-			while (rotObjetivo > 180f) rotObjetivo -= 360f;
-			while (rotObjetivo < -180f) rotObjetivo += 360f;
-			rotObjetivo = MathUtils.clamp(rotObjetivo, -80f, 80f);
+		// Histéresis de giro: para evitar giros espasmódicos al nadar verticalmente
+		// y permitir aleteo de retroceso suave con aletas pectorales (como peces reales)
+		float umbralGiro = 0.35f;
+		if (miraDerechaActual && vx < -umbralGiro) {
+			miraDerechaActual = false;
+		} else if (!miraDerechaActual && vx > umbralGiro) {
+			miraDerechaActual = true;
 		}
 
-		setFlip(debeVoltear, false);
-		float nuevaRot = MathUtils.lerpAngleDeg(getRotation(), rotObjetivo, 7.5f * delta);
+		boolean debeVoltear = miraDerechaPorDefecto ? !miraDerechaActual : miraDerechaActual;
+
+		// Si cambia el volteo horizontal (cambio de lado al nadar),
+		// invertir el ángulo de rotación para preservar la inclinación visual exacta de la cabeza
+		// evitando que el pez quede nadando al revés durante la transición
+		if (super.isFlipX() != debeVoltear) {
+			setRotation(-getRotation());
+			setFlip(debeVoltear, false);
+		}
+
+		// Ángulo de inclinación (pitch) respecto al avance:
+		// atan2(vy, |vx|) da el cabeceo hidrodinámico respecto a la horizontal [-90°, 90°]
+		float anguloPitch = MathUtils.atan2(vy, Math.max(0.001f, Math.abs(vx))) * MathUtils.radDeg;
+		float rotObjetivo;
+		if (miraDerechaActual) {
+			rotObjetivo = MathUtils.clamp(anguloPitch, -65f, 65f);
+		} else {
+			rotObjetivo = MathUtils.clamp(-anguloPitch, -65f, 65f);
+		}
+
+		float nuevaRot = MathUtils.lerpAngleDeg(getRotation(), rotObjetivo, 9.5f * delta);
 		setRotation(nuevaRot);
 	}
 
 	@Override
 	public boolean isFlipX() {
-		return flipX;
+		return super.isFlipX();
 	}
 
 	@Override
 	public boolean isFlipY() {
+		return super.isFlipY();
+	}
+
+	public boolean isFlipXObjetivo() {
+		return flipX;
+	}
+
+	public boolean isFlipYObjetivo() {
 		return flipY;
+	}
+
+	public float getMultiplicadorVelocidadAnimacion() {
+		return multiplicadorVelocidadAnimacion;
+	}
+
+	public void setMultiplicadorVelocidadAnimacion(float multiplicador) {
+		this.multiplicadorVelocidadAnimacion = multiplicador;
 	}
 
 	public boolean isRemover() {
@@ -518,7 +555,7 @@ public abstract class Personaje extends Sprite {
 				delta = 0.1f;
 			}
 
-			tiempo += delta;
+			tiempo += delta * multiplicadorVelocidadAnimacion;
 
 		}
 

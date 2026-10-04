@@ -36,6 +36,8 @@ public class NivelSubmarino extends Nivel {
     private CamaraSubmarina camaraSubmarina;
     private PointLight luzJugador;
     private Texture texturaFondoParalaje;
+    private Texture texturaRayosSol;
+    private float tiempoRayos = 0f;
     private com.diamon.particulas.SistemaBurbujas sistemaBurbujas;
     private float anchoMapaMetros;
     private float altoMapaMetros;
@@ -148,6 +150,11 @@ public class NivelSubmarino extends Nivel {
             sistemaBurbujas = new com.diamon.particulas.SistemaBurbujas(recurso.get("particulas/circle4.png", Texture.class));
             sistemaBurbujas.setLimiteYSuperficie(altoMapaMetros);
         }
+
+        // 8. Textura de rayos de sol volumétricos
+        if (recurso.isLoaded("texturas/rayos_sol.png", Texture.class)) {
+            texturaRayosSol = recurso.get("texturas/rayos_sol.png", Texture.class);
+        }
     }
 
     @Override
@@ -155,6 +162,8 @@ public class NivelSubmarino extends Nivel {
         if (delta <= 0) {
             return;
         }
+
+        tiempoRayos += delta;
 
         // 1. Paso fijo de físicas Box2D (60 Hz con sub-stepping)
         mundoVirtual.step(1.0f / 60.0f, 6, 2);
@@ -252,6 +261,37 @@ public class NivelSubmarino extends Nivel {
         renderTiled.setView(camara);
         if (cargadorTmx.getCapasFondo().length > 0) {
             renderTiled.render(cargadorTmx.getCapasFondo());
+        }
+
+        // --- FASE 2.5: Rayos de Sol Volumétricos Submarinos (Sun Shafts) ---
+        if (texturaRayosSol != null) {
+            float viewW = camara.viewportWidth * camara.zoom;
+            float minX = camara.position.x - viewW / 2f - 6f;
+            float maxX = camara.position.x + viewW / 2f + 6f;
+            float superficieY = altoMapaMetros;
+
+            pincel.setProjectionMatrix(camara.combined);
+            pincel.begin();
+            float rayoW = 4.8f;
+            float rayoH = 28.0f;
+            float primerRayoX = (float) Math.floor(minX / 6.5f) * 6.5f;
+
+            for (float rx = primerRayoX; rx <= maxX; rx += 6.5f) {
+                float oscilacion = MathUtils.sin(tiempoRayos * 0.70f + rx * 0.22f) * 5.5f;
+                float pulsoLuz = 0.38f + MathUtils.sin(tiempoRayos * 1.3f + rx * 0.35f) * 0.14f;
+
+                pincel.setColor(1.0f, 1.0f, 1.0f, pulsoLuz);
+                pincel.draw(texturaRayosSol,
+                        rx - rayoW / 2f, superficieY - rayoH,
+                        rayoW / 2f, rayoH,
+                        rayoW, rayoH,
+                        1f, 1f,
+                        -12f + oscilacion,
+                        0, 0,
+                        texturaRayosSol.getWidth(), texturaRayosSol.getHeight(),
+                        false, false);
+            }
+            pincel.end();
         }
 
         // --- FASE 3: Entidades del Juego y Partículas ---

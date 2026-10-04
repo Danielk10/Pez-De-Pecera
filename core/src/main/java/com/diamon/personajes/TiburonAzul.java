@@ -151,6 +151,10 @@ public class TiburonAzul extends Personaje {
 		// Orientación e inclinación 360° fluida (la textura mira a la derecha por defecto)
 		orientarHaciaDireccion(vx, vy, true, delta);
 
+		float rapidezTiburon = (float) Math.hypot(vx, vy);
+		float factorAnim = isAturdido() ? 0.2f : (muerde ? 1.9f : com.badlogic.gdx.math.MathUtils.clamp(rapidezTiburon * 0.45f, 0.7f, 1.8f));
+		setMultiplicadorVelocidadAnimacion(factorAnim);
+
 		if (cuerpo != null) {
 			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);
 		}

@@ -612,6 +612,14 @@ public class Jugador extends Personaje {
 			} else {
 				tiempoIdle = 0f;
 			}
+			float rapidezNado = (float) Math.hypot(velocidadX, velocidadY);
+			if (rapidezNado > 0.15f) {
+				float factorAnim = 0.65f + rapidezNado * 0.25f;
+				if (isTurboActivo()) factorAnim *= 1.45f;
+				setMultiplicadorVelocidadAnimacion(factorAnim);
+			} else {
+				setMultiplicadorVelocidadAnimacion(0.35f);
+			}
 
 			// Orientación e inclinación 360° fluida (estilo Hungry Shark)
 			orientarHaciaDireccion(velocidadX, velocidadY, true, delta);
@@ -718,33 +726,17 @@ public class Jugador extends Personaje {
 	}
 
 	private void actualizarVelocidad() {
+		dirTeclasX = (derecha ? 1f : 0f) - (izquierda ? 1f : 0f);
+		dirTeclasY = (arriba ? 1f : 0f) - (abajo ? 1f : 0f);
 
-		velocidadX = 0;
-
-		velocidadY = 0;
-
-		if (abajo) {
-
-			velocidadY = -velocidad;
+		float len = (float) Math.hypot(dirTeclasX, dirTeclasY);
+		if (len > 1.0f) {
+			dirTeclasX /= len;
+			dirTeclasY /= len;
 		}
 
-		if (arriba) {
-
-			velocidadY = velocidad;
-		}
-
-		if (izquierda) {
-
-			velocidadX = -velocidad;
-
-		}
-
-		if (derecha) {
-
-			velocidadX = velocidad;
-
-		}
-
+		velocidadX = dirTeclasX * velocidad;
+		velocidadY = dirTeclasY * velocidad;
 	}
 
 	public float getVelocidadX() {
@@ -858,10 +850,28 @@ public class Jugador extends Personaje {
 	}
 
 	public void darImpulso() {
-		activarPowerUp(TipoPowerUp.TURBO, 2.0f);
-		float dir = isFlipX() ? -1f : 1f;
-		velocidadX = dir * 8.5f;
-		activarHitFlash(0.16f, new Color(1.0f, 0.8f, 0.2f, 1.0f));
+		activarPowerUp(TipoPowerUp.TURBO, 2.5f);
+		float rapidezActual = (float) Math.hypot(velocidadX, velocidadY);
+		float dirX, dirY;
+		if (rapidezActual > 0.2f) {
+			dirX = velocidadX / rapidezActual;
+			dirY = velocidadY / rapidezActual;
+		} else {
+			dirX = isFlipX() ? -1f : 1f;
+			dirY = 0f;
+		}
+		velocidadX = dirX * 9.5f;
+		velocidadY = dirY * 9.5f;
+		activarHitFlash(0.2f, new Color(1.0f, 0.85f, 0.25f, 1.0f));
+		if (pantalla instanceof com.diamon.pantallas.PantallaJuego) {
+			com.diamon.pantallas.PantallaJuego pj = (com.diamon.pantallas.PantallaJuego) pantalla;
+			if (pj.getNivel() instanceof com.diamon.escenarios.NivelSubmarino) {
+				com.diamon.escenarios.NivelSubmarino ns = (com.diamon.escenarios.NivelSubmarino) pj.getNivel();
+				if (ns.getSistemaBurbujas() != null) {
+					ns.getSistemaBurbujas().estallidoBurbujas(x + getWidth() / 2f, y + getHeight() / 2f, 18, new Color(0.85f, 0.95f, 1.0f, 0.9f));
+				}
+			}
+		}
 	}
 
 	public void activarSonar() {

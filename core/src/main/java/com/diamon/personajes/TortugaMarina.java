@@ -71,6 +71,7 @@ public class TortugaMarina extends Personaje {
 
         // Orientación suave: la textura original mira a la DERECHA
         orientarHaciaDireccion(vx, vy, true, delta);
+        setMultiplicadorVelocidadAnimacion(0.85f);
 
         if (cuerpo != null) {
             cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * MathUtils.degreesToRadians);

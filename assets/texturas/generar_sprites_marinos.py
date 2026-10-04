@@ -348,9 +348,202 @@ tortuga4
         f.write(atlas_content.strip())
     print("Tortuga atlas y textura generados exitosamente.")
 
+def create_cardumen_atlas():
+    # Cardumen de peces de arrecife tipo La Sirenita (cardumen.png / cardumen.atlas)
+    # 4 especies x 4 frames de nado cada una (16 sprites en total de 48x32)
+    # Dimensiones de la hoja de sprites: 192 x 128 (4 columnas x 4 filas)
+    fw, fh = 48, 32
+    sheet = Image.new("RGBA", (fw * 4, fh * 4), (0, 0, 0, 0))
+
+    especies = [
+        {
+            "nombre": "azul",  # Cirujano Azul (Dory)
+            "cuerpo": (30, 110, 235, 255),
+            "lomo": (15, 65, 180, 255),
+            "vientre": (65, 155, 255, 255),
+            "cola": (255, 220, 25, 255),
+            "aleta": (20, 80, 195, 230),
+            "ojo": (10, 20, 45, 255),
+            "detalle": "dory"
+        },
+        {
+            "nombre": "amarillo",  # Pez Mariposa Dorado
+            "cuerpo": (255, 210, 30, 255),
+            "lomo": (245, 175, 15, 255),
+            "vientre": (255, 235, 90, 255),
+            "cola": (255, 225, 70, 240),
+            "aleta": (255, 190, 20, 230),
+            "ojo": (40, 25, 10, 255),
+            "detalle": "rayas"
+        },
+        {
+            "nombre": "turquesa",  # Damisela Esmeralda
+            "cuerpo": (25, 220, 195, 255),
+            "lomo": (10, 165, 145, 255),
+            "vientre": (90, 250, 235, 255),
+            "cola": (45, 240, 215, 240),
+            "aleta": (20, 190, 170, 230),
+            "ojo": (10, 40, 35, 255),
+            "detalle": "esmeralda"
+        },
+        {
+            "nombre": "coral",  # Antias Coral / Pez de hada
+            "cuerpo": (255, 75, 125, 255),
+            "lomo": (230, 40, 95, 255),
+            "vientre": (255, 150, 90, 255),
+            "cola": (255, 205, 60, 240),
+            "aleta": (255, 105, 145, 230),
+            "ojo": (45, 15, 25, 255),
+            "detalle": "coral"
+        }
+    ]
+
+    atlas_lines = [
+        "cardumen.png",
+        "size: 192, 128",
+        "format: RGBA8888",
+        "filter: Linear, Linear",
+        "repeat: none"
+    ]
+
+    for row, esp in enumerate(especies):
+        for col in range(4):
+            img = Image.new("RGBA", (fw, fh), (0, 0, 0, 0))
+            d = ImageDraw.Draw(img)
+
+            # Fase de la aleta caudal (golpe de nado)
+            # col=0 (0), col=1 (+1), col=2 (0), col=3 (-1)
+            t = col * (math.pi / 2.0)
+            tail_wave_y = math.sin(t) * 3.8
+            fin_wave = math.cos(t) * 2.2
+
+            # 1. Aleta Caudal (Cola de pez)
+            tail_x_root = 16
+            tail_y_root = 16
+            tail_poly = [
+                (tail_x_root, tail_y_root),
+                (4, tail_y_root - 8 + tail_wave_y),
+                (8, tail_y_root + tail_wave_y * 0.5),
+                (4, tail_y_root + 8 + tail_wave_y),
+                (tail_x_root, tail_y_root)
+            ]
+            d.polygon(tail_poly, fill=esp["cola"], outline=(int(esp["cola"][0]*0.8), int(esp["cola"][1]*0.8), int(esp["cola"][2]*0.8), 255))
+
+            # 2. Aleta Dorsal y Ventral
+            dorsal_poly = [
+                (20, 10),
+                (26, 4 + fin_wave * 0.5),
+                (32, 6),
+                (30, 10)
+            ]
+            d.polygon(dorsal_poly, fill=esp["aleta"])
+
+            ventral_poly = [
+                (22, 22),
+                (27, 27 - fin_wave * 0.5),
+                (31, 23)
+            ]
+            d.polygon(ventral_poly, fill=esp["aleta"])
+
+            # 3. Cuerpo Hidrodinámico (Pez mirando hacia la DERECHA)
+            # Elongated oval
+            body_box = [13, 9, 39, 23]
+            d.ellipse(body_box, fill=esp["cuerpo"])
+
+            # Degradado suave en vientre
+            belly_box = [16, 15, 37, 23]
+            d.ellipse(belly_box, fill=esp["vientre"])
+
+            # Lomo superior
+            spine_poly = [(16, 12), (26, 9), (36, 12), (36, 15), (16, 15)]
+            d.polygon(spine_poly, fill=esp["lomo"])
+
+            # Detalles específicos de especie
+            if esp["detalle"] == "dory":
+                # Marca negra característica de cirujano azul
+                d.arc([18, 11, 32, 21], 180, 360, fill=(15, 25, 45, 240), width=2)
+            elif esp["detalle"] == "rayas":
+                # Rayas verticales sutiles
+                d.line([(24, 10), (23, 22)], fill=(255, 255, 255, 180), width=1)
+                d.line([(30, 10), (29, 21)], fill=(255, 255, 255, 180), width=1)
+            elif esp["detalle"] == "coral":
+                # Degradado dorado ventral
+                d.ellipse([20, 16, 32, 22], fill=(255, 195, 65, 200))
+
+            # 4. Aleta Pectoral
+            pec_poly = [
+                (24, 16),
+                (20, 20 + fin_wave),
+                (23, 21 + fin_wave),
+                (26, 17)
+            ]
+            d.polygon(pec_poly, fill=esp["aleta"])
+
+            # 5. Ojo expresivo estilo Disney / Nemo
+            eye_cx = 33
+            eye_cy = 14
+            d.ellipse([eye_cx - 3, eye_cy - 3, eye_cx + 3, eye_cy + 3], fill=(255, 255, 255, 255))
+            d.ellipse([eye_cx - 1.5, eye_cy - 2, eye_cx + 2.5, eye_cy + 2], fill=esp["ojo"])
+            # Brillo / destello de luz
+            d.ellipse([eye_cx - 0.5, eye_cy - 2.2, eye_cx + 1.2, eye_cy - 0.5], fill=(255, 255, 255, 255))
+
+            # Filtro suave
+            img = img.filter(ImageFilter.SMOOTH_MORE)
+
+            sheet_x = col * fw
+            sheet_y = row * fh
+            sheet.paste(img, (sheet_x, sheet_y))
+
+            # Registro en el Atlas
+            nombre_region = f"cardumen_{esp['nombre']}_{col + 1}"
+            atlas_lines.extend([
+                nombre_region,
+                "  rotate: false",
+                f"  xy: {sheet_x}, {sheet_y}",
+                f"  size: {fw}, {fh}",
+                f"  orig: {fw}, {fh}",
+                "  offset: 0, 0",
+                "  index: -1"
+            ])
+
+    sheet.save("assets/texturas/cardumen.png", "PNG")
+    with open("assets/texturas/cardumen.atlas", "w", encoding="utf-8") as f:
+        f.write("\n".join(atlas_lines) + "\n")
+    print("Cardumen atlas y textura generados exitosamente.")
+
+def create_sun_shafts():
+    # Rayo de luz solar volumétrico submarino (64x256)
+    w, h = 64, 256
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+
+    for y in range(h):
+        # Atenuación vertical suave desde la superficie hasta las profundidades
+        v_factor = 1.0 - (y / float(h))
+        # Curva de atenuación exponencial
+        alpha_base = int(180 * (v_factor ** 1.8))
+
+        for x in range(w):
+            # Atenuación horizontal en campana gaussiana desde el centro del rayo
+            nx = (x - w / 2.0) / (w / 2.0)
+            h_factor = max(0.0, 1.0 - nx * nx)
+            alpha = int(alpha_base * h_factor)
+            if alpha > 0:
+                # Color blanco-dorado con toque turquesa marino
+                r = int(220 + 35 * v_factor)
+                g = int(240 + 15 * v_factor)
+                b = 255
+                d.point((x, y), fill=(r, g, b, alpha))
+
+    img = img.filter(ImageFilter.GaussianBlur(radius=2))
+    img.save("assets/texturas/rayos_sol.png", "PNG")
+    print("Rayos de sol submarinos generados exitosamente.")
+
 if __name__ == "__main__":
     create_whale_atlas()
     create_clam_atlas()
     create_krill()
     create_sea_urchin()
     create_turtle_atlas()
+    create_cardumen_atlas()
+    create_sun_shafts()

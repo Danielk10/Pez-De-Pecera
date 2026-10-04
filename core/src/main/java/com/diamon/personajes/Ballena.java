@@ -66,14 +66,22 @@ public class Ballena extends Personaje {
 
         // Orientación e inclinación suave: la textura original mira a la IZQUIERDA
         orientarHaciaDireccion(vx, vy, false, delta);
+        setMultiplicadorVelocidadAnimacion(0.85f);
 
-        // Dispersión sutil de burbujas desde el espiráculo
+        // Chorro sutil de burbujas desde el espiráculo hacia arriba
         tiempoSiguienteBurbuja += delta;
-        if (tiempoSiguienteBurbuja > 0.8f) {
+        if (tiempoSiguienteBurbuja > 2.8f) {
             tiempoSiguienteBurbuja = 0f;
             if (pantalla instanceof com.diamon.pantallas.PantallaJuego) {
-                float blowholeX = direccionDerecha ? (x + getWidth() * 0.75f) : (x + getWidth() * 0.25f);
-                float blowholeY = y + getHeight() * 0.85f;
+                com.diamon.pantallas.PantallaJuego pj = (com.diamon.pantallas.PantallaJuego) pantalla;
+                if (pj.getNivel() instanceof com.diamon.escenarios.NivelSubmarino) {
+                    com.diamon.escenarios.NivelSubmarino ns = (com.diamon.escenarios.NivelSubmarino) pj.getNivel();
+                    if (ns.getSistemaBurbujas() != null) {
+                        float blowholeX = direccionDerecha ? (x + getWidth() * 0.78f) : (x + getWidth() * 0.22f);
+                        float blowholeY = y + getHeight() * 0.82f;
+                        ns.getSistemaBurbujas().estallidoBurbujas(blowholeX, blowholeY, 14, new com.badlogic.gdx.graphics.Color(0.80f, 0.95f, 1.0f, 0.85f));
+                    }
+                }
             }
         }
 

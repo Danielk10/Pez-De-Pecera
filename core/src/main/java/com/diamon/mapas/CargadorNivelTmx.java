@@ -36,6 +36,7 @@ import com.diamon.personajes.Algas;
 import com.diamon.personajes.Bomba;
 import com.diamon.personajes.Ballena;
 import com.diamon.personajes.CardumenKrill;
+import com.diamon.personajes.CardumenSirenita;
 import com.diamon.personajes.ErizoMarino;
 import com.diamon.personajes.OstraGigante;
 import com.diamon.personajes.PezAngel;
@@ -220,6 +221,7 @@ public class CargadorNivelTmx {
                 fixtureDef.density = 1.0f;
                 fixtureDef.friction = 0.4f;
                 fixtureDef.filter.categoryBits = Constantes.CAT_TERRENO;
+                fixtureDef.filter.maskBits = Constantes.CAT_JUGADOR | Constantes.CAT_ENEMIGO | Constantes.CAT_BALA;
 
                 body.createFixture(fixtureDef);
                 shape.dispose();
@@ -393,6 +395,14 @@ public class CargadorNivelTmx {
                             0.15f, Animation.PlayMode.LOOP, pantalla, 96, 72, Personaje.ESTATICO);
                     tortuga.setPosition(x, y);
                     listaPersonajes.add(tortuga);
+                }
+            } else if (name.equalsIgnoreCase("CardumenSirenita") || name.equalsIgnoreCase("Cardumen") || name.equalsIgnoreCase("Sirenita")) {
+                if (recurso.isLoaded("texturas/cardumen.atlas", TextureAtlas.class)) {
+                    CardumenSirenita cardumen = new CardumenSirenita(
+                            recurso.get("texturas/cardumen.atlas", TextureAtlas.class),
+                            pantalla, 120, 80, Personaje.ESTATICO);
+                    cardumen.setPosition(x, y);
+                    listaPersonajes.add(cardumen);
                 }
             } else if (name.equalsIgnoreCase("Krill") || name.equalsIgnoreCase("CardumenKrill")) {
                 if (recurso.isLoaded("texturas/krill.png", Texture.class)) {

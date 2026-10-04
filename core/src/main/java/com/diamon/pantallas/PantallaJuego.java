@@ -1404,4 +1404,12 @@ public class PantallaJuego extends Pantalla {
 		}
 	}
 
+	public Nivel getMundo() {
+		return mundo;
+	}
+
+	public Nivel getNivel() {
+		return mundo;
+	}
+
 }

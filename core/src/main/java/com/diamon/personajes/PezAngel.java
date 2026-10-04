@@ -108,14 +108,16 @@ public class PezAngel extends Personaje {
 			}
 
 			if (!siguiendoJugador) {
-				// Nado orgánico de cardumen
+				// Nado orgánico de arrecife con pulso y deslizamiento (burst-and-glide)
 				if (Math.abs(x - spawnX) > 6.0f) {
 					direccionX = (x > spawnX) ? -1 : 1;
 				}
-				float targetVx = direccionX * 1.8f;
-				float targetVy = com.badlogic.gdx.math.MathUtils.sin(tiempoNado) * 0.9f;
-				vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 3.0f * delta);
-				vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 3.0f * delta);
+				float fasePulso = (tiempoNado % 2.0f);
+				float impulso = (fasePulso < 0.6f) ? 1.6f : 0.65f;
+				float targetVx = direccionX * 1.8f * impulso;
+				float targetVy = com.badlogic.gdx.math.MathUtils.sin(tiempoNado * 1.5f) * 0.8f;
+				vx = com.badlogic.gdx.math.MathUtils.lerp(vx, targetVx, 3.2f * delta);
+				vy = com.badlogic.gdx.math.MathUtils.lerp(vy, targetVy, 3.2f * delta);
 			}
 		}
 
@@ -126,6 +128,9 @@ public class PezAngel extends Personaje {
 
 		// Orientación correcta: la textura pez1.png mira a la DERECHA por defecto
 		orientarHaciaDireccion(vx, vy, true, delta);
+
+		float rapidezPez = (float) Math.hypot(vx, vy);
+		setMultiplicadorVelocidadAnimacion(com.badlogic.gdx.math.MathUtils.clamp(rapidezPez * 0.75f, 0.45f, 2.4f));
 
 		if (cuerpo != null) {
 			cuerpo.setTransform(x + getWidth() / 2f, y + getHeight() / 2f, getRotation() * com.badlogic.gdx.math.MathUtils.degreesToRadians);

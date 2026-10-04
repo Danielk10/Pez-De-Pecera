@@ -378,59 +378,65 @@ def create_tileset():
         return t
 
     # -------------------------------------------------------------
-    # Helper: Tile 12 (0,3) - Ruina sumergida / Bloque tallado
+    # Helper: Tile 12 (0,3) - Rampa de arena suave descendente (pendiente natural)
     # -------------------------------------------------------------
-    def draw_sunken_brick():
-        t = Image.new("RGBA", (64, 64), (55, 71, 79, 255))
+    def draw_sand_slope_down():
+        t = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
         d = ImageDraw.Draw(t)
-        # Biseles de piedra tallada
-        d.rectangle([2, 2, 61, 61], outline=(38, 50, 56, 255), width=2)
-        d.line([(3, 3), (60, 3)], fill=(120, 144, 156, 220), width=2)
-        d.line([(3, 3), (3, 60)], fill=(120, 144, 156, 220), width=2)
-        d.line([(3, 60), (60, 60)], fill=(25, 35, 40, 255), width=2)
-        d.line([(60, 3), (60, 60)], fill=(25, 35, 40, 255), width=2)
-        
-        # Símbolo / glifo grabado antiguo en espiral
-        spiral = []
-        for a in range(0, 720, 20):
-            r = 3 + a * 0.025
-            rad = math.radians(a)
-            sx = 32 + math.cos(rad) * r
-            sy = 32 + math.sin(rad) * r
-            spiral.append((sx, sy))
-        d.line(spiral, fill=(30, 42, 48, 255), width=2)
-        d.line([(px + 1, py + 1) for px, py in spiral], fill=(90, 115, 125, 180), width=1)
+        for y in range(64):
+            for x in range(64):
+                # Pendiente continua de (0, 14) a (63, 50)
+                prog = x / 63.0
+                surface_y = 14 + prog * 36.0 + math.sin(x * 0.15) * 1.8
+                if y >= surface_y:
+                    depth_ratio = min(1.0, (y - surface_y) / 45.0)
+                    r = int(210 * (1.0 - 0.16 * depth_ratio))
+                    g = int(168 * (1.0 - 0.20 * depth_ratio))
+                    b = int(92 * (1.0 - 0.26 * depth_ratio))
 
-        # Musgo marino adherido
-        for _ in range(4):
-            mx = random.randint(8, 54)
-            my = random.randint(8, 54)
-            d.ellipse([mx, my, mx + 5, my + 3], fill=(35, 95, 65, 210))
+                    noise = random.randint(-8, 8)
+                    r = max(0, min(255, r + noise))
+                    g = max(0, min(255, g + noise))
+                    b = max(0, min(255, b + noise))
+
+                    # Resalte luminoso acuático en la cresta
+                    if y <= int(surface_y) + 1:
+                        r = min(255, r + 30)
+                        g = min(255, g + 30)
+                        b = min(255, b + 20)
+
+                    d.point((x, y), fill=(r, g, b, 255))
         return t
 
     # -------------------------------------------------------------
-    # Helper: Tile 13 (1,3) - Ruina sumergida / Pilar ceremonial
+    # Helper: Tile 13 (1,3) - Rampa de arena suave ascendente (pendiente natural)
     # -------------------------------------------------------------
-    def draw_sunken_pillar():
+    def draw_sand_slope_up():
         t = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
         d = ImageDraw.Draw(t)
-        # Fuste de columna central (x: 14 a 50)
-        d.rectangle([14, 0, 50, 63], fill=(69, 90, 100, 255))
-        
-        # Ranuras verticales / acanaladuras
-        flutes = [20, 28, 36, 44]
-        for fx in flutes:
-            d.line([(fx, 0), (fx, 63)], fill=(38, 50, 56, 255), width=2)
-            d.line([(fx + 2, 0), (fx + 2, 63)], fill=(120, 144, 156, 180), width=1)
-        
-        # Relieves horizontales en capitel y basa
-        for hy in [0, 8, 55, 63]:
-            d.line([(10, hy), (54, hy)], fill=(30, 40, 45, 255), width=2)
-            d.line([(10, hy - 1 if hy > 0 else hy + 1), (54, hy - 1 if hy > 0 else hy + 1)], fill=(140, 165, 175, 200), width=1)
-        
-        # Fisuras por erosión acuática
-        crack = [(24, 18), (28, 28), (22, 38), (26, 48)]
-        d.line(crack, fill=(20, 30, 35, 255), width=2)
+        for y in range(64):
+            for x in range(64):
+                # Pendiente continua de (0, 50) a (63, 14)
+                prog = (63 - x) / 63.0
+                surface_y = 14 + prog * 36.0 + math.sin(x * 0.15) * 1.8
+                if y >= surface_y:
+                    depth_ratio = min(1.0, (y - surface_y) / 45.0)
+                    r = int(210 * (1.0 - 0.16 * depth_ratio))
+                    g = int(168 * (1.0 - 0.20 * depth_ratio))
+                    b = int(92 * (1.0 - 0.26 * depth_ratio))
+
+                    noise = random.randint(-8, 8)
+                    r = max(0, min(255, r + noise))
+                    g = max(0, min(255, g + noise))
+                    b = max(0, min(255, b + noise))
+
+                    # Resalte luminoso acuático en la cresta
+                    if y <= int(surface_y) + 1:
+                        r = min(255, r + 30)
+                        g = min(255, g + 30)
+                        b = min(255, b + 20)
+
+                    d.point((x, y), fill=(r, g, b, 255))
         return t
 
     # -------------------------------------------------------------
@@ -508,8 +514,8 @@ def create_tileset():
         (2, 2, draw_dark_kelp),
         (3, 2, draw_anemone_gold),
         # Fila 3
-        (0, 3, draw_sunken_brick),
-        (1, 3, draw_sunken_pillar),
+        (0, 3, draw_sand_slope_down),
+        (1, 3, draw_sand_slope_up),
         (2, 3, draw_glowing_crystals),
         (3, 3, draw_bubble_vent),
     ]

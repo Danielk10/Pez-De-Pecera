@@ -85,9 +85,44 @@ public class FondoMenuMarino extends Actor {
         }
     }
 
+    private static class PezCardumenMenu {
+        Animation<TextureRegion> animacion;
+        float offsetX;
+        float offsetY;
+        float escala;
+        float faseOffset;
+    }
+
+    private static class CardumenMenu {
+        float x;
+        float baseY;
+        float velocidadX;
+        boolean haciaDerecha = true;
+        float tiempo = 0f;
+        final Array<PezCardumenMenu> peces = new Array<PezCardumenMenu>(true, 14);
+
+        void reiniciar() {
+            haciaDerecha = MathUtils.randomBoolean();
+            velocidadX = (haciaDerecha ? 1f : -1f) * MathUtils.random(38f, 62f);
+            baseY = MathUtils.random(70f, Juego.ALTO_PANTALLA - 110f);
+            x = haciaDerecha ? -240f : (Juego.ANCHO_PANTALLA + 240f);
+        }
+
+        void actualizar(float delta) {
+            tiempo += delta;
+            x += velocidadX * delta;
+            if (haciaDerecha && x > Juego.ANCHO_PANTALLA + 260f) {
+                reiniciar();
+            } else if (!haciaDerecha && x < -260f) {
+                reiniciar();
+            }
+        }
+    }
+
     private final Texture texturaBurbuja;
     private final Array<Burbuja> burbujas = new Array<Burbuja>(true, 32);
     private final Array<CriaturaMenu> criaturas = new Array<CriaturaMenu>(true, 10);
+    private CardumenMenu cardumenMenu;
 
     public FondoMenuMarino(AssetManager recurso) {
         setBounds(0, 0, Juego.ANCHO_PANTALLA, Juego.ALTO_PANTALLA);
@@ -244,6 +279,33 @@ public class FondoMenuMarino extends Actor {
             ballena.amplitudOndulacion = 14f;
             criaturas.insert(0, ballena); // Renderizar detrás de todas las demás
         }
+
+        // --- 8. Cardumen sincronizado tipo La Sirenita (cinta de peces de colores) ---
+        if (recurso.isLoaded("texturas/cardumen.atlas", TextureAtlas.class)) {
+            TextureAtlas atlas = recurso.get("texturas/cardumen.atlas", TextureAtlas.class);
+            String[] especies = {"azul", "amarillo", "turquesa", "coral"};
+            cardumenMenu = new CardumenMenu();
+            cardumenMenu.reiniciar();
+
+            for (int i = 0; i < 12; i++) {
+                PezCardumenMenu p = new PezCardumenMenu();
+                String esp = especies[i % 4];
+                Array<TextureAtlas.AtlasRegion> frames = new Array<TextureAtlas.AtlasRegion>(4);
+                for (int f = 1; f <= 4; f++) {
+                    TextureAtlas.AtlasRegion reg = atlas.findRegion("cardumen_" + esp + "_" + f);
+                    if (reg != null) frames.add(reg);
+                }
+                if (frames.size == 0) frames = atlas.getRegions();
+                p.animacion = new Animation<TextureRegion>(0.10f, frames, Animation.PlayMode.LOOP);
+
+                float t = (float) i / 12f;
+                p.offsetX = (t - 0.5f) * 160f;
+                p.offsetY = MathUtils.sin(t * MathUtils.PI) * MathUtils.random(-20f, 20f);
+                p.escala = MathUtils.random(0.72f, 0.92f);
+                p.faseOffset = MathUtils.random(0f, MathUtils.PI2);
+                cardumenMenu.peces.add(p);
+            }
+        }
     }
 
     @Override
@@ -262,7 +324,12 @@ public class FondoMenuMarino extends Actor {
             }
         }
 
-        // 2. Actualizar criaturas marinas
+        // 2. Actualizar cardumen sincronizado
+        if (cardumenMenu != null) {
+            cardumenMenu.actualizar(delta);
+        }
+
+        // 3. Actualizar criaturas marinas
         for (int i = 0; i < criaturas.size; i++) {
             criaturas.get(i).actualizar(delta);
         }
@@ -303,7 +370,36 @@ public class FondoMenuMarino extends Actor {
                     pitch);
         }
 
-        // 2. Dibujar burbujas ascendentes
+        // 2. Dibujar cardumen tipo La Sirenita (cinta ondulante sincronizada)
+        if (cardumenMenu != null) {
+            for (int i = 0; i < cardumenMenu.peces.size; i++) {
+                PezCardumenMenu p = cardumenMenu.peces.get(i);
+                TextureRegion frame = p.animacion.getKeyFrame(cardumenMenu.tiempo * 1.5f + p.faseOffset, true);
+                if (frame == null) continue;
+
+                float ondaY = MathUtils.sin(cardumenMenu.tiempo * 3.4f - p.offsetX * 0.04f) * 16f;
+                float px = cardumenMenu.x + (cardumenMenu.haciaDerecha ? p.offsetX : -p.offsetX);
+                float py = cardumenMenu.baseY + p.offsetY + ondaY;
+
+                float pw = 48f * p.escala;
+                float ph = 32f * p.escala;
+                float scaleX = cardumenMenu.haciaDerecha ? 1f : -1f;
+
+                float vy = MathUtils.cos(cardumenMenu.tiempo * 3.4f - p.offsetX * 0.04f) * 16f * 3.4f;
+                float pitch = MathUtils.clamp(MathUtils.atan2(vy, Math.abs(cardumenMenu.velocidadX)) * MathUtils.radDeg, -18f, 18f);
+                if (!cardumenMenu.haciaDerecha) pitch = -pitch;
+
+                batch.setColor(1f, 1f, 1f, 0.94f * parentAlpha);
+                batch.draw(frame,
+                        px - pw / 2f, py - ph / 2f,
+                        pw / 2f, ph / 2f,
+                        pw, ph,
+                        scaleX, 1f,
+                        pitch);
+            }
+        }
+
+        // 3. Dibujar burbujas ascendentes
         if (texturaBurbuja != null) {
             for (int i = 0; i < burbujas.size; i++) {
                 Burbuja b = burbujas.get(i);

@@ -20,6 +20,7 @@ import com.diamon.personajes.Pulpo;
 import com.diamon.personajes.TiburonAzul;
 import com.diamon.personajes.Ballena;
 import com.diamon.personajes.CardumenKrill;
+import com.diamon.personajes.CardumenSirenita;
 import com.diamon.personajes.ErizoMarino;
 import com.diamon.personajes.OstraGigante;
 import com.diamon.personajes.TortugaMarina;
@@ -50,6 +51,11 @@ public class FabricaActores {
             if (recurso.isLoaded("texturas/ostra.atlas", TextureAtlas.class)) {
                 p = new OstraGigante(recurso.get("texturas/ostra.atlas", TextureAtlas.class).getRegions(),
                         pantalla, 96, 96, Personaje.ESTATICO);
+            }
+        } else if (lower.contains("sirenita") || lower.contains("cardumensirenita")) {
+            if (recurso.isLoaded("texturas/cardumen.atlas", TextureAtlas.class)) {
+                p = new CardumenSirenita(recurso.get("texturas/cardumen.atlas", TextureAtlas.class),
+                        pantalla, 120, 80, Personaje.ESTATICO);
             }
         } else if (lower.contains("krill")) {
             if (recurso.isLoaded("texturas/krill.png", Texture.class)) {

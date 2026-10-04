@@ -31,6 +31,7 @@ public class Algas extends Personaje {
 
 	private float tiempoSway = 0f;
 	private float excitacionSway = 0f;
+	private float empujeEstela = 0f;
 
 	@Override
 	public void actualizar(float delta) {
@@ -38,23 +39,47 @@ public class Algas extends Personaje {
 
 		tiempoSway += delta;
 		if (excitacionSway > 0) {
-			excitacionSway = Math.max(0f, excitacionSway - delta * 3.0f);
+			excitacionSway = Math.max(0f, excitacionSway - delta * 3.5f);
+		}
+		empujeEstela = com.badlogic.gdx.math.MathUtils.lerp(empujeEstela, 0f, 3.0f * delta);
+
+		// Reacción a estelas de criaturas marinas que pasen cerca
+		if (personajes != null) {
+			for (int i = 0; i < personajes.size; i++) {
+				Personaje p = personajes.get(i);
+				if (p instanceof Jugador || p instanceof TiburonAzul || p instanceof Ballena) {
+					float dX = p.getX() - x;
+					float dY = p.getY() - y;
+					float dist = (float) Math.hypot(dX, dY);
+					if (dist < 2.4f) {
+						excitacionSway = Math.min(20f, excitacionSway + 14.0f * delta);
+						empujeEstela = (dX < 0) ? 8.5f : -8.5f;
+						break;
+					}
+				}
+			}
 		}
 
 		// Pivotar desde la base del alga (anclada a la arena o roca)
 		setOrigin(getWidth() / 2f, 0f);
 
-		// Ondulación armónica simulando corriente marina
-		float anguloBase = com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 1.6f + x * 2.5f) * 6.5f;
-		float extraSway = com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 8.0f) * excitacionSway;
-		setRotation(anguloBase + extraSway);
+		// Ondulación armónica simulando corriente marina en múltiples frecuencias
+		float anguloBase = com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 1.5f + x * 2.2f) * 7.5f;
+		float ondaSecundaria = com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 3.1f + x * 4.0f) * 3.0f;
+		float extraSway = com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 9.0f) * excitacionSway;
+		setRotation(anguloBase + ondaSecundaria + extraSway + empujeEstela);
+
+		// Elasticidad hidrodinámica sutil (respiración del alga)
+		float estiramientoY = 1.0f + com.badlogic.gdx.math.MathUtils.sin(tiempoSway * 1.8f + x * 1.5f) * 0.045f;
+		setScale(1.0f, estiramientoY);
 	}
 
 	@Override
 	public void colision(Personaje personaje) {
 		if (personaje instanceof Jugador) {
-			// El roce del pez agita el alga
-			excitacionSway = 14.0f;
+			// El roce del pez agita el alga con fuerza
+			excitacionSway = 18.0f;
+			empujeEstela = (((Jugador) personaje).getVelocidadX() >= 0) ? 12.0f : -12.0f;
 		}
 	}
 

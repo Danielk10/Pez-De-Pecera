@@ -1,0 +1,117 @@
+cardumen.png
+size: 192, 128
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+cardumen_azul_1
+  rotate: false
+  xy: 0, 0
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_azul_2
+  rotate: false
+  xy: 48, 0
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_azul_3
+  rotate: false
+  xy: 96, 0
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_azul_4
+  rotate: false
+  xy: 144, 0
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_amarillo_1
+  rotate: false
+  xy: 0, 32
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_amarillo_2
+  rotate: false
+  xy: 48, 32
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_amarillo_3
+  rotate: false
+  xy: 96, 32
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_amarillo_4
+  rotate: false
+  xy: 144, 32
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_turquesa_1
+  rotate: false
+  xy: 0, 64
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_turquesa_2
+  rotate: false
+  xy: 48, 64
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_turquesa_3
+  rotate: false
+  xy: 96, 64
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_turquesa_4
+  rotate: false
+  xy: 144, 64
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_coral_1
+  rotate: false
+  xy: 0, 96
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_coral_2
+  rotate: false
+  xy: 48, 96
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_coral_3
+  rotate: false
+  xy: 96, 96
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
+cardumen_coral_4
+  rotate: false
+  xy: 144, 96
+  size: 48, 32
+  orig: 48, 32
+  offset: 0, 0
+  index: -1
